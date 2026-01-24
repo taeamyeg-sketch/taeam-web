@@ -1,2 +1,2 @@
 export { AdaptiveText, AdaptiveTextHero, AdaptiveTextFeatures } from './AdaptiveText';
-export { SplitSection, getSplitConfig, BRAND, VARIANTS } from './SplitSection';
+export { default as SplitSection, getSplitConfig, BRAND, VARIANTS } from './SplitSection';
