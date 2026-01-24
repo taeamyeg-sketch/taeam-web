@@ -112,14 +112,14 @@ export default function Home() {
         />
         
         {/* 3. LOGO (Standard Absolute Position) */}
-        <div className={`absolute top-6 left-6 z-50 ${mounted ? 'animate-fade-in-down' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
-            <img src="/taeam-logo.jpg" alt="Taeam" className="w-24 md:w-32 drop-shadow-2xl rounded-full hover:scale-105 transition-transform duration-300 animate-float-slow" />
+        <div className={`absolute top-6 left-6 z-50 ${mounted ? 'animate-fade-in-down' : 'opacity-0'}`} style={{ animationDelay: '0s' }}>
+            <img src="/taeam-logo.jpg" alt="Taeam" className="w-16 md:w-32 drop-shadow-2xl rounded-full hover:scale-105 transition-transform duration-300 animate-float-slow" />
         </div>
 
         {/* --- DUAL BRANDING: TAEAM on Gold + Arabic on Black --- */}
         
         {/* TAEAM - Positioned on Gold side (top-left area) */}
-        <div className={`absolute left-4 sm:left-6 md:left-16 top-[28%] sm:top-1/3 md:top-[30%] z-10 ${mounted ? 'animate-fade-in-left' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
+        <div className={`absolute left-4 sm:left-6 md:left-16 top-[28%] sm:top-1/3 md:top-[30%] z-10 ${mounted ? 'animate-fade-in-left' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
           <h1 className="text-[#0f0f0f] text-[11vw] sm:text-[12vw] md:text-[8vw] font-black tracking-tighter leading-none">
             TAEAM
           </h1>
@@ -129,7 +129,7 @@ export default function Home() {
         </div>
 
         {/* Arabic "طعام" - Positioned on Black side (bottom-right area) */}
-        <div className={`absolute right-4 sm:right-6 md:right-16 bottom-[38%] sm:bottom-[35%] md:bottom-[30%] z-10 text-right ${mounted ? 'animate-fade-in-right' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>
+        <div className={`absolute right-4 sm:right-6 md:right-16 bottom-[38%] sm:bottom-[35%] md:bottom-[30%] z-10 text-right ${mounted ? 'animate-fade-in-right' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
           <p className="text-[#EAB308] text-[12vw] sm:text-[14vw] md:text-[10vw] font-black leading-none select-none">
             طعام
           </p>
@@ -140,7 +140,7 @@ export default function Home() {
 
         {/* --- INPUT SECTION (Fat Pills + Clear Gap) --- */}
       {/* Positioned at bottom of viewport with breathing room */}
-      <div className={`absolute bottom-6 sm:bottom-10 md:bottom-32 left-0 w-full z-50 px-3 sm:px-4 flex justify-center pointer-events-none ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
+      <div className={`absolute bottom-6 sm:bottom-10 md:bottom-32 left-0 w-full z-50 px-3 sm:px-4 flex justify-center pointer-events-none ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
           <div className="w-full max-w-5xl flex flex-col items-center text-center pointer-events-auto gap-3 sm:gap-4 md:gap-14">
               
               {!isSuccess ? (
