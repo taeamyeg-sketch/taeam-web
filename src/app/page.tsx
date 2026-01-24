@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Package, Sparkles, Instagram, Box, ArrowRight } from "lucide-react";
+import { Sparkles, Instagram, ArrowRight, Refrigerator, Mail } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { AdaptiveText } from "@/components/AdaptiveText";
 import SplitSection, { BRAND } from "@/components/SplitSection";
@@ -13,6 +13,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [mounted, setMounted] = useState(false);
   const [arabicRevealed, setArabicRevealed] = useState(false);
+  const [scrolledPastHero, setScrolledPastHero] = useState(false);
 
   // Refs for scroll-triggered animations
   const ecosystemRef = useRef<HTMLElement>(null);
@@ -23,6 +24,19 @@ export default function Home() {
   // Page mount animation trigger
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Scroll detection for nav color change
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroHeight = window.innerHeight * 0.85;
+      setScrolledPastHero(window.scrollY > heroHeight);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial position
+    
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Intersection Observer for scroll-triggered animations
@@ -89,9 +103,32 @@ export default function Home() {
     <main className="bg-[#0f0f0f] font-sans selection:bg-[#EAB308] selection:text-black overflow-x-hidden grain-overlay">
       
       {/* ------------------------------------------------------
+          NAVIGATION BAR
+      ------------------------------------------------------- */}
+      <nav className={`fixed top-0 left-0 right-0 z-[100] px-4 sm:px-6 md:px-10 py-4 md:py-6 flex items-center justify-between ${mounted ? 'animate-fade-in-down' : 'opacity-0'}`}>
+        {/* Logo */}
+        <div>
+          <img src="/taeam-logo.jpg" alt="Taeam" className="w-12 md:w-16 drop-shadow-2xl rounded-full hover:scale-105 transition-transform duration-300" />
+        </div>
+        
+        {/* Nav Links */}
+        <div className="flex items-center gap-5 sm:gap-6 md:gap-10">
+          <a href="#features" className={`font-semibold text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>
+            Features
+          </a>
+          <a href="#about" className={`font-semibold text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>
+            About
+          </a>
+          <a href="#contact" className={`font-semibold text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>
+            Contact
+          </a>
+        </div>
+      </nav>
+
+      {/* ------------------------------------------------------
           SECTION 1: HERO (Fixed Alignment)
       ------------------------------------------------------- */}
-      <section className="relative min-h-screen w-full bg-[#EAB308] flex flex-col items-center justify-center pt-16 pb-16 md:pt-24 md:pb-24">
+      <section id="waitlist" className="relative min-h-screen w-full bg-[#EAB308] flex flex-col items-center justify-center pt-16 pb-16 md:pt-24 md:pb-24">
         
         {/* Floating ambient particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
@@ -110,16 +147,11 @@ export default function Home() {
           className="absolute inset-0 bg-[#0f0f0f] z-0 pointer-events-none"
           style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 100%)' }}
         />
-        
-        {/* 3. LOGO (Standard Absolute Position) */}
-        <div className={`absolute top-6 left-6 z-50 ${mounted ? 'animate-fade-in-down' : 'opacity-0'}`} style={{ animationDelay: '0s' }}>
-            <img src="/taeam-logo.jpg" alt="Taeam" className="w-16 md:w-32 drop-shadow-2xl rounded-full hover:scale-105 transition-transform duration-300 animate-float-slow" />
-        </div>
 
         {/* --- DUAL BRANDING: TAEAM on Gold + Arabic on Black --- */}
         
-        {/* TAEAM - Positioned on Gold side (top-left area) */}
-        <div className={`absolute left-4 sm:left-6 md:left-16 top-[28%] sm:top-1/3 md:top-[30%] z-10 ${mounted ? 'animate-fade-in-left' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
+        {/* TAEAM - Positioned on Gold side (closer to diagonal split) */}
+        <div className={`absolute left-[8%] sm:left-[10%] md:left-[12%] top-[28%] sm:top-1/3 md:top-[30%] z-10 ${mounted ? 'animate-fade-in-left' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
           <h1 className="text-[#0f0f0f] text-[11vw] sm:text-[12vw] md:text-[8vw] font-black tracking-tighter leading-none">
             TAEAM
           </h1>
@@ -128,8 +160,8 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Arabic "طعام" - Positioned on Black side (bottom-right area) */}
-        <div className={`absolute right-4 sm:right-6 md:right-16 bottom-[38%] sm:bottom-[35%] md:bottom-[30%] z-10 text-right ${mounted ? 'animate-fade-in-right' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
+        {/* Arabic "طعام" - Positioned on Black side (closer to diagonal split) */}
+        <div className={`absolute right-[8%] sm:right-[10%] md:right-[12%] bottom-[38%] sm:bottom-[35%] md:bottom-[30%] z-10 text-right ${mounted ? 'animate-fade-in-right' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
           <p className="text-[#EAB308] text-[12vw] sm:text-[14vw] md:text-[10vw] font-black leading-none select-none">
             طعام
           </p>
@@ -140,7 +172,7 @@ export default function Home() {
 
         {/* --- INPUT SECTION (Fat Pills + Clear Gap) --- */}
       {/* Positioned at bottom of viewport with breathing room */}
-      <div className={`absolute bottom-6 sm:bottom-10 md:bottom-32 left-0 w-full z-50 px-3 sm:px-4 flex justify-center pointer-events-none ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
+      <div className={`absolute bottom-6 sm:bottom-10 md:bottom-16 left-0 w-full z-50 px-3 sm:px-4 flex justify-center pointer-events-none ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
           <div className="w-full max-w-5xl flex flex-col items-center text-center pointer-events-auto gap-3 sm:gap-4 md:gap-14">
               
               {!isSuccess ? (
@@ -196,206 +228,394 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------
-          SECTION 2: THE ECOSYSTEM (Zig-Zag Flipped)
+          SECTION 2: THE FRIDGE
       ------------------------------------------------------- */}
-      <section ref={ecosystemRef} className="min-h-screen w-full bg-[#0f0f0f] relative flex flex-col justify-center items-center px-3 sm:px-4 md:px-10 py-10 sm:py-12 md:py-20">
+      <section id="features" ref={ecosystemRef} className="w-full bg-[#1a1a1a] relative py-16 sm:py-20 md:py-32">
         
-        {/* Floating ambient particles for section 2 */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
-          <div className="absolute top-[10%] right-[10%] w-32 h-32 bg-[#EAB308]/5 rounded-full blur-3xl animate-breathe" />
-          <div className="absolute bottom-[20%] left-[5%] w-40 h-40 bg-[#EAB308]/3 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '2s' }} />
-          <div className="absolute top-[50%] left-[50%] w-2 h-2 bg-[#EAB308]/40 rounded-full animate-float" style={{ animationDelay: '0.3s' }} />
-          <div className="absolute top-[30%] left-[70%] w-1.5 h-1.5 bg-white/20 rounded-full animate-float" style={{ animationDelay: '1.2s' }} />
-        </div>
-        
-        {/* Flipped Diagonal Overlay - Gold on Black */}
-        <div 
-          className="absolute inset-0 z-0 pointer-events-none"
-          style={{ 
-            backgroundColor: BRAND.GOLD,
-            clipPath: 'polygon(0 0, 0 100%, 100% 100%)'
-          }}
-        />
-        
-        {/* Background Accent */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#0f0f0f]/20 blur-[120px] rounded-full pointer-events-none z-[1]" />
+        {/* Subtle gradient accent */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#EAB308]/30 to-transparent" />
+        <div className="absolute top-0 right-[20%] w-64 h-64 bg-[#EAB308]/5 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="max-w-7xl w-full mx-auto relative z-10">
+        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 md:px-10 relative z-10">
           
-          {/* Section Header (Centered) */}
-          <div className="text-center mb-10 sm:mb-16 md:mb-24">
-             <h3 className="animate-on-scroll stagger-1 text-[#EAB308] font-black tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-2 sm:mb-4 text-xs sm:text-sm md:text-base">The Future of Food</h3>
-             <h2 className="animate-on-scroll stagger-2 text-2xl sm:text-3xl md:text-7xl font-black text-white uppercase tracking-tighter">
-               What&apos;s <span className="text-gradient">Coming</span>
-             </h2>
-          </div>
-
-          {/* Grid Cards */}
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-12">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
             
-            {/* Card 1: The Fridge */}
-            <div ref={card1Ref} className="animate-on-scroll stagger-3 group relative bg-[#141414] border border-white/10 p-5 sm:p-6 md:p-14 rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[3rem] overflow-hidden hover:border-[#EAB308] transition-all duration-500 hover:shadow-[0_0_50px_rgba(234,179,8,0.15)] flex flex-col justify-between min-h-[220px] sm:min-h-[260px] md:min-h-[400px] card-shine hover-lift">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#EAB308]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-lg sm:rounded-xl md:rounded-2xl bg-[#EAB308] flex items-center justify-center mb-3 sm:mb-4 md:mb-8 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(234,179,8,0.5)]">
-                  <Box className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10 text-black" />
-                </div>
-                <h3 className="text-xl sm:text-2xl md:text-5xl font-black text-white mb-2 sm:mb-3 md:mb-6 uppercase italic group-hover:text-[#EAB308] transition-colors duration-300">The Fridge</h3>
-                <p className="text-gray-400 text-sm sm:text-base md:text-xl leading-relaxed font-medium">
-                  An exclusive marketplace for the city&apos;s best home bakers. <span className="text-white">Limited batches.</span> When they&apos;re gone, they&apos;re gone.
-                </p>
+            {/* Left: Content */}
+            <div ref={card1Ref} className="animate-on-scroll stagger-1 order-2 md:order-1">
+              {/* Icon */}
+              <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl bg-[#EAB308] flex items-center justify-center mb-6 md:mb-8 shadow-lg hover:scale-110 hover:rotate-3 transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.5)]">
+                <Refrigerator className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-black" />
+              </div>
+              
+              {/* Title */}
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-4 md:mb-6 uppercase tracking-tight">
+                The Fridge
+              </h2>
+              
+              {/* Headline */}
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#EAB308] mb-4 md:mb-6 italic">
+                Home-baked, Not Store-Bought.
+              </h3>
+              
+              {/* Description */}
+              <p className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed font-medium">
+                An exclusive marketplace for the city&apos;s best home bakers. <span className="text-white">Limited batches.</span> When they&apos;re gone, they&apos;re gone.
+              </p>
+            </div>
+            
+            {/* Right: Image */}
+            <div className="animate-on-scroll stagger-2 order-1 md:order-2">
+              <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#252525] border border-white/10 hover:border-[#EAB308]/50 transition-all duration-500 group">
+                <img 
+                  src="/fridge-feature.jpg" 
+                  alt="The Fridge - Home baked goods marketplace" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             </div>
-
-            {/* Card 2: Takinator */}
-            <div ref={card2Ref} className="animate-on-scroll stagger-4 group relative bg-[#141414] border border-white/10 p-5 sm:p-6 md:p-14 rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[3rem] overflow-hidden hover:border-[#EAB308] transition-all duration-500 hover:shadow-[0_0_50px_rgba(234,179,8,0.15)] flex flex-col justify-between min-h-[220px] sm:min-h-[260px] md:min-h-[400px] card-shine hover-lift">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#EAB308]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-lg sm:rounded-xl md:rounded-2xl bg-[#EAB308] flex items-center justify-center mb-3 sm:mb-4 md:mb-8 shadow-lg group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(234,179,8,0.5)]">
-                  <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10 text-black group-hover:animate-pulse" />
-                </div>
-                <h3 className="text-xl sm:text-2xl md:text-5xl font-black text-white mb-2 sm:mb-3 md:mb-6 uppercase italic group-hover:text-[#EAB308] transition-colors duration-300">Takinator AI</h3>
-                <p className="text-gray-400 text-sm sm:text-base md:text-xl leading-relaxed font-medium">
-                  Your personal <span className="text-white">AI Food Genie</span>. Tell it your craving, and it finds the hidden halal gems instantly.
-                </p>
-              </div>
-            </div>
-
+            
           </div>
         </div>
       </section>
 
       {/* ------------------------------------------------------
-          SECTION 3: OUR PROMISE (Zig-Zag Return - Same as Hero)
+          SECTION 3: TAKINATOR AI
       ------------------------------------------------------- */}
-      <section ref={promiseRef} className="min-h-screen w-full bg-[#EAB308] relative flex flex-col justify-center items-center px-3 sm:px-4 md:px-10 py-10 sm:py-12 md:py-20 overflow-hidden">
+      <section ref={card2Ref} className="w-full bg-[#141414] relative py-16 sm:py-20 md:py-32">
         
-        {/* Floating ambient particles for section 3 */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
-          <div className="absolute top-[15%] left-[15%] w-3 h-3 bg-black/10 rounded-full animate-float" style={{ animationDelay: '0s' }} />
-          <div className="absolute top-[25%] right-[20%] w-2 h-2 bg-white/30 rounded-full animate-float" style={{ animationDelay: '0.8s' }} />
-          <div className="absolute bottom-[35%] right-[30%] w-2.5 h-2.5 bg-black/15 rounded-full animate-float-slow" style={{ animationDelay: '1.5s' }} />
-          <div className="absolute top-[60%] left-[10%] w-24 h-24 bg-black/5 rounded-full blur-2xl animate-breathe" />
-        </div>
-        
-        {/* Diagonal Overlay - Black on Gold (Same as Hero) */}
-        <div 
-          className="absolute inset-0 z-0 pointer-events-none"
-          style={{ 
-            backgroundColor: BRAND.BLACK,
-            clipPath: 'polygon(100% 0, 100% 100%, 0 100%)'
-          }}
-        />
+        {/* Subtle gradient accent */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute bottom-[20%] left-[10%] w-64 h-64 bg-[#EAB308]/5 rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Header - Positioned higher on desktop, pill badge on mobile */}
-        <div className="absolute top-24 sm:top-28 md:top-16 left-0 w-full z-10 md:text-center px-4 md:px-0">
-          {/* Desktop version */}
-          <h2 className="hidden md:block text-7xl font-black uppercase tracking-tighter text-[#0f0f0f]">
-            Our Name, Our Promise
-          </h2>
-          {/* Mobile version - styled pill badge */}
-          <div className="md:hidden inline-flex items-center gap-2 bg-[#0f0f0f] px-6 py-3 rounded-full shadow-xl border border-[#EAB308]/30">
-            <div className="w-2 h-2 bg-[#EAB308] rounded-full animate-pulse" />
-            <span className="text-[#EAB308] text-base sm:text-lg font-bold tracking-wide uppercase">
-              Our Name, Our Promise
-            </span>
-          </div>
-        </div>
-
-        {/* DESKTOP LAYOUT - Arabic on Gold side, Meaning on Black side */}
-        <div className="hidden md:block">
-          {/* Arabic "طعام" - Gold side (left), BLACK text */}
-          <div 
-            className="absolute left-16 top-[35%] z-10 cursor-pointer group"
-            onDoubleClick={() => setArabicRevealed(true)}
-          >
-            <p className="text-[#0f0f0f] text-[10vw] font-black leading-[1.2] select-none group-hover:scale-105 transition-transform duration-500">
-              طعام
-            </p>
-            {/* Double click hint */}
-            <div className={`absolute -bottom-8 left-1/2 -translate-x-1/2 transition-all duration-500 ${arabicRevealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-              <span className="bg-[#0f0f0f]/90 px-4 py-2 rounded-full text-[#EAB308] text-sm tracking-wide border border-[#EAB308]/40 animate-pulse whitespace-nowrap">
-                Double click me
-              </span>
+        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+          
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+            
+            {/* Left: Image */}
+            <div className="animate-on-scroll stagger-3">
+              <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#252525] border border-white/10 hover:border-[#EAB308]/50 transition-all duration-500 group">
+                <img 
+                  src="/takinator-feature.jpg" 
+                  alt="Takinator AI - Your personal food genie" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
             </div>
-          </div>
-
-          {/* Meaning Textbox - Black side (right), appears on double-click */}
-          <div 
-            className={`absolute right-16 bottom-[20%] z-10 max-w-md bg-[#1a1a1a] p-10 rounded-[2rem] border border-[#EAB308]/30 shadow-2xl text-left transition-all duration-700 ease-out ${
-              arabicRevealed 
-                ? 'opacity-100 translate-x-0 scale-100' 
-                : 'opacity-0 translate-x-12 scale-95 pointer-events-none'
-            }`}
-          >
-            <span className="absolute top-6 left-6 text-5xl text-[#EAB308] opacity-20 font-serif">"</span>
             
-            <h3 className="text-4xl font-bold text-white mb-4">Ta&apos;am</h3>
-            <div className={`w-16 h-1 bg-[#EAB308] mb-6 rounded-full transition-all duration-500 delay-300 ${arabicRevealed ? 'scale-x-100' : 'scale-x-0'} origin-left`} />
-            
-            <p className="text-xl text-gray-300 leading-snug font-light">
-              Translates simply to <span className="text-[#EAB308] font-bold">"Food"</span>.
-            </p>
-            <p className="text-gray-500 text-base mt-4">
-              We style it <b className="text-white">Taeam</b> — making 100% Halal accessible to everyone.
-            </p>
-          </div>
-        </div>
-
-        {/* MOBILE LAYOUT - Arabic on gold side */}
-        <div className="md:hidden flex flex-col items-start px-1 sm:px-2 mt-28 sm:mt-36">
-          {/* Arabic - positioned on gold side (left) */}
-          <div 
-            className="relative cursor-pointer group"
-            onDoubleClick={() => setArabicRevealed(true)}
-          >
-            <p className="text-[#0f0f0f] text-[14vw] sm:text-[16vw] font-black leading-[1.2] select-none group-hover:scale-105 transition-transform duration-500">
-              طعام
-            </p>
-            {/* Double tap hint */}
-            <div className={`absolute -bottom-5 sm:-bottom-6 left-1/2 -translate-x-1/2 transition-all duration-500 ${arabicRevealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-              <span className="bg-[#0f0f0f]/90 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[#EAB308] text-[10px] sm:text-xs tracking-wide border border-[#EAB308]/40 animate-pulse whitespace-nowrap">
-                Double tap me
-              </span>
+            {/* Right: Content */}
+            <div className="animate-on-scroll stagger-4">
+              {/* Icon */}
+              <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl bg-[#EAB308] flex items-center justify-center mb-6 md:mb-8 shadow-lg hover:scale-110 hover:-rotate-3 transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.5)]">
+                <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-black" />
+              </div>
+              
+              {/* Title */}
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-4 md:mb-6 uppercase tracking-tight">
+                Takinator AI
+              </h2>
+              
+              {/* Headline */}
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#EAB308] mb-4 md:mb-6 italic">
+                Stop Scrolling, Start Eating.
+              </h3>
+              
+              {/* Description */}
+              <p className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed font-medium">
+                Your personal <span className="text-white">AI Food Genie</span>. Tell it your craving, and it finds the hidden halal gems instantly.
+              </p>
             </div>
-          </div>
-
-          {/* Meaning - appears below on mobile */}
-          <div 
-            className={`mt-12 sm:mt-16 w-full max-w-[calc(100vw-1.5rem)] sm:max-w-sm bg-[#1a1a1a] p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-[#EAB308]/30 shadow-2xl text-left transition-all duration-700 ease-out ${
-              arabicRevealed 
-                ? 'opacity-100 translate-y-0 scale-100' 
-                : 'opacity-0 -translate-y-6 scale-95 pointer-events-none'
-            }`}
-          >
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-1.5 sm:mb-2">Ta&apos;am</h3>
-            <div className={`w-8 sm:w-10 h-1 bg-[#EAB308] mb-3 sm:mb-4 rounded-full transition-all duration-500 delay-300 ${arabicRevealed ? 'scale-x-100' : 'scale-x-0'} origin-left`} />
             
-            <p className="text-sm sm:text-base text-gray-300 leading-snug font-light">
-              Translates simply to <span className="text-[#EAB308] font-bold">"Food"</span>.
-            </p>
-            <p className="text-gray-500 text-xs sm:text-sm mt-2 sm:mt-3">
-              We style it <b className="text-white">Taeam</b> — making 100% Halal accessible to everyone.
-            </p>
           </div>
         </div>
       </section>
 
-      {/* FOOTER (Simple & Clean) */}
-      <footer className="bg-black py-6 sm:py-8 md:py-12 text-center border-t border-white/10 relative overflow-hidden">
-        {/* Subtle gradient glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[#EAB308]/50 to-transparent" />
+      {/* ------------------------------------------------------
+          SECTION 4: OUR NAME, OUR PROMISE
+      ------------------------------------------------------- */}
+      <section id="about" ref={promiseRef} className="w-full bg-[#1a1a1a] relative flex flex-col justify-center items-center px-5 sm:px-6 md:px-10 py-20 sm:py-24 md:py-32 overflow-hidden">
         
-        <div className="animate-on-scroll flex flex-col items-center gap-3 sm:gap-4 md:gap-6 px-3 sm:px-4">
-            <a href="https://instagram.com/taeam.ca" target="_blank" className="group flex items-center gap-1.5 sm:gap-2 md:gap-3 text-gray-400 hover:text-[#EAB308] transition-all duration-300 text-xs sm:text-sm md:text-lg">
-                <div className="p-1 sm:p-1.5 md:p-2 bg-white/5 rounded-full group-hover:bg-[#EAB308] group-hover:text-black transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(234,179,8,0.4)]">
-                  <Instagram className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" /> 
-                </div>
-                <span className="font-medium tracking-wide hover-underline">Follow @taeam.ca</span>
-            </a>
-            <p className="text-gray-700 text-[10px] sm:text-xs md:text-sm tracking-wider sm:tracking-widest uppercase hover:text-gray-500 transition-colors duration-300">© 2026 Taeam Inc. Edmonton.</p>
+        {/* Hurufiya / Arabic Calligraphy Background - Desktop only */}
+        <div className="hidden md:block absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden pointer-events-none z-[1]">
+          <p className="absolute -right-20 top-1/2 -translate-y-1/2 text-[40vw] font-black text-[#EAB308]/[0.03] leading-none select-none" style={{ writingMode: 'vertical-rl' }}>
+            طعام
+          </p>
         </div>
-      </footer>
+        
+        {/* Mobile Hurufiya - subtle centered background */}
+        <div className="md:hidden absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
+          <p className="text-[50vw] font-black text-[#EAB308]/[0.04] leading-none select-none">
+            ط
+          </p>
+        </div>
+        
+        {/* Subtle gradient accents */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#EAB308]/20 to-transparent" />
+        <div className="absolute top-[20%] left-[5%] w-32 md:w-64 h-32 md:h-64 bg-[#EAB308]/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[20%] right-[10%] w-24 md:w-48 h-24 md:h-48 bg-[#EAB308]/3 rounded-full blur-[60px] md:blur-[100px] pointer-events-none" />
+
+        <div className="max-w-7xl w-full mx-auto relative z-10">
+          
+          {/* Section Title - Centered */}
+          <div className="text-center mb-10 sm:mb-14 md:mb-28">
+            <h3 className="animate-on-scroll stagger-1 text-[#EAB308] font-black tracking-[0.12em] sm:tracking-[0.2em] uppercase mb-2 sm:mb-4 text-[10px] sm:text-sm md:text-base">
+              The Promise
+            </h3>
+            <h2 className="animate-on-scroll stagger-2 text-2xl sm:text-4xl md:text-7xl font-black text-white uppercase tracking-tighter leading-tight">
+              Our Name, <br className="sm:hidden" /><span className="text-gradient">Our Promise</span>
+            </h2>
+          </div>
+
+          {/* ==================== MOBILE LAYOUT ==================== */}
+          <div className="md:hidden flex flex-col gap-10">
+            
+            {/* Arabic Word - Centered on Mobile */}
+            <div className="animate-on-scroll stagger-3 text-center">
+              <div 
+                className="relative inline-block cursor-pointer group"
+                onDoubleClick={() => setArabicRevealed(true)}
+              >
+                <p className="text-[#EAB308] text-[22vw] font-black leading-[1] select-none active:scale-95 transition-transform duration-300 drop-shadow-[0_0_40px_rgba(234,179,8,0.25)]">
+                  طعام
+                </p>
+                {/* Double tap hint */}
+                <div className={`mt-3 transition-all duration-500 ${arabicRevealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                  <span className="inline-block bg-[#252525] px-4 py-2 rounded-full text-[#EAB308] text-[11px] tracking-wide border border-[#EAB308]/30 animate-pulse">
+                    Double tap to reveal meaning
+                  </span>
+                </div>
+              </div>
+
+              {/* Meaning Card - Mobile */}
+              <div 
+                className={`mt-6 bg-[#252525] p-5 rounded-2xl border border-[#EAB308]/20 shadow-2xl text-left transition-all duration-700 ease-out ${
+                  arabicRevealed 
+                    ? 'opacity-100 translate-y-0' 
+                    : 'opacity-0 -translate-y-4 pointer-events-none h-0 p-0 mt-0 overflow-hidden'
+                }`}
+              >
+                <div className="flex items-start gap-2">
+                  <span className="text-3xl text-[#EAB308] opacity-40 font-serif leading-none">"</span>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">Ta&apos;am</h3>
+                    <div className={`w-10 h-0.5 bg-[#EAB308] mb-3 rounded-full transition-all duration-500 delay-300 ${arabicRevealed ? 'scale-x-100' : 'scale-x-0'} origin-left`} />
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      Translates simply to <span className="text-[#EAB308] font-bold">"Food"</span>.
+                    </p>
+                    <p className="text-gray-500 text-xs mt-2">
+                      We style it <b className="text-white">Taeam</b> — making 100% Halal accessible to everyone.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Divider Line - Mobile */}
+            <div className="flex items-center justify-center gap-3">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#EAB308]/20" />
+              <div className="w-2 h-2 bg-[#EAB308]/40 rounded-full" />
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#EAB308]/20" />
+            </div>
+            
+            {/* Mission Section - Mobile */}
+            <div className="animate-on-scroll stagger-4">
+              {/* Mission Title */}
+              <h3 className="text-xl font-black text-white mb-3 uppercase tracking-tight text-center">
+                Our Mission: <span className="text-[#EAB308]">Zero Doubt</span>
+              </h3>
+              
+              {/* Decorative line */}
+              <div className="w-12 h-0.5 bg-[#EAB308] mb-5 rounded-full mx-auto" />
+              
+              {/* Mission Description */}
+              <div className="space-y-4 text-center">
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  We aren&apos;t just building a delivery app; we&apos;re building a <span className="text-white font-semibold">standard</span>.
+                </p>
+                
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  No more calling restaurants to ask about alcohol. No more guessing if the meat is hand-slaughtered.
+                </p>
+                
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  Taeam is a <span className="text-[#EAB308] font-semibold">100% Halal ecosystem</span> built on <span className="text-white font-semibold italic">Amanah</span> (Trust).
+                </p>
+                
+                {/* Status Badge - Mobile */}
+                <div className="pt-4">
+                  <div className="inline-flex items-start gap-2.5 bg-[#252525] px-4 py-3 rounded-2xl border border-[#EAB308]/20 text-left max-w-[300px]">
+                    <div className="w-2 h-2 bg-[#EAB308] rounded-full animate-pulse mt-1 flex-shrink-0" />
+                    <span className="text-gray-400 text-xs leading-relaxed">
+                      Currently under development — building the experience the <span className="text-white">Ummah</span> has been waiting for.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ==================== DESKTOP LAYOUT ==================== */}
+          <div className="hidden md:grid md:grid-cols-2 gap-32 lg:gap-40 items-start">
+            
+            {/* Left Side: Arabic Word + Meaning Reveal */}
+            <div className="animate-on-scroll stagger-3">
+              {/* Arabic Word */}
+              <div 
+                className="relative cursor-pointer group mb-16"
+                onDoubleClick={() => setArabicRevealed(true)}
+              >
+                <p className="text-[#EAB308] text-[9vw] font-black leading-[1] select-none group-hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_60px_rgba(234,179,8,0.2)]">
+                  طعام
+                </p>
+                {/* Double click hint */}
+                <div className={`absolute -bottom-2 left-0 transition-all duration-500 ${arabicRevealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                  <span className="bg-[#252525] px-4 py-2 rounded-full text-[#EAB308] text-sm tracking-wide border border-[#EAB308]/30 animate-pulse whitespace-nowrap">
+                    Double click to reveal
+                  </span>
+                </div>
+              </div>
+
+              {/* Meaning Card - Desktop */}
+              <div 
+                className={`bg-[#252525] p-10 rounded-3xl border border-[#EAB308]/20 shadow-2xl transition-all duration-700 ease-out ${
+                  arabicRevealed 
+                    ? 'opacity-100 translate-y-0 scale-100' 
+                    : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
+                }`}
+              >
+                <span className="text-5xl text-[#EAB308] opacity-30 font-serif">"</span>
+                
+                <h3 className="text-4xl font-bold text-white mb-4 -mt-4">Ta&apos;am</h3>
+                <div className={`w-16 h-1 bg-[#EAB308] mb-6 rounded-full transition-all duration-500 delay-300 ${arabicRevealed ? 'scale-x-100' : 'scale-x-0'} origin-left`} />
+                
+                <p className="text-xl text-gray-300 leading-relaxed font-light">
+                  Translates simply to <span className="text-[#EAB308] font-bold">"Food"</span>.
+                </p>
+                <p className="text-gray-500 text-base mt-4">
+                  We style it <b className="text-white">Taeam</b> — making 100% Halal accessible to everyone.
+                </p>
+              </div>
+            </div>
+            
+            {/* Right Side: Our Mission */}
+            <div className="animate-on-scroll stagger-4 pt-8">
+              {/* Mission Title */}
+              <h3 className="text-4xl font-black text-white mb-6 uppercase tracking-tight">
+                Our Mission: <span className="text-[#EAB308]">Zero Doubt</span>
+              </h3>
+              
+              {/* Decorative line */}
+              <div className="w-20 h-1 bg-[#EAB308] mb-8 rounded-full" />
+              
+              {/* Mission Description */}
+              <div className="space-y-6">
+                <p className="text-gray-300 text-xl leading-relaxed font-medium">
+                  We aren&apos;t just building a delivery app; we&apos;re building a <span className="text-white font-bold">standard</span>.
+                </p>
+                
+                <p className="text-gray-400 text-xl leading-relaxed">
+                  No more calling restaurants to ask about alcohol. No more guessing if the meat is hand-slaughtered.
+                </p>
+                
+                <p className="text-gray-300 text-xl leading-relaxed">
+                  Taeam is a <span className="text-[#EAB308] font-bold">100% Halal ecosystem</span> built on <span className="text-white font-bold italic">Amanah</span> (Trust).
+                </p>
+                
+                <div className="pt-6">
+                  <div className="inline-flex items-center gap-3 bg-[#252525] px-6 py-4 rounded-full border border-[#EAB308]/20">
+                    <div className="w-2.5 h-2.5 bg-[#EAB308] rounded-full animate-pulse" />
+                    <span className="text-gray-400 text-base font-medium">
+                      Currently under development — building the experience the <span className="text-white">Ummah</span> has been waiting for.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------
+          SECTION 5: CONTACT US
+      ------------------------------------------------------- */}
+      <section id="contact" className="w-full bg-[#0f0f0f] relative py-16 sm:py-20 md:py-28 overflow-hidden">
+        
+        {/* Subtle gradient accents */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#EAB308]/20 to-transparent" />
+        <div className="absolute top-[30%] left-[10%] w-32 md:w-48 h-32 md:h-48 bg-[#EAB308]/5 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute bottom-[20%] right-[15%] w-24 md:w-40 h-24 md:h-40 bg-[#EAB308]/3 rounded-full blur-[60px] pointer-events-none" />
+
+        <div className="max-w-4xl w-full mx-auto px-5 sm:px-6 md:px-10 relative z-10">
+          
+          {/* Section Title */}
+          <div className="text-center mb-10 sm:mb-12 md:mb-16">
+            <h3 className="animate-on-scroll stagger-1 text-[#EAB308] font-black tracking-[0.12em] sm:tracking-[0.2em] uppercase mb-2 sm:mb-3 text-[10px] sm:text-sm md:text-base">
+              Get In Touch
+            </h3>
+            <h2 className="animate-on-scroll stagger-2 text-2xl sm:text-3xl md:text-5xl font-black text-white uppercase tracking-tighter">
+              Contact <span className="text-gradient">Us</span>
+            </h2>
+          </div>
+
+          {/* Contact Cards */}
+          <div className="animate-on-scroll stagger-3 grid sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-12 md:mb-16">
+            
+            {/* Instagram Card */}
+            <a 
+              href="https://instagram.com/taeam.ca" 
+              target="_blank" 
+              className="group bg-[#1a1a1a] p-5 sm:p-6 md:p-8 rounded-2xl border border-white/5 hover:border-[#EAB308]/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.1)]"
+            >
+              <div className="flex items-center gap-3 sm:gap-4 mb-3 md:mb-4">
+                <div className="p-2.5 sm:p-3 bg-[#EAB308]/10 rounded-xl group-hover:bg-[#EAB308] transition-all duration-300">
+                  <Instagram className="w-5 h-5 sm:w-6 sm:h-6 text-[#EAB308] group-hover:text-black transition-colors duration-300" />
+                </div>
+                <span className="text-white font-bold text-base sm:text-lg md:text-xl">Instagram</span>
+              </div>
+              <p className="text-gray-400 text-sm sm:text-base group-hover:text-[#EAB308] transition-colors duration-300">
+                @taeam.ca
+              </p>
+            </a>
+            
+            {/* Email Card */}
+            <a 
+              href="mailto:contact@taeam.ca" 
+              className="group bg-[#1a1a1a] p-5 sm:p-6 md:p-8 rounded-2xl border border-white/5 hover:border-[#EAB308]/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.1)]"
+            >
+              <div className="flex items-center gap-3 sm:gap-4 mb-3 md:mb-4">
+                <div className="p-2.5 sm:p-3 bg-[#EAB308]/10 rounded-xl group-hover:bg-[#EAB308] transition-all duration-300">
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-[#EAB308] group-hover:text-black transition-colors duration-300" />
+                </div>
+                <span className="text-white font-bold text-base sm:text-lg md:text-xl">Email</span>
+              </div>
+              <p className="text-gray-400 text-sm sm:text-base group-hover:text-[#EAB308] transition-colors duration-300">
+                contact@taeam.ca
+              </p>
+            </a>
+          </div>
+
+          {/* Divider */}
+          <div className="flex items-center justify-center gap-3 mb-8 md:mb-10">
+            <div className="h-px flex-1 max-w-[100px] bg-gradient-to-r from-transparent to-white/10" />
+            <div className="w-1.5 h-1.5 bg-[#EAB308]/50 rounded-full" />
+            <div className="h-px flex-1 max-w-[100px] bg-gradient-to-l from-transparent to-white/10" />
+          </div>
+
+          {/* Footer Info */}
+          <div className="animate-on-scroll stagger-4 text-center space-y-3 sm:space-y-4">
+            <p className="text-gray-500 text-xs sm:text-sm">
+              Based in <span className="text-white">Edmonton, Alberta, Canada</span>
+            </p>
+            <p className="text-gray-600 text-[10px] sm:text-xs tracking-wider uppercase">
+              © 2026 Taeam Inc. All Rights Reserved.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
