@@ -13,12 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Taeam - The Halal Dessert Revolution | Coming Soon",
-  description: "Join the inner circle. Get 15% off your first order + 1000 Founding Member Points. Exclusive marketplace for halal desserts and AI-powered food discovery.",
+  title: "Taeam - Premium Halal Delivery",
+  description: "The easiest way to get authentic Halal food delivered.",
   keywords: ["halal", "desserts", "food", "Edmonton", "marketplace", "AI", "Taeam"],
   openGraph: {
-    title: "Taeam - The Halal Dessert Revolution",
-    description: "Join the inner circle. Get 15% off your first order + 1000 Founding Member Points.",
+    title: "Taeam - Premium Halal Delivery",
+    description: "The easiest way to get authentic Halal food delivered.",
     type: "website",
   },
 };
