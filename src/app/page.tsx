@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Sparkles, Instagram, ArrowRight, Refrigerator, Mail } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Sparkles, Instagram, ArrowRight, Refrigerator, Mail, Car, MapPin, ChevronRight, X, Send } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
-import { AdaptiveText } from "@/components/AdaptiveText";
-import SplitSection, { BRAND } from "@/components/SplitSection";
+import WaitlistModal from "@/components/WaitlistModal";
+import EdmontonMap from "@/components/EdmontonMap";
+import Link from "next/link";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -14,16 +15,24 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [arabicRevealed, setArabicRevealed] = useState(false);
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false);
+  const [isWaitlisted, setIsWaitlisted] = useState(false);
+  const [showSuggestModal, setShowSuggestModal] = useState(false);
+  const [suggestName, setSuggestName] = useState("");
+  const [suggestSubmitted, setSuggestSubmitted] = useState(false);
 
-  // Refs for scroll-triggered animations
-  const ecosystemRef = useRef<HTMLElement>(null);
-  const promiseRef = useRef<HTMLElement>(null);
-  const card1Ref = useRef<HTMLDivElement>(null);
-  const card2Ref = useRef<HTMLDivElement>(null);
 
-  // Page mount animation trigger
+  // Page mount animation trigger + waitlist check
   useEffect(() => {
     setMounted(true);
+    const alreadyWaitlisted = localStorage.getItem('taeam_waitlisted') === 'true';
+    if (alreadyWaitlisted) {
+      setIsWaitlisted(true);
+    } else {
+      // Show modal after a short delay so the page renders first
+      const timer = setTimeout(() => setShowWaitlistModal(true), 800);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   // Scroll detection for nav color change
@@ -86,10 +95,15 @@ export default function Home() {
         .insert([{ email, bonus_points: 1000 }]);
 
       if (supabaseError) {
-        if (supabaseError.code === "23505") setError("Email already registered!");
-        else throw supabaseError;
+        if (supabaseError.code === "23505") {
+          setIsSuccess(true);
+          setIsWaitlisted(true);
+          localStorage.setItem('taeam_waitlisted', 'true');
+        } else throw supabaseError;
       } else {
         setIsSuccess(true);
+        setIsWaitlisted(true);
+        localStorage.setItem('taeam_waitlisted', 'true');
       }
     } catch (err) {
       console.error(err);
@@ -99,8 +113,54 @@ export default function Home() {
     }
   };
 
+  const handleSuggestSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!suggestName.trim()) return;
+    try {
+      await supabase.from('restaurant_suggestions').insert([{ restaurant_name: suggestName.trim() }]);
+    } catch (_) { /* silent */ }
+    setSuggestSubmitted(true);
+  };
+
   return (
     <main className="bg-[#0f0f0f] font-sans selection:bg-[#EAB308] selection:text-black overflow-x-hidden grain-overlay">
+
+      {/* ── WAITLIST MODAL ── */}
+      {showWaitlistModal && (
+        <WaitlistModal
+          onClose={() => setShowWaitlistModal(false)}
+          onSuccess={() => { setShowWaitlistModal(false); setIsWaitlisted(true); }}
+        />
+      )}
+
+      {/* ── SUGGEST RESTAURANT MODAL ── */}
+      {showSuggestModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => { setShowSuggestModal(false); setSuggestSubmitted(false); setSuggestName(''); }} />
+          <div className="relative w-full max-w-sm animate-pop-in">
+            <div className="bg-[#111111] border border-[#EAB308]/30 rounded-3xl p-7 shadow-[0_0_60px_rgba(234,179,8,0.12)]">
+              <button onClick={() => { setShowSuggestModal(false); setSuggestSubmitted(false); setSuggestName(''); }} className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors text-gray-400 hover:text-white"><X className="w-3.5 h-3.5" /></button>
+              {!suggestSubmitted ? (
+                <>
+                  <div className="w-10 h-10 rounded-xl bg-[#EAB308] flex items-center justify-center mb-4"><MapPin className="w-5 h-5 text-black" /></div>
+                  <h3 className="text-lg font-black text-white uppercase tracking-tight mb-1">Suggest a Restaurant</h3>
+                  <p className="text-gray-500 text-xs mb-5 leading-relaxed">Know a halal spot that should be on Taeam? Tell us and we&apos;ll reach out to them.</p>
+                  <form onSubmit={handleSuggestSubmit} className="space-y-3">
+                    <input type="text" value={suggestName} onChange={(e) => setSuggestName(e.target.value)} placeholder="Restaurant name" autoFocus className="w-full bg-white/5 border border-white/10 focus:border-[#EAB308]/50 text-white placeholder-gray-600 rounded-xl px-4 py-3 outline-none text-sm transition-all" />
+                    <button type="submit" className="w-full bg-[#EAB308] text-black font-black py-3 rounded-xl hover:bg-yellow-400 transition-colors text-sm uppercase tracking-wider flex items-center justify-center gap-2"><Send className="w-4 h-4" /> Submit</button>
+                  </form>
+                </>
+              ) : (
+                <div className="text-center py-4">
+                  <div className="text-3xl mb-3">✅</div>
+                  <h3 className="text-lg font-black text-white mb-1">Got it!</h3>
+                  <p className="text-gray-400 text-sm">We&apos;ll reach out to them. Thanks for helping us grow.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* ------------------------------------------------------
           NAVIGATION BAR
@@ -112,16 +172,11 @@ export default function Home() {
         </div>
         
         {/* Nav Links */}
-        <div className="flex items-center gap-5 sm:gap-6 md:gap-10">
-          <a href="#features" className={`font-semibold text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>
-            Features
-          </a>
-          <a href="#about" className={`font-semibold text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>
-            About
-          </a>
-          <a href="#contact" className={`font-semibold text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>
-            Contact
-          </a>
+        <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
+          <a href="#features" className={`font-semibold text-xs sm:text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>Features</a>
+          <Link href="/drive" className={`font-semibold text-xs sm:text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}><span className="sm:hidden">Drive</span><span className="hidden sm:inline">Drive for Us</span></Link>
+          <a href="#about" className={`hidden sm:block font-semibold text-xs sm:text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>About</a>
+          <a href="#contact" className={`hidden sm:block font-semibold text-xs sm:text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>Contact</a>
         </div>
       </nav>
 
@@ -175,7 +230,16 @@ export default function Home() {
       <div className={`absolute bottom-6 sm:bottom-10 md:bottom-16 left-0 w-full z-50 px-3 sm:px-4 flex justify-center pointer-events-none ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
           <div className="w-full max-w-5xl flex flex-col items-center text-center pointer-events-auto gap-3 sm:gap-4 md:gap-14">
               
-              {!isSuccess ? (
+              {isWaitlisted ? (
+                  <div className="flex flex-col items-center gap-4 md:gap-6 animate-fade-in-up">
+                    <div className="bg-black text-[#EAB308] px-6 md:px-12 py-4 md:py-8 rounded-full font-black text-lg md:text-3xl shadow-2xl flex items-center gap-2 md:gap-4 border-2 md:border-4 border-[#EAB308] animate-pulse-glow">
+                      You&apos;re on the list! <Sparkles className="w-6 h-6 md:w-10 md:h-10 animate-pulse"/>
+                    </div>
+                    <a href="https://instagram.com/taeam.ca" target="_blank" rel="noreferrer noopener" className="text-white font-bold hover:opacity-70 underline underline-offset-4 flex items-center gap-2 text-sm md:text-2xl drop-shadow-md">
+                      <Instagram className="w-5 h-5 md:w-8 md:h-8"/> Follow @taeam.ca for launch updates
+                    </a>
+                  </div>
+              ) : !isSuccess ? (
                   /* --- 1. THE PILLS (FAT & TALL) --- */
                   <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center gap-3 md:gap-6 w-full">
                       
@@ -210,7 +274,7 @@ export default function Home() {
                        <div className="bg-black text-[#EAB308] px-6 md:px-12 py-4 md:py-8 rounded-full font-black text-lg md:text-3xl shadow-2xl flex items-center gap-2 md:gap-4 border-2 md:border-4 border-[#EAB308] animate-pulse-glow">
                           You&apos;re In! <Sparkles className="w-6 h-6 md:w-10 md:h-10 animate-pulse"/>
                       </div>
-                      <a href="https://instagram.com/taeam.ca" target="_blank" className="text-white font-bold hover:opacity-70 underline underline-offset-4 flex items-center gap-2 text-sm md:text-2xl drop-shadow-md">
+                      <a href="https://instagram.com/taeam.ca" target="_blank" rel="noreferrer noopener" className="text-white font-bold hover:opacity-70 underline underline-offset-4 flex items-center gap-2 text-sm md:text-2xl drop-shadow-md">
                            <Instagram className="w-5 h-5 md:w-8 md:h-8"/> Follow for $50 Live Draw
                       </a>
                   </div>
@@ -228,9 +292,46 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------
-          SECTION 2: THE FRIDGE
+          SECTION 2: TAEAM LAUNCH
       ------------------------------------------------------- */}
-      <section id="features" ref={ecosystemRef} className="w-full bg-[#1a1a1a] relative py-16 sm:py-20 md:py-32">
+      <section id="launch" className="w-full bg-[#0f0f0f] relative py-16 sm:py-20 md:py-28 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#EAB308]/20 to-transparent" />
+        <div className="absolute top-[10%] left-[5%] w-80 h-80 bg-[#EAB308]/4 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[10%] right-[5%] w-64 h-64 bg-[#EAB308]/3 rounded-full blur-[100px] pointer-events-none" />
+        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+          <div className="text-center mb-10 sm:mb-14 md:mb-20">
+            <p className="animate-on-scroll stagger-1 text-[#EAB308] font-black tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-3 text-[10px] sm:text-sm">Edmonton, Alberta</p>
+            <h2 className="animate-on-scroll stagger-2 text-3xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none mb-4">Taeam <span className="text-gradient">Launch</span></h2>
+            <p className="animate-on-scroll stagger-3 text-gray-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">Edmonton&apos;s first 100% halal delivery platform. No guessing. No compromise.</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+            <div className="animate-on-scroll stagger-2 space-y-6">
+              <div className="space-y-4 text-gray-400 text-base sm:text-lg leading-relaxed">
+                <p>We&apos;re not trying to be everything for everyone. We&apos;re building one thing well — a halal food delivery app that actually earns your trust.</p>
+                <p>Every restaurant on Taeam is <span className="text-white font-semibold">verified halal</span>. No alcohol on the premises. No guessing if the meat was hand-slaughtered. You order, you eat, no questions needed.</p>
+                <p>We&apos;re starting in <span className="text-[#EAB308] font-semibold">North and South Edmonton</span> — growing street by street, restaurant by restaurant.</p>
+              </div>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <button onClick={() => setShowSuggestModal(true)} className="group flex items-center gap-2 bg-[#1a1a1a] border border-[#EAB308]/20 hover:border-[#EAB308]/60 text-[#EAB308] font-bold px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-[#EAB308]/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.15)] active:scale-95">
+                  <MapPin className="w-4 h-4" /> Suggest a Restaurant <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+                <Link href="/drive" className="group flex items-center gap-2 bg-[#EAB308] text-black font-black px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-yellow-400 hover:scale-105 active:scale-95 shadow-lg hover:shadow-[0_0_25px_rgba(234,179,8,0.4)]">
+                  <Car className="w-4 h-4" /> Drive for Us <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </div>
+            </div>
+            <div className="animate-on-scroll stagger-3">
+              <EdmontonMap />
+              <p className="text-center text-gray-600 text-xs mt-4 tracking-wide uppercase">Soft Launch Zones · North &amp; South Edmonton</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------
+          SECTION 3: THE FRIDGE
+      ------------------------------------------------------- */}
+      <section id="features" className="w-full bg-[#1a1a1a] relative py-16 sm:py-20 md:py-32">
         
         {/* Subtle gradient accent */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#EAB308]/30 to-transparent" />
@@ -241,7 +342,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
             
             {/* Left: Content */}
-            <div ref={card1Ref} className="animate-on-scroll stagger-1 order-2 md:order-1">
+            <div className="animate-on-scroll stagger-1 order-2 md:order-1">
               {/* Icon */}
               <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl bg-[#EAB308] flex items-center justify-center mb-6 md:mb-8 shadow-lg hover:scale-110 hover:rotate-3 transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.5)]">
                 <Refrigerator className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-black" />
@@ -258,9 +359,12 @@ export default function Home() {
               </h3>
               
               {/* Description */}
-              <p className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed font-medium">
+              <p className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed font-medium mb-6">
                 An exclusive marketplace for the city&apos;s best home bakers. <span className="text-white">Limited batches.</span> When they&apos;re gone, they&apos;re gone.
               </p>
+              <Link href="/fridge" className="group inline-flex items-center gap-2 bg-[#252525] border border-[#EAB308]/30 hover:border-[#EAB308]/70 text-[#EAB308] font-bold px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-[#EAB308]/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.15)] active:scale-95">
+                <Refrigerator className="w-4 h-4" /> Explore The Fridge <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </div>
             
             {/* Right: Image */}
@@ -281,11 +385,10 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------
-          SECTION 3: TAKINATOR AI
+          SECTION 4: ARBAAB AI
       ------------------------------------------------------- */}
-      <section ref={card2Ref} className="w-full bg-[#141414] relative py-16 sm:py-20 md:py-32">
+      <section className="w-full bg-[#141414] relative py-16 sm:py-20 md:py-32">
         
-        {/* Subtle gradient accent */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <div className="absolute bottom-[20%] left-[10%] w-64 h-64 bg-[#EAB308]/5 rounded-full blur-[100px] pointer-events-none" />
 
@@ -298,35 +401,34 @@ export default function Home() {
               <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#252525] border border-white/10 hover:border-[#EAB308]/50 transition-all duration-500 group">
                 <img 
                   src="/takinator-feature.jpg" 
-                  alt="Takinator AI - Your personal food genie" 
+                  alt="Arbaab AI — your personal food assistant inside Taeam" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             </div>
             
             {/* Right: Content */}
             <div className="animate-on-scroll stagger-4">
-              {/* Icon */}
               <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl bg-[#EAB308] flex items-center justify-center mb-6 md:mb-8 shadow-lg hover:scale-110 hover:-rotate-3 transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.5)]">
                 <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-black" />
               </div>
               
-              {/* Title */}
               <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-4 md:mb-6 uppercase tracking-tight">
-                Takinator AI
+                Arbaab AI
               </h2>
               
-              {/* Headline */}
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#EAB308] mb-4 md:mb-6 italic">
-                Stop Scrolling, Start Eating.
+                Your Personal Food Boss.
               </h3>
               
-              {/* Description */}
-              <p className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed font-medium">
-                Your personal <span className="text-white">AI Food Genie</span>. Tell it your craving, and it finds the hidden halal gems instantly.
+              <p className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed font-medium mb-6">
+                Arabic for &ldquo;boss&rdquo; — Arbaab runs errands so you don&apos;t have to. Tell it what you&apos;re craving, and it searches every menu. Ask it to reorder your last meal, check your rewards, or switch to dark mode — all through a simple chat.
               </p>
+
+              <Link href="/arbaab" className="group inline-flex items-center gap-2 bg-[#252525] border border-[#EAB308]/30 hover:border-[#EAB308]/70 text-[#EAB308] font-bold px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-[#EAB308]/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.15)] active:scale-95">
+                <Sparkles className="w-4 h-4" /> Try Arbaab <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </div>
             
           </div>
@@ -336,7 +438,7 @@ export default function Home() {
       {/* ------------------------------------------------------
           SECTION 4: OUR NAME, OUR PROMISE
       ------------------------------------------------------- */}
-      <section id="about" ref={promiseRef} className="w-full bg-[#1a1a1a] relative flex flex-col justify-center items-center px-5 sm:px-6 md:px-10 py-20 sm:py-24 md:py-32 overflow-hidden">
+      <section id="about" className="w-full bg-[#1a1a1a] relative flex flex-col justify-center items-center px-5 sm:px-6 md:px-10 py-20 sm:py-24 md:py-32 overflow-hidden">
         
         {/* Hurufiya / Arabic Calligraphy Background - Desktop only */}
         <div className="hidden md:block absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden pointer-events-none z-[1]">
@@ -567,7 +669,8 @@ export default function Home() {
             {/* Instagram Card */}
             <a 
               href="https://instagram.com/taeam.ca" 
-              target="_blank" 
+              target="_blank"
+              rel="noreferrer noopener"
               className="group bg-[#1a1a1a] p-5 sm:p-6 md:p-8 rounded-2xl border border-white/5 hover:border-[#EAB308]/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.1)]"
             >
               <div className="flex items-center gap-3 sm:gap-4 mb-3 md:mb-4">

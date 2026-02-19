@@ -13,13 +13,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Taeam - Premium Halal Delivery",
-  description: "The easiest way to get authentic Halal food delivered.",
-  keywords: ["halal", "desserts", "food", "Edmonton", "marketplace", "AI", "Taeam"],
+  metadataBase: new URL("https://taeam.ca"),
+  title: "Taeam - Edmonton's Halal Food Delivery",
+  description: "The only 100% halal food delivery app in Edmonton. Verified restaurants, home-baked goods from The Fridge, and Arbaab AI — your personal food assistant.",
+  keywords: ["halal", "food delivery", "Edmonton", "halal delivery", "The Fridge", "Arbaab AI", "Taeam"],
   openGraph: {
-    title: "Taeam - Premium Halal Delivery",
-    description: "The easiest way to get authentic Halal food delivered.",
+    title: "Taeam - Edmonton's Halal Food Delivery",
+    description: "The only 100% halal food delivery app in Edmonton. No guessing. No compromise.",
     type: "website",
+    url: "https://taeam.ca",
+    images: [
+      {
+        url: "/taeam-logo.png",
+        width: 512,
+        height: 512,
+        alt: "Taeam - Halal Food Delivery Edmonton",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Taeam - Edmonton's Halal Food Delivery",
+    description: "The only 100% halal food delivery app in Edmonton.",
+    images: ["/taeam-logo.png"],
   },
 };
 
