@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ArrowLeft, Car, DollarSign, Clock, MapPin, CheckCircle, ChevronRight, Bell } from 'lucide-react';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function DrivePage() {
   const [mounted, setMounted] = useState(false);
@@ -10,7 +11,7 @@ export default function DrivePage() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    requestAnimationFrame(() => window.scrollTo(0, 0));
     setMounted(true);
     const observer = new IntersectionObserver(
       (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
@@ -104,7 +105,7 @@ export default function DrivePage() {
         {/* Context blurb */}
         <div className="bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 mb-10 max-w-2xl mx-auto text-center animate-on-scroll">
           <p className="text-gray-300 leading-relaxed">
-            Other delivery platforms have paused driver signups in Edmonton. Their waitlists stretch for months — if they even have one at all.
+            Other delivery platforms have paused driver signups in Edmonton. Their waitlists stretch for months, if they even have one at all.
             We&apos;re launching fresh and we need drivers who want to be part of something real from the start.
           </p>
           <p className="text-[#EAB308] font-semibold mt-3 text-sm">
@@ -165,9 +166,13 @@ export default function DrivePage() {
 
             {!submitted ? (
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
-                  if (email.includes('@')) setSubmitted(true);
+                  if (!email.includes('@')) return;
+                  try {
+                    await supabase.from('driver_signups').insert([{ email: email.trim() }]);
+                  } catch (_) { /* silent — still show success */ }
+                  setSubmitted(true);
                 }}
                 className="flex flex-col sm:flex-row gap-2"
               >

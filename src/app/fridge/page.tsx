@@ -10,7 +10,7 @@ export default function FridgePage() {
   const [fridgeStatus, setFridgeStatus] = useState<'restocking' | 'countdown' | 'live'>('restocking');
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    requestAnimationFrame(() => window.scrollTo(0, 0));
     setMounted(true);
     const observer = new IntersectionObserver(
       (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
@@ -61,7 +61,7 @@ export default function FridgePage() {
       time: '10:00 PM',
       icon: <Flame className="w-5 h-5" />,
       label: 'Zero Carry-Over',
-      desc: 'The Fridge closes and every unsold item is cleared. Nothing carries over to tomorrow — ever.',
+      desc: 'The Fridge closes and every unsold item is cleared. Nothing carries over to tomorrow. Ever.',
       color: 'text-orange-400',
       bg: 'bg-orange-400/10',
       border: 'border-orange-400/20',
@@ -75,16 +75,16 @@ export default function FridgePage() {
     { emoji: '🥧', label: 'Pies & Tarts' },
     { emoji: '🍰', label: 'Cakes' },
     { emoji: '🍡', label: 'Sweets' },
-    { emoji: '🥜', label: 'Baklava' },
-    { emoji: '🧆', label: 'Samosas' },
+    { emoji: '🍮', label: 'Baklava' },
+    { emoji: '🍫', label: 'Brownies' },
   ];
 
   const chefRequirements = [
-    'Pass our food safety quiz — covers Alberta Health Services requirements for home kitchens',
+    'Pass our food safety quiz (covers Alberta Health Services requirements for home kitchens)',
     'Submit your application with photos of your kitchen and a sample of your work',
     'Complete a quick identity verification',
-    'Get approved by our team — we review every application personally',
-    'Start listing your fresh batches — we handle payments, delivery, and customers',
+    'Get approved by our team. We review every application personally.',
+    'Start listing your fresh batches. We handle payments, delivery, and customers.',
   ];
 
   const statusConfig = {
@@ -132,7 +132,7 @@ export default function FridgePage() {
             The <span className="text-gradient">Fridge</span>
           </h1>
           <p className="text-gray-400 text-lg sm:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
-            Edmonton&apos;s homemade dessert marketplace. Baked fresh that day — when it&apos;s gone, it&apos;s gone.
+            Edmonton&apos;s homemade dessert marketplace. Baked fresh that day. When it&apos;s gone, it&apos;s gone.
           </p>
         </div>
       </section>
@@ -146,7 +146,7 @@ export default function FridgePage() {
             </h2>
             <div className="space-y-3 text-gray-400 text-sm leading-relaxed">
               <p>
-                The Fridge is where Edmonton&apos;s home bakers sell their fresh-baked goods — baklava, brownies, samosas, kunafa, macarons, cookies, pies, and more.
+                The Fridge is where Edmonton&apos;s home bakers sell their fresh-baked goods: baklava, brownies, kunafa, macarons, cookies, pies, and more.
               </p>
               <p>
                 Every item is <span className="text-white font-semibold">made that same day</span> by a verified local chef. When a batch sells out, it&apos;s gone. The next batch comes tomorrow.
@@ -163,10 +163,10 @@ export default function FridgePage() {
             </h2>
             <div className="space-y-3">
               {[
-                '100% halal — every chef is vetted',
-                'Camera-verified freshness — no old photos',
+                '100% halal. Every chef is vetted.',
+                'Camera-verified freshness. No old photos.',
                 'Limited batches per chef per day',
-                'Same-day only — zero carry-over',
+                'Same-day only. Zero carry-over.',
                 'AHS-compliant home kitchen requirements',
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -232,7 +232,7 @@ export default function FridgePage() {
               </div>
             ))}
           </div>
-          <p className="text-center text-gray-600 text-xs mt-4">And much more — whatever chefs list that day</p>
+          <p className="text-center text-gray-600 text-xs mt-4">And much more, whatever chefs list that day</p>
         </div>
 
         {/* For Chefs / Home Bakers */}

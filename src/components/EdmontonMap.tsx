@@ -1,209 +1,203 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+
+type LatLng = [number, number];
+
+// North Edmonton zone — clean Dasher-style polygon, strictly above downtown
+// Covers north Edmonton (above ~53.565), clear of central Edmonton
+const NORTH_ZONE: LatLng[] = [
+  [53.620, -113.665],  // upper-left
+  [53.672, -113.600],  // top-left
+  [53.681, -113.510],  // top-center
+  [53.672, -113.415],  // top-right
+  [53.643, -113.348],  // right
+  [53.576, -113.352],  // lower-right
+  [53.564, -113.455],  // bottom-right
+  [53.564, -113.565],  // bottom-left
+  [53.576, -113.660],  // lower-left
+];
+
+// South Edmonton zone — identical shape template, strictly below downtown
+// Covers south Edmonton (below ~53.510), ~168km south of north zone bottom
+const SOUTH_ZONE: LatLng[] = [
+  [53.452, -113.665],  // upper-left
+  [53.504, -113.600],  // top-left
+  [53.513, -113.510],  // top-center
+  [53.504, -113.415],  // top-right
+  [53.475, -113.348],  // right
+  [53.408, -113.352],  // lower-right
+  [53.396, -113.455],  // bottom-right
+  [53.396, -113.565],  // bottom-left
+  [53.408, -113.660],  // lower-left
+];
+
 export default function EdmontonMap() {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+    if ((mapRef.current as HTMLDivElement & { _leaflet_id?: number })._leaflet_id) return;
+
+    // Inject custom CSS for map animations
+    if (!document.getElementById('edmonton-map-styles')) {
+      const style = document.createElement('style');
+      style.id = 'edmonton-map-styles';
+      style.textContent = `
+        @keyframes zone-glow {
+          0%, 100% { 
+            filter: drop-shadow(0 0 12px rgba(234, 179, 8, 0.5)) drop-shadow(0 0 24px rgba(234, 179, 8, 0.2));
+          }
+          50% { 
+            filter: drop-shadow(0 0 20px rgba(234, 179, 8, 0.7)) drop-shadow(0 0 40px rgba(234, 179, 8, 0.3));
+          }
+        }
+        @keyframes zone-fill-pulse {
+          0%, 100% { fill-opacity: 0.12; }
+          50% { fill-opacity: 0.22; }
+        }
+        .edmonton-zone {
+          animation: zone-glow 4s ease-in-out infinite, zone-fill-pulse 4s ease-in-out infinite;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+        .edmonton-zone:hover {
+          fill-opacity: 0.3 !important;
+          filter: drop-shadow(0 0 30px rgba(234, 179, 8, 0.8)) drop-shadow(0 0 60px rgba(234, 179, 8, 0.4)) !important;
+        }
+        .zone-label {
+          background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(0, 0, 0, 0.8) 100%);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(234, 179, 8, 0.3);
+          padding: 6px 14px;
+          border-radius: 20px;
+          color: #EAB308;
+          font-weight: 800;
+          font-size: 10px;
+          letter-spacing: 2.5px;
+          white-space: nowrap;
+          text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+          font-family: system-ui, -apple-system, sans-serif;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(234, 179, 8, 0.15);
+          transition: all 0.3s ease;
+        }
+        .zone-label:hover {
+          background: linear-gradient(135deg, rgba(234, 179, 8, 0.25) 0%, rgba(0, 0, 0, 0.9) 100%);
+          box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6), 0 0 30px rgba(234, 179, 8, 0.25);
+          transform: scale(1.05);
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    if (!document.getElementById('leaflet-css')) {
+      const link = document.createElement('link');
+      link.id = 'leaflet-css'; link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+    }
+
+    let map: import('leaflet').Map | null = null;
+
+    import('leaflet').then((L) => {
+      if (!mapRef.current) return;
+      if ((mapRef.current as HTMLDivElement & { _leaflet_id?: number })._leaflet_id) return;
+
+      map = L.map(mapRef.current, {
+        center: [53.535, -113.494], zoom: 10,
+        zoomControl: false, attributionControl: false,
+        scrollWheelZoom: false, dragging: false,
+        doubleClickZoom: false, touchZoom: false,
+        keyboard: false, boxZoom: false,
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        subdomains: 'abcd', maxZoom: 20,
+      }).addTo(map);
+
+      // Premium holographic zone styling
+      const zoneStyle = {
+        color: '#EAB308',
+        weight: 2.5,
+        opacity: 1,
+        fillColor: '#EAB308',
+        fillOpacity: 0.18,
+        className: 'edmonton-zone',
+        smoothFactor: 0,
+      };
+
+      // Create both zones with identical styling
+      const northPoly = L.polygon(NORTH_ZONE, { ...zoneStyle }).addTo(map);
+      const southPoly = L.polygon(SOUTH_ZONE, { ...zoneStyle }).addTo(map);
+
+      // Stagger the animation for visual interest
+      setTimeout(() => {
+        const southEl = southPoly.getElement() as HTMLElement | null;
+        if (southEl) southEl.style.animationDelay = '2s';
+      }, 100);
+
+      // Premium label styling
+      const createLabel = (text: string) => `<div class="zone-label">${text}</div>`;
+      
+      L.marker([53.622, -113.508], { 
+        icon: L.divIcon({ 
+          html: createLabel('NORTH EDMONTON'), 
+          className: '', 
+          iconAnchor: [72, 12] 
+        }), 
+        interactive: false 
+      }).addTo(map);
+      
+      L.marker([53.454, -113.508], { 
+        icon: L.divIcon({ 
+          html: createLabel('SOUTH EDMONTON'), 
+          className: '', 
+          iconAnchor: [72, 12] 
+        }), 
+        interactive: false 
+      }).addTo(map);
+
+      cleanupRef.current = () => { map?.remove(); map = null; };
+    });
+
+    return () => { cleanupRef.current?.(); cleanupRef.current = null; };
+  }, []);
+
   return (
-    <div className="relative w-full aspect-[4/5] max-w-sm mx-auto select-none">
-      {/* Outer glow container */}
-      <div className="absolute inset-0 rounded-3xl bg-[#EAB308]/5 blur-xl" />
-
-      <div className="relative w-full h-full rounded-3xl overflow-hidden border border-white/10 bg-[#0d1117] shadow-2xl">
-
-        {/* Grid lines — map feel */}
-        <svg className="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
-              <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#EAB308" strokeWidth="0.5"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-
-        {/* Main SVG map of Edmonton zones */}
-        <svg
-          viewBox="0 0 300 380"
-          className="absolute inset-0 w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* ── NORTH EDMONTON ZONE ── */}
-          <g>
-            {/* Glow layer */}
-            <path
-              d="M 50 40 L 250 40 L 260 80 L 255 130 L 245 155 L 155 162 L 145 162 L 55 155 L 45 130 L 40 80 Z"
-              fill="#EAB308"
-              opacity="0.08"
-              filter="url(#glow)"
-            />
-            {/* Fill */}
-            <path
-              d="M 50 40 L 250 40 L 260 80 L 255 130 L 245 155 L 155 162 L 145 162 L 55 155 L 45 130 L 40 80 Z"
-              fill="#EAB308"
-              opacity="0.18"
-              className="animate-breathe"
-            />
-            {/* Border */}
-            <path
-              d="M 50 40 L 250 40 L 260 80 L 255 130 L 245 155 L 155 162 L 145 162 L 55 155 L 45 130 L 40 80 Z"
-              fill="none"
-              stroke="#EAB308"
-              strokeWidth="1.5"
-              opacity="0.6"
-              strokeLinejoin="round"
-            />
-            {/* Street lines */}
-            <line x1="80" y1="40" x2="80" y2="155" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="120" y1="40" x2="118" y2="160" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="160" y1="40" x2="160" y2="162" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="200" y1="40" x2="202" y2="158" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="40" y1="75" x2="260" y2="75" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="42" y1="110" x2="258" y2="110" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="46" y1="140" x2="254" y2="140" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-
-            {/* Label */}
-            <text x="150" y="108" textAnchor="middle" fill="#EAB308" fontSize="11" fontWeight="700" letterSpacing="2" fontFamily="sans-serif" opacity="0.9">
-              NORTH
-            </text>
-            <text x="150" y="123" textAnchor="middle" fill="#EAB308" fontSize="9" fontWeight="500" letterSpacing="1" fontFamily="sans-serif" opacity="0.6">
-              EDMONTON
-            </text>
-
-            {/* Pulse dot */}
-            <circle cx="150" cy="88" r="4" fill="#EAB308" opacity="0.9">
-              <animate attributeName="r" values="4;8;4" dur="2s" repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.9;0;0.9" dur="2s" repeatCount="indefinite" />
-            </circle>
-            <circle cx="150" cy="88" r="3" fill="#EAB308" opacity="1" />
-          </g>
-
-          {/* ── RIVER VALLEY DIVIDER ── */}
-          <g opacity="0.5">
-            {/* North Saskatchewan River */}
-            <path
-              d="M 30 172 Q 80 165 130 170 Q 160 172 180 168 Q 220 163 270 170"
-              fill="none"
-              stroke="#3B82F6"
-              strokeWidth="4"
-              strokeLinecap="round"
-              opacity="0.4"
-            />
-            <path
-              d="M 30 178 Q 80 171 130 176 Q 160 178 180 174 Q 220 169 270 176"
-              fill="none"
-              stroke="#3B82F6"
-              strokeWidth="2"
-              strokeLinecap="round"
-              opacity="0.2"
-            />
-            {/* River label */}
-            <text x="150" y="187" textAnchor="middle" fill="#3B82F6" fontSize="7" fontWeight="500" letterSpacing="1" fontFamily="sans-serif" opacity="0.5">
-              NORTH SASKATCHEWAN RIVER
-            </text>
-          </g>
-
-          {/* ── SOUTH EDMONTON ZONE ── */}
-          <g>
-            {/* Glow layer */}
-            <path
-              d="M 55 198 L 245 198 L 250 230 L 252 270 L 245 310 L 230 340 L 150 345 L 70 340 L 55 310 L 48 270 L 50 230 Z"
-              fill="#EAB308"
-              opacity="0.08"
-              filter="url(#glow)"
-            />
-            {/* Fill */}
-            <path
-              d="M 55 198 L 245 198 L 250 230 L 252 270 L 245 310 L 230 340 L 150 345 L 70 340 L 55 310 L 48 270 L 50 230 Z"
-              fill="#EAB308"
-              opacity="0.18"
-              className="animate-breathe"
-              style={{ animationDelay: '1s' }}
-            />
-            {/* Border */}
-            <path
-              d="M 55 198 L 245 198 L 250 230 L 252 270 L 245 310 L 230 340 L 150 345 L 70 340 L 55 310 L 48 270 L 50 230 Z"
-              fill="none"
-              stroke="#EAB308"
-              strokeWidth="1.5"
-              opacity="0.6"
-              strokeLinejoin="round"
-            />
-            {/* Street lines */}
-            <line x1="80" y1="198" x2="78" y2="338" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="120" y1="198" x2="119" y2="343" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="160" y1="198" x2="160" y2="345" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="200" y1="198" x2="201" y2="342" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="50" y1="225" x2="250" y2="225" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="49" y1="258" x2="251" y2="258" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="50" y1="290" x2="250" y2="290" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-            <line x1="54" y1="320" x2="246" y2="320" stroke="#EAB308" strokeWidth="0.4" opacity="0.25" />
-
-            {/* Label */}
-            <text x="150" y="268" textAnchor="middle" fill="#EAB308" fontSize="11" fontWeight="700" letterSpacing="2" fontFamily="sans-serif" opacity="0.9">
-              SOUTH
-            </text>
-            <text x="150" y="283" textAnchor="middle" fill="#EAB308" fontSize="9" fontWeight="500" letterSpacing="1" fontFamily="sans-serif" opacity="0.6">
-              EDMONTON
-            </text>
-
-            {/* Pulse dot */}
-            <circle cx="150" cy="245" r="4" fill="#EAB308" opacity="0.9">
-              <animate attributeName="r" values="4;8;4" dur="2.5s" repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.9;0;0.9" dur="2.5s" repeatCount="indefinite" />
-            </circle>
-            <circle cx="150" cy="245" r="3" fill="#EAB308" opacity="1" />
-          </g>
-
-          {/* ── TAEAM MAP PIN — North ── */}
-          <g transform="translate(100, 60)">
-            <circle cx="0" cy="0" r="9" fill="#1a1a1a" stroke="#EAB308" strokeWidth="1.5" />
-            <text x="0" y="4" textAnchor="middle" fontSize="10" fill="#EAB308">🍽</text>
-          </g>
-          <g transform="translate(190, 130)">
-            <circle cx="0" cy="0" r="9" fill="#1a1a1a" stroke="#EAB308" strokeWidth="1.5" />
-            <text x="0" y="4" textAnchor="middle" fontSize="10" fill="#EAB308">🍽</text>
-          </g>
-
-          {/* ── TAEAM MAP PIN — South ── */}
-          <g transform="translate(110, 220)">
-            <circle cx="0" cy="0" r="9" fill="#1a1a1a" stroke="#EAB308" strokeWidth="1.5" />
-            <text x="0" y="4" textAnchor="middle" fontSize="10" fill="#EAB308">🍽</text>
-          </g>
-          <g transform="translate(185, 305)">
-            <circle cx="0" cy="0" r="9" fill="#1a1a1a" stroke="#EAB308" strokeWidth="1.5" />
-            <text x="0" y="4" textAnchor="middle" fontSize="10" fill="#EAB308">🍽</text>
-          </g>
-
-          {/* Glow filter */}
-          <defs>
-            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="8" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-        </svg>
-
-        {/* Legend */}
-        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-center gap-4">
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm bg-[#EAB308] opacity-70" />
-            <span className="text-[#EAB308] text-[10px] font-bold tracking-wider uppercase opacity-80">Soft Launch Zone</span>
-          </div>
-        </div>
-
-        {/* Compass rose */}
-        <div className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center">
-          <div className="relative w-6 h-6">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-[#EAB308] text-[8px] font-black opacity-60 -translate-y-[7px] block">N</span>
+    <div className="relative w-full aspect-[4/5] max-w-md mx-auto select-none group">
+      {/* Ambient glow layers */}
+      <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-[#EAB308]/10 via-transparent to-[#EAB308]/5 blur-2xl opacity-60 group-hover:opacity-80 transition-opacity duration-700 pointer-events-none" />
+      <div className="absolute inset-0 rounded-3xl bg-[#EAB308]/5 blur-xl pointer-events-none animate-pulse" style={{ animationDuration: '4s' }} />
+      
+      {/* Main map container */}
+      <div className="relative w-full h-full rounded-3xl overflow-hidden border border-[#EAB308]/20 shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_60px_rgba(234,179,8,0.08)] bg-[#0a0a0a] group-hover:border-[#EAB308]/40 transition-all duration-500">
+        {/* Inner glow overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#EAB308]/5 via-transparent to-[#EAB308]/3 pointer-events-none z-10" />
+        
+        {/* Map */}
+        <div ref={mapRef} className="w-full h-full" />
+        
+        {/* Top fade for polish */}
+        <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#0a0a0a]/80 to-transparent pointer-events-none z-10" />
+        
+        {/* Legend badge */}
+        <div className="absolute bottom-5 left-0 right-0 flex items-center justify-center z-[1000] pointer-events-none">
+          <div className="flex items-center gap-2.5 bg-black/80 backdrop-blur-md px-5 py-2.5 rounded-full border border-[#EAB308]/30 shadow-[0_4px_20px_rgba(0,0,0,0.4),0_0_15px_rgba(234,179,8,0.1)]">
+            <div className="relative">
+              <div className="w-3 h-3 rounded-sm bg-[#EAB308]" />
+              <div className="absolute inset-0 w-3 h-3 rounded-sm bg-[#EAB308] animate-ping opacity-40" />
             </div>
-            <svg viewBox="0 0 24 24" className="w-6 h-6 opacity-30">
-              <path d="M12 2 L14 10 L12 8 L10 10 Z" fill="#EAB308" />
-              <path d="M12 22 L10 14 L12 16 L14 14 Z" fill="#ffffff" opacity="0.5" />
-              <circle cx="12" cy="12" r="2" fill="#EAB308" opacity="0.6" />
-            </svg>
+            <span className="text-[#EAB308] text-[10px] font-bold tracking-[0.15em] uppercase">Soft Launch Zones</span>
           </div>
         </div>
+
+        {/* Corner accents */}
+        <div className="absolute top-3 left-3 w-8 h-8 border-l-2 border-t-2 border-[#EAB308]/30 rounded-tl-lg pointer-events-none z-10" />
+        <div className="absolute top-3 right-3 w-8 h-8 border-r-2 border-t-2 border-[#EAB308]/30 rounded-tr-lg pointer-events-none z-10" />
+        <div className="absolute bottom-3 left-3 w-8 h-8 border-l-2 border-b-2 border-[#EAB308]/30 rounded-bl-lg pointer-events-none z-10" />
+        <div className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-[#EAB308]/30 rounded-br-lg pointer-events-none z-10" />
       </div>
     </div>
   );

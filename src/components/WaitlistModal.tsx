@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Sparkles, X, ArrowRight } from 'lucide-react';
+import { Gift, X, ArrowRight } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 
 interface WaitlistModalProps {
@@ -79,7 +79,7 @@ export default function WaitlistModal({ onClose, onSuccess }: WaitlistModalProps
               {/* Header */}
               <div className="mb-6">
                 <div className="w-12 h-12 rounded-2xl bg-[#EAB308] flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(234,179,8,0.4)]">
-                  <Sparkles className="w-6 h-6 text-black" />
+                  <Gift className="w-6 h-6 text-black" />
                 </div>
                 <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">
                   Join the Waitlist
@@ -129,7 +129,7 @@ export default function WaitlistModal({ onClose, onSuccess }: WaitlistModalProps
             /* Success State */
             <div className="text-center py-4">
               <div className="w-16 h-16 rounded-full bg-[#EAB308] flex items-center justify-center mx-auto mb-4 shadow-[0_0_40px_rgba(234,179,8,0.5)] animate-pulse-glow">
-                <Sparkles className="w-8 h-8 text-black" />
+                <Gift className="w-8 h-8 text-black" />
               </div>
               <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">
                 You&apos;re In!

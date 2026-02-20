@@ -22,13 +22,22 @@ export default function Home() {
   const [suggestSubmitted, setSuggestSubmitted] = useState(false);
 
 
-  // Page mount animation trigger + waitlist check
+  // Page mount animation trigger + waitlist check + scroll restoration
   useEffect(() => {
     setMounted(true);
+
+    // Restore scroll position when returning from sub-pages
+    const savedY = sessionStorage.getItem('taeam_scroll_y');
+    if (savedY) {
+      requestAnimationFrame(() => window.scrollTo({ top: parseInt(savedY, 10), behavior: 'instant' }));
+      sessionStorage.removeItem('taeam_scroll_y');
+    }
+
     const alreadyWaitlisted = localStorage.getItem('taeam_waitlisted') === 'true';
+    const alreadyDismissed = sessionStorage.getItem('taeam_popup_dismissed') === 'true';
     if (alreadyWaitlisted) {
       setIsWaitlisted(true);
-    } else {
+    } else if (!alreadyDismissed) {
       // Show modal after a short delay so the page renders first
       const timer = setTimeout(() => setShowWaitlistModal(true), 800);
       return () => clearTimeout(timer);
@@ -128,7 +137,10 @@ export default function Home() {
       {/* ── WAITLIST MODAL ── */}
       {showWaitlistModal && (
         <WaitlistModal
-          onClose={() => setShowWaitlistModal(false)}
+          onClose={() => {
+            sessionStorage.setItem('taeam_popup_dismissed', 'true');
+            setShowWaitlistModal(false);
+          }}
           onSuccess={() => { setShowWaitlistModal(false); setIsWaitlisted(true); }}
         />
       )}
@@ -165,18 +177,18 @@ export default function Home() {
       {/* ------------------------------------------------------
           NAVIGATION BAR
       ------------------------------------------------------- */}
-      <nav className={`fixed top-0 left-0 right-0 z-[100] px-4 sm:px-6 md:px-10 py-4 md:py-6 flex items-center justify-between ${mounted ? 'animate-fade-in-down' : 'opacity-0'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-[100] px-3 sm:px-6 md:px-10 py-3 md:py-5 flex items-center justify-between ${mounted ? 'animate-fade-in-down' : 'opacity-0'}`}>
         {/* Logo */}
         <div>
-          <img src="/taeam-logo.jpg" alt="Taeam" className="w-12 md:w-16 drop-shadow-2xl rounded-full hover:scale-105 transition-transform duration-300" />
+          <img src="/taeam-logo.jpg" alt="Taeam" className="w-10 md:w-14 drop-shadow-2xl rounded-full hover:scale-105 transition-transform duration-300" />
         </div>
         
-        {/* Nav Links */}
-        <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
-          <a href="#features" className={`font-semibold text-xs sm:text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>Features</a>
-          <Link href="/drive" className={`font-semibold text-xs sm:text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}><span className="sm:hidden">Drive</span><span className="hidden sm:inline">Drive for Us</span></Link>
-          <a href="#about" className={`hidden sm:block font-semibold text-xs sm:text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>About</a>
-          <a href="#contact" className={`hidden sm:block font-semibold text-xs sm:text-sm md:text-base transition-all duration-300 underline underline-offset-4 uppercase tracking-wide ${scrolledPastHero ? 'text-[#EAB308] decoration-[#EAB308]/50 hover:decoration-white hover:text-white' : 'text-black decoration-black/50 hover:decoration-[#EAB308] hover:text-[#EAB308]'}`}>Contact</a>
+        {/* Nav Links — pill container ensures readability at all scroll positions */}
+        <div className="flex items-center gap-2 sm:gap-5 md:gap-7 bg-black/40 backdrop-blur-md px-3 sm:px-5 py-2 rounded-full border border-white/10">
+          <a href="#features" className={`font-bold text-[10px] sm:text-xs md:text-sm transition-all duration-300 uppercase tracking-wider hover:text-[#EAB308] ${scrolledPastHero ? 'text-[#EAB308]' : 'text-white/90'}`}>Features</a>
+          <Link href="/drive" onClick={() => sessionStorage.setItem('taeam_scroll_y', String(window.scrollY))} className={`font-bold text-[10px] sm:text-xs md:text-sm transition-all duration-300 uppercase tracking-wider hover:text-[#EAB308] ${scrolledPastHero ? 'text-[#EAB308]' : 'text-white/90'}`}><span className="sm:hidden">Drive</span><span className="hidden sm:inline">Drive for Us</span></Link>
+          <a href="#about" className={`font-bold text-[10px] sm:text-xs md:text-sm transition-all duration-300 uppercase tracking-wider hover:text-[#EAB308] ${scrolledPastHero ? 'text-[#EAB308]' : 'text-white/90'}`}>About</a>
+          <a href="#contact" className={`font-bold text-[10px] sm:text-xs md:text-sm transition-all duration-300 uppercase tracking-wider hover:text-[#EAB308] ${scrolledPastHero ? 'text-[#EAB308]' : 'text-white/90'}`}>Contact</a>
         </div>
       </nav>
 
@@ -307,15 +319,15 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
             <div className="animate-on-scroll stagger-2 space-y-6">
               <div className="space-y-4 text-gray-400 text-base sm:text-lg leading-relaxed">
-                <p>We&apos;re not trying to be everything for everyone. We&apos;re building one thing well — a halal food delivery app that actually earns your trust.</p>
+                <p>We&apos;re not trying to be everything for everyone. We&apos;re building one thing and building it well: a halal food delivery app that actually earns your trust.</p>
                 <p>Every restaurant on Taeam is <span className="text-white font-semibold">verified halal</span>. No alcohol on the premises. No guessing if the meat was hand-slaughtered. You order, you eat, no questions needed.</p>
-                <p>We&apos;re starting in <span className="text-[#EAB308] font-semibold">North and South Edmonton</span> — growing street by street, restaurant by restaurant.</p>
+                <p>We&apos;re starting in <span className="text-[#EAB308] font-semibold">North and South Edmonton</span>, growing street by street and restaurant by restaurant.</p>
               </div>
               <div className="flex flex-wrap gap-3 pt-2">
                 <button onClick={() => setShowSuggestModal(true)} className="group flex items-center gap-2 bg-[#1a1a1a] border border-[#EAB308]/20 hover:border-[#EAB308]/60 text-[#EAB308] font-bold px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-[#EAB308]/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.15)] active:scale-95">
                   <MapPin className="w-4 h-4" /> Suggest a Restaurant <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </button>
-                <Link href="/drive" className="group flex items-center gap-2 bg-[#EAB308] text-black font-black px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-yellow-400 hover:scale-105 active:scale-95 shadow-lg hover:shadow-[0_0_25px_rgba(234,179,8,0.4)]">
+                <Link href="/drive" onClick={() => sessionStorage.setItem('taeam_scroll_y', String(window.scrollY))} className="group flex items-center gap-2 bg-[#EAB308] text-black font-black px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-yellow-400 hover:scale-105 active:scale-95 shadow-lg hover:shadow-[0_0_25px_rgba(234,179,8,0.4)]">
                   <Car className="w-4 h-4" /> Drive for Us <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
@@ -362,7 +374,7 @@ export default function Home() {
               <p className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed font-medium mb-6">
                 An exclusive marketplace for the city&apos;s best home bakers. <span className="text-white">Limited batches.</span> When they&apos;re gone, they&apos;re gone.
               </p>
-              <Link href="/fridge" className="group inline-flex items-center gap-2 bg-[#252525] border border-[#EAB308]/30 hover:border-[#EAB308]/70 text-[#EAB308] font-bold px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-[#EAB308]/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.15)] active:scale-95">
+              <Link href="/fridge" onClick={() => sessionStorage.setItem('taeam_scroll_y', String(window.scrollY))} className="group inline-flex items-center gap-2 bg-[#252525] border border-[#EAB308]/30 hover:border-[#EAB308]/70 text-[#EAB308] font-bold px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-[#EAB308]/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.15)] active:scale-95">
                 <Refrigerator className="w-4 h-4" /> Explore The Fridge <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
@@ -400,8 +412,8 @@ export default function Home() {
             <div className="animate-on-scroll stagger-3">
               <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#252525] border border-white/10 hover:border-[#EAB308]/50 transition-all duration-500 group">
                 <img 
-                  src="/takinator-feature.jpg" 
-                  alt="Arbaab AI — your personal food assistant inside Taeam" 
+                  src="/arbaaab.png" 
+                  alt="Arbaab AI, your personal food assistant inside Taeam" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -411,7 +423,7 @@ export default function Home() {
             {/* Right: Content */}
             <div className="animate-on-scroll stagger-4">
               <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl bg-[#EAB308] flex items-center justify-center mb-6 md:mb-8 shadow-lg hover:scale-110 hover:-rotate-3 transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.5)]">
-                <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-black" />
+                <img src="/takinator_avatar.png" className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 object-contain" alt="Arbaab" />
               </div>
               
               <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-4 md:mb-6 uppercase tracking-tight">
@@ -423,11 +435,11 @@ export default function Home() {
               </h3>
               
               <p className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed font-medium mb-6">
-                Arabic for &ldquo;boss&rdquo; — Arbaab runs errands so you don&apos;t have to. Tell it what you&apos;re craving, and it searches every menu. Ask it to reorder your last meal, check your rewards, or switch to dark mode — all through a simple chat.
+                Arabic for &ldquo;boss&rdquo;. Arbaab handles the busywork so you don&apos;t have to. Tell it what you&apos;re craving and it searches every menu. Reorder a past meal, check your rewards, switch to dark mode. All through a simple chat.
               </p>
 
-              <Link href="/arbaab" className="group inline-flex items-center gap-2 bg-[#252525] border border-[#EAB308]/30 hover:border-[#EAB308]/70 text-[#EAB308] font-bold px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-[#EAB308]/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.15)] active:scale-95">
-                <Sparkles className="w-4 h-4" /> Try Arbaab <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              <Link href="/arbaab" onClick={() => sessionStorage.setItem('taeam_scroll_y', String(window.scrollY))} className="group inline-flex items-center gap-2 bg-[#252525] border border-[#EAB308]/30 hover:border-[#EAB308]/70 text-[#EAB308] font-bold px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-[#EAB308]/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.15)] active:scale-95">
+                <img src="/takinator_avatar.png" className="w-4 h-4 object-contain" alt="Arbaab" /> Try Arbaab <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
             
@@ -508,7 +520,7 @@ export default function Home() {
                       Translates simply to <span className="text-[#EAB308] font-bold">"Food"</span>.
                     </p>
                     <p className="text-gray-500 text-xs mt-2">
-                      We style it <b className="text-white">Taeam</b> — making 100% Halal accessible to everyone.
+                      We style it <b className="text-white">Taeam</b>. Our goal: making 100% Halal accessible to everyone.
                     </p>
                   </div>
                 </div>
@@ -551,7 +563,7 @@ export default function Home() {
                   <div className="inline-flex items-start gap-2.5 bg-[#252525] px-4 py-3 rounded-2xl border border-[#EAB308]/20 text-left max-w-[300px]">
                     <div className="w-2 h-2 bg-[#EAB308] rounded-full animate-pulse mt-1 flex-shrink-0" />
                     <span className="text-gray-400 text-xs leading-relaxed">
-                      Currently under development — building the experience the <span className="text-white">Ummah</span> has been waiting for.
+                      Currently under development. We&apos;re building the experience the <span className="text-white">Ummah</span> has been waiting for.
                     </span>
                   </div>
                 </div>
@@ -597,7 +609,7 @@ export default function Home() {
                   Translates simply to <span className="text-[#EAB308] font-bold">"Food"</span>.
                 </p>
                 <p className="text-gray-500 text-base mt-4">
-                  We style it <b className="text-white">Taeam</b> — making 100% Halal accessible to everyone.
+                  We style it <b className="text-white">Taeam</b>. Our goal: making 100% Halal accessible to everyone.
                 </p>
               </div>
             </div>
@@ -630,7 +642,7 @@ export default function Home() {
                   <div className="inline-flex items-center gap-3 bg-[#252525] px-6 py-4 rounded-full border border-[#EAB308]/20">
                     <div className="w-2.5 h-2.5 bg-[#EAB308] rounded-full animate-pulse" />
                     <span className="text-gray-400 text-base font-medium">
-                      Currently under development — building the experience the <span className="text-white">Ummah</span> has been waiting for.
+                      Currently under development. We&apos;re building the experience the <span className="text-white">Ummah</span> has been waiting for.
                     </span>
                   </div>
                 </div>

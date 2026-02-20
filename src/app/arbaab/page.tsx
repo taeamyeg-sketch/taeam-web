@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, Sparkles, Send, Moon, Sun, Search, ShoppingCart, RotateCcw, Star, Navigation } from 'lucide-react';
+import { ArrowLeft, Send, Sun, Search, ShoppingCart, RotateCcw, Star, Navigation } from 'lucide-react';
 import Link from 'next/link';
 
 type DemoMessage = {
@@ -13,7 +13,7 @@ type DemoMessage = {
 const DEMO_SEQUENCES: Record<string, DemoMessage[]> = {
   theme: [
     { role: 'user', text: 'Switch to light mode' },
-    { role: 'arbaab', text: "Done — switching to light mode for you.", delay: 900 },
+    { role: 'arbaab', text: "Done. Switching to light mode for you.", delay: 900 },
   ],
   search: [
     { role: 'user', text: 'Find me something spicy' },
@@ -21,15 +21,15 @@ const DEMO_SEQUENCES: Record<string, DemoMessage[]> = {
   ],
   reorder: [
     { role: 'user', text: 'Reorder my last meal' },
-    { role: 'arbaab', text: "Your last order was a Chicken Shawarma Platter from Al-Salam Kitchen — $16.99. Want me to add it to your cart?", delay: 1000 },
+    { role: 'arbaab', text: "Your last order was a Chicken Shawarma Platter from Al-Salam Kitchen, $16.99. Want me to add it to your cart?", delay: 1000 },
   ],
   rewards: [
     { role: 'user', text: 'What are my rewards?' },
-    { role: 'arbaab', text: "You have 1,240 Taeam Points — that's worth about $6.20 in credit. You're 260 points away from Silver tier. Keep it up.", delay: 950 },
+    { role: 'arbaab', text: "You have 1,240 Taeam Points (worth about $6.20 in credit). You're 260 points away from Silver tier. Keep it up.", delay: 950 },
   ],
   fridge: [
     { role: 'user', text: 'Is The Fridge open?' },
-    { role: 'arbaab', text: "The Fridge opens at 5:00 PM and closes at 10:00 PM every day. It's currently restocking — new batches go live in a few hours. Want me to notify you when it opens?", delay: 1050 },
+    { role: 'arbaab', text: "The Fridge opens at 5:00 PM and closes at 10:00 PM daily. It's currently restocking. New batches go live in a few hours. Want me to notify you when it opens?", delay: 1050 },
   ],
 };
 
@@ -51,17 +51,23 @@ export default function ArbaabPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    requestAnimationFrame(() => window.scrollTo(0, 0));
     setMounted(true);
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    );
+    // Show all elements immediately — arbaab page is short, all content is above fold
     setTimeout(() => {
-      document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-    }, 100);
-    return () => observer.disconnect();
+      document.querySelectorAll('.animate-on-scroll').forEach(el => el.classList.add('in-view'));
+    }, 80);
   }, []);
+
+  // Re-apply in-view after isLightMode changes because React's reconciler
+  // overwrites className (removing the DOM-added 'in-view' class) when conditional
+  // Tailwind classes change due to the isLightMode state update.
+  useEffect(() => {
+    if (!mounted) return;
+    setTimeout(() => {
+      document.querySelectorAll('.animate-on-scroll').forEach(el => el.classList.add('in-view'));
+    }, 50);
+  }, [isLightMode, mounted]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -110,11 +116,11 @@ export default function ArbaabPage() {
   };
 
   const capabilities = [
-    { icon: <Search className="w-5 h-5" />, title: 'Search food & menus', desc: 'Describe a craving — Arbaab searches every restaurant for you.' },
+    { icon: <Search className="w-5 h-5" />, title: 'Search food & menus', desc: 'Describe a craving and Arbaab searches every restaurant for you.' },
     { icon: <ShoppingCart className="w-5 h-5" />, title: 'Add to cart', desc: 'Just say what you want. It finds it and drops it in your cart.' },
     { icon: <RotateCcw className="w-5 h-5" />, title: 'Reorder in one tap', desc: 'Remembers your past orders and can prep a reorder instantly.' },
-    { icon: <Navigation className="w-5 h-5" />, title: 'Navigate the whole app', desc: 'Open any screen — settings, fridge, orders, profile — just ask.' },
-    { icon: <Sun className="w-5 h-5" />, title: 'Control your settings', desc: 'Change theme, language, notification preferences — through chat.' },
+    { icon: <Navigation className="w-5 h-5" />, title: 'Navigate the whole app', desc: 'Open any screen by asking: settings, fridge, orders, profile.' },
+    { icon: <Sun className="w-5 h-5" />, title: 'Control your settings', desc: 'Change theme, language, and notification preferences through chat.' },
     { icon: <Star className="w-5 h-5" />, title: 'Track your rewards', desc: 'Check points, tier status, and redeem rewards without leaving the chat.' },
   ];
 
@@ -150,7 +156,7 @@ export default function ArbaabPage() {
 
         <div className={`relative z-10 text-center max-w-3xl mx-auto ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <div className="inline-flex items-center gap-2 bg-[#EAB308]/10 border border-[#EAB308]/20 rounded-full px-4 py-2 mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-[#EAB308]" />
+            <img src="/takinator_avatar.png" className="w-3.5 h-3.5 object-contain" alt="Arbaab" />
             <span className="text-[#EAB308] text-xs font-bold uppercase tracking-widest">AI Food Assistant</span>
           </div>
 
@@ -159,7 +165,7 @@ export default function ArbaabPage() {
           </h1>
 
           <p className={`text-lg sm:text-xl font-medium max-w-2xl mx-auto leading-relaxed transition-colors duration-700 ${isLightMode ? 'text-gray-600' : 'text-gray-400'}`}>
-            Arabic for &ldquo;boss&rdquo; — because it runs errands so you don&apos;t have to.
+            Arabic for &ldquo;boss&rdquo;. It runs errands so you don&apos;t have to.
           </p>
         </div>
       </section>
@@ -195,7 +201,7 @@ export default function ArbaabPage() {
           {/* Demo header */}
           <div className={`px-5 py-4 border-b flex items-center gap-3 transition-colors duration-700 ${isLightMode ? 'border-gray-100 bg-gray-50' : 'border-white/5 bg-[#0d0d0d]'}`}>
             <div className="w-8 h-8 rounded-xl bg-[#EAB308] flex items-center justify-center shadow-[0_0_15px_rgba(234,179,8,0.4)]">
-              <Sparkles className="w-4 h-4 text-black" />
+              <img src="/takinator_avatar.png" className="w-4 h-4 object-contain" alt="Arbaab" />
             </div>
             <div>
               <p className={`font-bold text-sm transition-colors duration-700 ${isLightMode ? 'text-gray-900' : 'text-white'}`}>Arbaab</p>
@@ -214,7 +220,7 @@ export default function ArbaabPage() {
             {messages.length === 0 && !isTyping && (
               <div className="flex items-start gap-3">
                 <div className="w-7 h-7 rounded-lg bg-[#EAB308] flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Sparkles className="w-3.5 h-3.5 text-black" />
+                  <img src="/takinator_avatar.png" className="w-3.5 h-3.5 object-contain" alt="Arbaab" />
                 </div>
                 <div className={`rounded-2xl rounded-tl-sm px-4 py-3 max-w-[80%] text-sm transition-colors duration-700 ${isLightMode ? 'bg-gray-100 text-gray-700' : 'bg-white/5 text-gray-300'}`}>
                   Assalamu Alaikum! Try one of the commands below and watch what happens.
@@ -226,7 +232,7 @@ export default function ArbaabPage() {
               <div key={i} className={`flex items-start gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                 {msg.role === 'arbaab' && (
                   <div className="w-7 h-7 rounded-lg bg-[#EAB308] flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Sparkles className="w-3.5 h-3.5 text-black" />
+                    <img src="/takinator_avatar.png" className="w-3.5 h-3.5 object-contain" alt="Arbaab" />
                   </div>
                 )}
                 <div className={`rounded-2xl px-4 py-3 max-w-[80%] text-sm transition-colors duration-700 ${
@@ -244,7 +250,7 @@ export default function ArbaabPage() {
             {isTyping && (
               <div className="flex items-start gap-3">
                 <div className="w-7 h-7 rounded-lg bg-[#EAB308] flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-3.5 h-3.5 text-black" />
+                  <img src="/takinator_avatar.png" className="w-3.5 h-3.5 object-contain" alt="Arbaab" />
                 </div>
                 <div className={`rounded-2xl rounded-tl-sm px-4 py-3 transition-colors duration-700 ${isLightMode ? 'bg-gray-100' : 'bg-white/5'}`}>
                   <div className="flex gap-1.5 items-center h-4">
@@ -318,7 +324,7 @@ export default function ArbaabPage() {
         <div className={`mt-10 max-w-md mx-auto text-center animate-on-scroll rounded-2xl p-5 border transition-colors duration-700 ${isLightMode ? 'bg-white border-gray-100 text-gray-600' : 'bg-[#141414] border-white/5 text-gray-500'}`}>
           <p className="text-xs leading-relaxed">
             <span className={`font-bold transition-colors duration-700 ${isLightMode ? 'text-gray-800' : 'text-white'}`}>Your data stays yours.</span>{' '}
-            Arbaab only accesses what you allow — search, order history, app navigation. No payment info, no personal details. You control every permission in Settings.
+            Arbaab only accesses what you allow: search, order history, and app navigation. No payment info, no personal details. You control every permission in Settings.
           </p>
         </div>
 
