@@ -44,6 +44,16 @@ export default function Home() {
     }
   }, []);
 
+  // Body scroll lock when any modal is open (iOS Safari scrolls background otherwise)
+  useEffect(() => {
+    if (showWaitlistModal || showSuggestModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [showWaitlistModal, showSuggestModal]);
+
   // Scroll detection for nav color change
   useEffect(() => {
     const handleScroll = () => {
@@ -158,7 +168,7 @@ export default function Home() {
                   <h3 className="text-lg font-black text-white uppercase tracking-tight mb-1">Suggest a Restaurant</h3>
                   <p className="text-gray-500 text-xs mb-5 leading-relaxed">Know a halal spot that should be on Taeam? Tell us and we&apos;ll reach out to them.</p>
                   <form onSubmit={handleSuggestSubmit} className="space-y-3">
-                    <input type="text" value={suggestName} onChange={(e) => setSuggestName(e.target.value)} placeholder="Restaurant name" autoFocus className="w-full bg-white/5 border border-white/10 focus:border-[#EAB308]/50 text-white placeholder-gray-600 rounded-xl px-4 py-3 outline-none text-sm transition-all" />
+                    <input type="text" value={suggestName} onChange={(e) => setSuggestName(e.target.value)} placeholder="Restaurant name" className="w-full bg-white/5 border border-white/10 focus:border-[#EAB308]/50 text-white placeholder-gray-600 rounded-xl px-4 py-3 outline-none text-base transition-all" />
                     <button type="submit" className="w-full bg-[#EAB308] text-black font-black py-3 rounded-xl hover:bg-yellow-400 transition-colors text-sm uppercase tracking-wider flex items-center justify-center gap-2"><Send className="w-4 h-4" /> Submit</button>
                   </form>
                 </>

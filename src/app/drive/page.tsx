@@ -181,7 +181,7 @@ export default function DrivePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email"
-                  className="flex-1 bg-white/5 border border-white/10 focus:border-[#EAB308]/50 text-white placeholder-gray-600 rounded-xl px-4 py-3 outline-none text-sm transition-all duration-200"
+                  className="flex-1 bg-white/5 border border-white/10 focus:border-[#EAB308]/50 text-white placeholder-gray-600 rounded-xl px-4 py-3 outline-none text-base transition-all duration-200"
                 />
                 <button
                   type="submit"

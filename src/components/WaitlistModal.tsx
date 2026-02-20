@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Gift, X, ArrowRight } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -14,6 +14,12 @@ export default function WaitlistModal({ onClose, onSuccess }: WaitlistModalProps
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,8 +103,7 @@ export default function WaitlistModal({ onClose, onSuccess }: WaitlistModalProps
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email address"
                   disabled={isSubmitting}
-                  autoFocus
-                  className="w-full bg-white/5 border border-white/10 focus:border-[#EAB308]/50 text-white placeholder-gray-500 rounded-xl px-4 py-3.5 outline-none transition-all duration-300 text-sm focus:shadow-[0_0_20px_rgba(234,179,8,0.1)]"
+                  className="w-full bg-white/5 border border-white/10 focus:border-[#EAB308]/50 text-white placeholder-gray-500 rounded-xl px-4 py-3.5 outline-none transition-all duration-300 text-base focus:shadow-[0_0_20px_rgba(234,179,8,0.1)]"
                 />
 
                 {error && (
