@@ -343,7 +343,7 @@ export default function ArbaabPage() {
       {/* Footer */}
       <div className={`h-px bg-gradient-to-r from-transparent via-[#EAB308]/10 to-transparent transition-opacity duration-700 ${isLightMode ? 'opacity-30' : ''}`} />
       <div className="text-center py-6">
-        <p className={`text-xs tracking-wider uppercase transition-colors duration-700 ${isLightMode ? 'text-gray-400' : 'text-gray-700'}`}>© 2026 Taeam Inc.</p>
+        <p className={`text-xs tracking-wider uppercase transition-colors duration-700 ${isLightMode ? 'text-gray-400' : 'text-gray-700'}`}>© 2026 Taeam Technologies Inc.</p>
       </div>
     </main>
   );

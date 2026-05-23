@@ -374,18 +374,24 @@ export default function Home() {
               <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-4 md:mb-6 uppercase tracking-tight">
                 The Fridge
               </h2>
-              
+
+              {/* Coming Soon Badge */}
+              <div className="inline-flex items-center gap-2 bg-[#EAB308]/10 border border-[#EAB308]/20 rounded-full px-4 py-2 mb-4 md:mb-6">
+                <div className="w-2 h-2 bg-[#EAB308] rounded-full animate-pulse" />
+                <span className="text-[#EAB308] text-xs font-bold uppercase tracking-widest">Coming Soon</span>
+              </div>
+
               {/* Headline */}
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#EAB308] mb-4 md:mb-6 italic">
                 Home-baked, Not Store-Bought.
               </h3>
-              
+
               {/* Description */}
               <p className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed font-medium mb-6">
-                An exclusive marketplace for the city&apos;s best home bakers. <span className="text-white">Limited batches.</span> When they&apos;re gone, they&apos;re gone.
+                Edmonton&apos;s homemade dessert marketplace is in the works. Verified local chefs. Fresh-baked daily. <span className="text-white">Launching after our core delivery goes live.</span>
               </p>
               <Link href="/fridge" onClick={() => sessionStorage.setItem('taeam_scroll_y', String(window.scrollY))} className="group inline-flex items-center gap-2 bg-[#252525] border border-[#EAB308]/30 hover:border-[#EAB308]/70 text-[#EAB308] font-bold px-5 py-3 rounded-full text-sm transition-all duration-300 hover:bg-[#EAB308]/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.15)] active:scale-95">
-                <Refrigerator className="w-4 h-4" /> Explore The Fridge <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                <Refrigerator className="w-4 h-4" /> Join the Fridge Waitlist <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
             
@@ -733,10 +739,10 @@ export default function Home() {
           {/* Footer Info */}
           <div className="animate-on-scroll stagger-4 text-center space-y-3 sm:space-y-4">
             <p className="text-gray-500 text-xs sm:text-sm">
-              Based in <span className="text-white">Edmonton, Alberta, Canada</span>
+              Based in <span className="text-white">16506 21 Ave SW, Edmonton, Alberta, Canada</span>
             </p>
             <p className="text-gray-600 text-[10px] sm:text-xs tracking-wider uppercase">
-              © 2026 Taeam Inc. All Rights Reserved.
+              © 2026 Taeam Technologies Inc. All Rights Reserved.
             </p>
           </div>
         </div>

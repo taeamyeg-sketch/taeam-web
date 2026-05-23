@@ -214,7 +214,7 @@ export default function DrivePage() {
       {/* Footer line */}
       <div className="h-px bg-gradient-to-r from-transparent via-[#EAB308]/10 to-transparent" />
       <div className="text-center py-6">
-        <p className="text-gray-700 text-xs tracking-wider uppercase">© 2026 Taeam Inc.</p>
+        <p className="text-gray-700 text-xs tracking-wider uppercase">© 2026 Taeam Technologies Inc.</p>
       </div>
     </main>
   );
