@@ -71,7 +71,7 @@ export default function HalalExperience() {
   }, []);
 
   return (
-    <main className={`${body.className} relative min-h-screen bg-[#FAF7F0] antialiased selection:bg-[#EAB308] selection:text-black`} style={{ color: '#3a342d' }}>
+    <main className={`${body.className} relative min-h-screen overflow-x-clip bg-[#FAF7F0] antialiased selection:bg-[#EAB308] selection:text-black`} style={{ color: '#3a342d' }}>
       {/* Reading progress */}
       <motion.div className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-[#EAB308]" style={{ scaleX: progress }} />
 
@@ -96,7 +96,7 @@ export default function HalalExperience() {
             <p className={`${display.className} mx-auto mt-7 max-w-2xl text-xl font-light leading-snug text-[#5a534a] sm:text-2xl`}>
               Almost two million Muslims in Canada still walk out of restaurants unsure the food is really halal. Here is why it happens, and how we close it.
             </p>
-            <div className="mt-8 flex items-center justify-center gap-3 text-xs uppercase tracking-[0.15em] text-[#8a8178]">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs uppercase tracking-[0.15em] text-[#8a8178]">
               <span>Edmonton</span>
               <span className="h-1 w-1 rounded-full bg-[#c9bfb2]" />
               <span>6 min read</span>
@@ -248,7 +248,7 @@ export default function HalalExperience() {
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#B8860B]">By the numbers</span>
           <h2 className={`${display.className} mt-3 text-3xl font-semibold text-[#1a1714] sm:text-5xl`}>A large, underserved community</h2>
         </Reveal>
-        <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 md:grid-cols-4">
           {[
             { node: <CountUp to={1775715} />, label: 'Muslims in Canada in 2021, more than double the 2001 figure', ref: 1 },
             { node: <>4<span className="text-xl"> in </span>10</>, label: 'fast-food spots that could not verify their halal slaughter method', ref: 2 },
