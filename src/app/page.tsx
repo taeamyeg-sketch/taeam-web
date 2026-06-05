@@ -5,6 +5,7 @@ import { Sparkles, Instagram, ArrowRight, Refrigerator, Mail, Car, MapPin, Chevr
 import { supabase } from "@/lib/supabaseClient";
 import WaitlistModal from "@/components/WaitlistModal";
 import EdmontonMap from "@/components/EdmontonMap";
+import HalalTeaser from "@/components/HalalTeaser";
 import Link from "next/link";
 
 export default function Home() {
@@ -349,6 +350,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ------------------------------------------------------
+          SECTION 2.5: HALAL TRUST GAP (teaser → /halal)
+      ------------------------------------------------------- */}
+      <HalalTeaser />
 
       {/* ------------------------------------------------------
           SECTION 3: THE FRIDGE
