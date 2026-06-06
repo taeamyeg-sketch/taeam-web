@@ -27,17 +27,17 @@ function applyAppearance(update: () => void) {
 const DEMO_SEQUENCES: Record<string, { user: string; reply: string; delay: number }> = {
   search: {
     user: 'Find me something spicy',
-    reply: 'Found 3 spots with spicy options nearby. Al-Salam has a jalapeño shawarma people keep coming back for. Want me to open it?',
+    reply: "Taeam's Donair has a jalapeño shawarma people keep coming back for. Want me to open it?",
     delay: 1100,
   },
   reorder: {
     user: 'Reorder my last meal',
-    reply: 'Your last order was a Chicken Shawarma Platter from Al-Salam Kitchen, $16.99. Add it to your cart?',
+    reply: "Your last order was a Chicken Shawarma Platter from Taeam's Donair, $16.99. Add it to your cart?",
     delay: 1000,
   },
   rewards: {
     user: 'What are my rewards?',
-    reply: "You've got 1,240 Taeam Points (~$6.20 in credit). 260 points from Silver tier. Keep it up.",
+    reply: "You've got 1,240 Taeam Points. Your daily check-in and 5 reward videos just refreshed, ready to watch and claim.",
     delay: 950,
   },
 };
@@ -173,11 +173,16 @@ export default function ArbaabPage() {
           {/* iPhone mockup */}
           <div className="flex justify-center">
             <div className="relative w-full max-w-[310px]">
-              {/* bezel */}
-              <div className="relative rounded-[3rem] border border-black/40 bg-[#1b1b1d] p-[10px] shadow-[0_30px_70px_-25px_rgba(0,0,0,0.6)]">
+              {/* bezel — iPhone 17 Pro "Cosmic Orange" titanium */}
+              <div className="relative rounded-[3rem] border border-[#7e3f1d] bg-gradient-to-b from-[#e3884c] via-[#c0612f] to-[#974823] p-[10px] shadow-[0_30px_70px_-25px_rgba(0,0,0,0.6)]">
+                {/* side buttons */}
+                <span className="absolute -left-[2.5px] top-[130px] h-8 w-[3px] rounded-l-sm bg-[#7e3f1d]" />
+                <span className="absolute -left-[2.5px] top-[182px] h-12 w-[3px] rounded-l-sm bg-[#7e3f1d]" />
+                <span className="absolute -left-[2.5px] top-[242px] h-12 w-[3px] rounded-l-sm bg-[#7e3f1d]" />
+                <span className="absolute -right-[2.5px] top-[195px] h-16 w-[3px] rounded-r-sm bg-[#7e3f1d]" />
                 {/* screen */}
                 <div
-                  className={`relative flex h-[600px] flex-col overflow-hidden rounded-[2.4rem] transition-colors duration-300 ${
+                  className={`relative flex h-[600px] flex-col overflow-hidden rounded-[2.4rem] ring-2 ring-black transition-colors duration-300 ${
                     isDark ? 'bg-[#0f0f0f]' : 'bg-white'
                   }`}
                 >

@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabaseClient";
 import WaitlistModal from "@/components/WaitlistModal";
 import EdmontonMap from "@/components/EdmontonMap";
 import HalalTeaser from "@/components/HalalTeaser";
+import ArbaabPhone from "@/components/ArbaabPhone";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -436,18 +437,9 @@ export default function Home() {
           
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
             
-            {/* Left: Image */}
-            <div className="animate-on-scroll stagger-3">
-              <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#252525] border border-white/10 hover:border-[#EAB308]/50 transition-all duration-500 group">
-                <Image
-                  src="/arbaaab.png"
-                  alt="Arbaab AI, your personal food assistant inside Taeam"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
+            {/* Left: Arbaab phone mockup */}
+            <div className="animate-on-scroll stagger-3 flex justify-center">
+              <ArbaabPhone />
             </div>
             
             {/* Right: Content */}
