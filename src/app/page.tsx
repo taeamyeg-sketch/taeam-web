@@ -7,6 +7,7 @@ import WaitlistModal from "@/components/WaitlistModal";
 import EdmontonMap from "@/components/EdmontonMap";
 import HalalTeaser from "@/components/HalalTeaser";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -137,8 +138,11 @@ export default function Home() {
     e.preventDefault();
     if (!suggestName.trim()) return;
     try {
-      await supabase.from('restaurant_suggestions').insert([{ restaurant_name: suggestName.trim() }]);
-    } catch (_) { /* silent */ }
+      const { error } = await supabase.from('restaurant_suggestions').insert([{ restaurant_name: suggestName.trim() }]);
+      if (error) console.error('restaurant suggestion failed:', error);
+    } catch (err) {
+      console.error('restaurant suggestion threw:', err);
+    }
     setSuggestSubmitted(true);
   };
 
@@ -194,7 +198,7 @@ export default function Home() {
           <img src="/taeam-logo.jpg" alt="Taeam" className="w-10 md:w-14 drop-shadow-2xl rounded-full hover:scale-105 transition-transform duration-300" />
         </div>
         
-        {/* Nav Links — pill container ensures readability at all scroll positions */}
+        {/* Nav Links: pill container ensures readability at all scroll positions */}
         <div className="flex items-center gap-2 sm:gap-5 md:gap-7 bg-black/40 backdrop-blur-md px-3 sm:px-5 py-2 rounded-full border border-white/10">
           <a href="#features" className={`font-bold text-[10px] sm:text-xs md:text-sm transition-all duration-300 uppercase tracking-wider hover:text-[#EAB308] ${scrolledPastHero ? 'text-[#EAB308]' : 'text-white/90'}`}>Features</a>
           <Link href="/drive" onClick={() => sessionStorage.setItem('taeam_scroll_y', String(window.scrollY))} className={`font-bold text-[10px] sm:text-xs md:text-sm transition-all duration-300 uppercase tracking-wider hover:text-[#EAB308] ${scrolledPastHero ? 'text-[#EAB308]' : 'text-white/90'}`}><span className="sm:hidden">Drive</span><span className="hidden sm:inline">Drive for Us</span></Link>
@@ -255,7 +259,7 @@ export default function Home() {
               
               {isWaitlisted ? (
                   <div className="flex flex-col items-center gap-4 md:gap-6 animate-fade-in-up">
-                    <div className="bg-black text-[#EAB308] px-6 md:px-12 py-4 md:py-8 rounded-full font-black text-lg md:text-3xl shadow-2xl flex items-center gap-2 md:gap-4 border-2 md:border-4 border-[#EAB308] animate-pulse-glow">
+                    <div className="bg-black text-[#EAB308] px-6 md:px-12 py-4 md:py-8 rounded-full font-black text-lg md:text-3xl shadow-2xl flex items-center gap-2 md:gap-4 border-2 md:border-4 border-[#EAB308]">
                       You&apos;re on the list! <Sparkles className="w-6 h-6 md:w-10 md:h-10 animate-pulse"/>
                     </div>
                     <a href="https://instagram.com/taeam.ca" target="_blank" rel="noreferrer noopener" className="text-white font-bold hover:opacity-70 underline underline-offset-4 flex items-center gap-2 text-sm md:text-2xl drop-shadow-md">
@@ -280,7 +284,7 @@ export default function Home() {
                       <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="group w-full md:flex-[1] bg-black text-[#EAB308] border-2 md:border-4 border-[#EAB308] font-black px-4 sm:px-6 md:px-12 rounded-full hover:bg-[#EAB308] hover:text-black transition-all duration-300 whitespace-nowrap text-xs sm:text-sm md:text-3xl uppercase tracking-wide sm:tracking-wider shadow-2xl hover:scale-105 active:scale-95 h-12 sm:h-14 md:h-24 flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3 animate-pulse-glow hover:shadow-[0_0_50px_rgba(234,179,8,0.5)]"
+                          className="group w-full md:flex-[1] bg-black text-[#EAB308] border-2 md:border-4 border-[#EAB308] font-black px-4 sm:px-6 md:px-12 rounded-full hover:bg-[#EAB308] hover:text-black transition-all duration-300 whitespace-nowrap text-xs sm:text-sm md:text-3xl uppercase tracking-wide sm:tracking-wider shadow-2xl hover:scale-105 active:scale-95 h-12 sm:h-14 md:h-24 flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3 hover:shadow-[0_0_50px_rgba(234,179,8,0.5)]"
                       >
                           {isSubmitting ? (
                             <span className="animate-pulse">...</span>
@@ -294,7 +298,7 @@ export default function Home() {
                   </form>
               ) : (
                   <div className="flex flex-col items-center gap-4 md:gap-6 animate-in fade-in zoom-in duration-500">
-                       <div className="bg-black text-[#EAB308] px-6 md:px-12 py-4 md:py-8 rounded-full font-black text-lg md:text-3xl shadow-2xl flex items-center gap-2 md:gap-4 border-2 md:border-4 border-[#EAB308] animate-pulse-glow">
+                       <div className="bg-black text-[#EAB308] px-6 md:px-12 py-4 md:py-8 rounded-full font-black text-lg md:text-3xl shadow-2xl flex items-center gap-2 md:gap-4 border-2 md:border-4 border-[#EAB308]">
                           You&apos;re In! <Sparkles className="w-6 h-6 md:w-10 md:h-10 animate-pulse"/>
                       </div>
                       <a href="https://instagram.com/taeam.ca" target="_blank" rel="noreferrer noopener" className="text-white font-bold hover:opacity-70 underline underline-offset-4 flex items-center gap-2 text-sm md:text-2xl drop-shadow-md">
@@ -305,7 +309,7 @@ export default function Home() {
 
               {/* --- 2. THE TEXT (CLEARLY SEPARATED) --- */}
               {/* The 'gap-14' on the parent div handles the spacing now */}
-              <p className="text-[#EAB308] text-[10px] sm:text-xs md:text-3xl font-black tracking-tight uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,1)] animate-shimmer">
+              <p className="text-[#EAB308] text-[10px] sm:text-xs md:text-3xl font-black tracking-tight uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">
                   Join for 15% off + 1000 Founding Points
               </p>
 
@@ -345,7 +349,7 @@ export default function Home() {
             </div>
             <div className="animate-on-scroll stagger-3">
               <EdmontonMap />
-              <p className="text-center text-gray-600 text-xs mt-4 tracking-wide uppercase">Soft Launch Zones · North &amp; South Edmonton</p>
+              <p className="text-center text-gray-500 text-xs mt-4 tracking-wide uppercase">Soft Launch Zones · North &amp; South Edmonton</p>
             </div>
           </div>
         </div>
@@ -404,10 +408,12 @@ export default function Home() {
             {/* Right: Image */}
             <div className="animate-on-scroll stagger-2 order-1 md:order-2">
               <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#252525] border border-white/10 hover:border-[#EAB308]/50 transition-all duration-500 group">
-                <img 
-                  src="/fridge-feature.jpg" 
-                  alt="The Fridge - Home baked goods marketplace" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                <Image
+                  src="/fridge-feature.jpg"
+                  alt="The Fridge, home-baked goods marketplace"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -433,10 +439,12 @@ export default function Home() {
             {/* Left: Image */}
             <div className="animate-on-scroll stagger-3">
               <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#252525] border border-white/10 hover:border-[#EAB308]/50 transition-all duration-500 group">
-                <img 
-                  src="/arbaaab.png" 
-                  alt="Arbaab AI, your personal food assistant inside Taeam" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                <Image
+                  src="/arbaaab.png"
+                  alt="Arbaab AI, your personal food assistant inside Taeam"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -747,7 +755,7 @@ export default function Home() {
             <p className="text-gray-500 text-xs sm:text-sm">
               Based in <span className="text-white">16506 21 Ave SW, Edmonton, Alberta, Canada</span>
             </p>
-            <p className="text-gray-600 text-[10px] sm:text-xs tracking-wider uppercase">
+            <p className="text-gray-500 text-[10px] sm:text-xs tracking-wider uppercase">
               © 2026 Taeam Technologies Inc. All Rights Reserved.
             </p>
           </div>

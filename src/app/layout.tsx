@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://taeam.ca"),
   title: "Taeam - Edmonton's Halal Food Delivery",
-  description: "The only 100% halal food delivery app in Edmonton. Verified restaurants, home-baked goods from The Fridge, and Arbaab AI — your personal food assistant.",
+  description: "The only 100% halal food delivery app in Edmonton. Verified restaurants, home-baked goods from The Fridge, and Arbaab AI, your personal food assistant.",
   keywords: ["halal", "food delivery", "Edmonton", "halal delivery", "The Fridge", "Arbaab AI", "Taeam"],
   openGraph: {
     title: "Taeam - Edmonton's Halal Food Delivery",
@@ -50,11 +50,37 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "Taeam",
+    legalName: "Taeam Technologies Inc.",
+    description:
+      "Edmonton's 100% halal food delivery platform. Verified halal restaurants, home-baked goods, and Arbaab AI.",
+    url: "https://taeam.ca",
+    email: "contact@taeam.ca",
+    image: "https://taeam.ca/taeam-logo.png",
+    logo: "https://taeam.ca/taeam-logo.png",
+    areaServed: "Edmonton, Alberta, Canada",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "16506 21 Ave SW",
+      addressLocality: "Edmonton",
+      addressRegion: "AB",
+      addressCountry: "CA",
+    },
+    sameAs: ["https://instagram.com/taeam.ca"],
+  };
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
       </body>
     </html>

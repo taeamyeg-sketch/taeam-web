@@ -134,6 +134,21 @@ body {
   to { transform: scaleX(1); transform-origin: left; }
 }
 
+/* iOS-style appearance switch — the View Transitions API snapshots the old
+   theme and cross-dissolves to the new one (the same smooth fade iOS uses when
+   it changes appearance). Tune the timing here. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.01ms;
+  }
+}
+
 /* --- ANIMATION UTILITY CLASSES --- */
 
 /* Base animation setup - for scroll triggered */
@@ -316,14 +331,12 @@ body {
   z-index: 100;
 }
 
-/* Gradient text */
+/* Gradient text — static sheen (no perpetual animation; calmer, less "AI demo") */
 .text-gradient {
-  background: linear-gradient(135deg, #EAB308 0%, #fde047 50%, #EAB308 100%);
-  background-size: 200% auto;
+  background: linear-gradient(120deg, #EAB308 0%, #fde047 50%, #EAB308 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradientShift 4s ease infinite;
 }
 
 /* Glow text */

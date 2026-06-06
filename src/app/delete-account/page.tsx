@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Delete Your Account — Taeam',
+  title: 'Delete Your Account · Taeam',
   description:
     'How to request deletion of your Taeam or Tawsil account and the data we hold on you.',
   robots: { index: true, follow: true },
@@ -34,7 +34,7 @@ export default function DeleteAccountPage() {
         </header>
 
         <section className="space-y-6">
-          <Section title="Option 1 — Delete from inside the app (fastest)">
+          <Section title="Option 1: Delete from inside the app (fastest)">
             <p>
               <strong className="text-white">Taeam customer app:</strong> open the app → Profile →
               Account → <em>Delete account</em>. Confirm. Your account is closed immediately.
@@ -49,10 +49,10 @@ export default function DeleteAccountPage() {
             </p>
           </Section>
 
-          <Section title="Option 2 — Email us">
+          <Section title="Option 2: Email us">
             <p>
-              If you can&apos;t access the app — for example, you&apos;ve lost your phone or your
-              account is locked — send an email to{' '}
+              If you can&apos;t access the app, for example you&apos;ve lost your phone or your
+              account is locked, send an email to{' '}
               <a href="mailto:contact@taeam.ca" className="text-amber-400 hover:underline">
                 contact@taeam.ca
               </a>{' '}
@@ -93,16 +93,16 @@ export default function DeleteAccountPage() {
             </p>
             <ul className="list-disc list-inside space-y-1 ml-2">
               <li>
-                <strong className="text-white">Order and earnings records</strong> — kept for{' '}
+                <strong className="text-white">Order and earnings records</strong>, kept for{' '}
                 <strong className="text-white">7 years</strong> to meet Canada Revenue Agency tax
                 record requirements
               </li>
               <li>
-                <strong className="text-white">Payment receipts and refund records</strong> — kept
+                <strong className="text-white">Payment receipts and refund records</strong>, kept
                 for <strong className="text-white">7 years</strong> for tax and dispute purposes
               </li>
               <li>
-                <strong className="text-white">Fraud and safety records</strong> — if your account
+                <strong className="text-white">Fraud and safety records</strong>: if your account
                 was flagged for fraud, abuse, or a safety incident, the relevant records are
                 retained to prevent re-registration and to comply with law-enforcement requests
               </li>

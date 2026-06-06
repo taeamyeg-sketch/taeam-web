@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — Taeam',
+  title: 'Privacy Policy · Taeam',
   description: 'How Taeam handles your information.',
   robots: { index: true, follow: true },
 };
@@ -50,8 +50,8 @@ export default function PrivacyPolicyPage() {
               restaurants and to track delivery; we don&apos;t track you when the app is closed.
             </p>
             <p>
-              We also collect basic technical details — device type, OS version, app version, crash
-              reports — so we can fix bugs.
+              We also collect basic technical details like device type, OS version, app version and
+              crash reports, so we can fix bugs.
             </p>
           </Section>
 
@@ -68,7 +68,7 @@ export default function PrivacyPolicyPage() {
             <p>
               Restaurants get your name, order, and delivery instructions so they can prepare your
               food. Drivers get the delivery address and a way to reach you during the drop-off.
-              Stripe processes the payment — we never see or store your full card number. We use
+              Stripe processes the payment, and we never see or store your full card number. We use
               Supabase to host the database and FCM to deliver push notifications.
             </p>
             <p>We don&apos;t sell your data, and we don&apos;t share it with advertisers.</p>
@@ -77,8 +77,8 @@ export default function PrivacyPolicyPage() {
           <Section title="How we keep it safe">
             <p>
               All traffic between the app and our servers is encrypted with TLS. Passwords
-              aren&apos;t stored — auth is handled by Supabase. Payment cards aren&apos;t stored
-              either — Stripe holds those. Inside the company, only the people who need access to
+              aren&apos;t stored, auth is handled by Supabase. Payment cards aren&apos;t stored
+              either, Stripe holds those. Inside the company, only the people who need access to
               do their job have it.
             </p>
             <p>
@@ -114,7 +114,7 @@ export default function PrivacyPolicyPage() {
               get sent to OpenAI for processing. We don&apos;t send your name, phone number,
               address, or payment info. Chats aren&apos;t kept on OpenAI&apos;s side after the
               response is generated. We do keep an audit log of any actions it takes inside the app
-              (like adding items to a cart) for security reasons — that&apos;s the action, not the
+              (like adding items to a cart) for security reasons, and that&apos;s the action, not the
               chat.
             </p>
             <p>

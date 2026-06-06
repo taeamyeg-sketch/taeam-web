@@ -125,7 +125,7 @@ export default function WaitlistModal({ onClose, onSuccess }: WaitlistModalProps
                   )}
                 </button>
 
-                <p className="text-center text-gray-600 text-xs">
+                <p className="text-center text-gray-500 text-xs">
                   No spam. Just a heads-up when we launch.
                 </p>
               </form>
@@ -133,7 +133,7 @@ export default function WaitlistModal({ onClose, onSuccess }: WaitlistModalProps
           ) : (
             /* Success State */
             <div className="text-center py-4">
-              <div className="w-16 h-16 rounded-full bg-[#EAB308] flex items-center justify-center mx-auto mb-4 shadow-[0_0_40px_rgba(234,179,8,0.5)] animate-pulse-glow">
+              <div className="w-16 h-16 rounded-full bg-[#EAB308] flex items-center justify-center mx-auto mb-4 shadow-[0_0_40px_rgba(234,179,8,0.5)]">
                 <Gift className="w-8 h-8 text-black" />
               </div>
               <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">

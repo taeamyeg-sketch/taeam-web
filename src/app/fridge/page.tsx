@@ -1,152 +1,189 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Refrigerator, ChefHat, Sparkles, Bell } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChefHat, Cookie, Bell, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { supabase } from '@/lib/supabaseClient';
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function FridgePage() {
   const [mounted, setMounted] = useState(false);
   const [email, setEmail] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     requestAnimationFrame(() => window.scrollTo(0, 0));
     setMounted(true);
   }, []);
 
-  const handleWaitlist = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (!error) return;
+    const t = setTimeout(() => setError(''), 4000);
+    return () => clearTimeout(t);
+  }, [error]);
+
+  const handleWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
-      setSubmitted(true);
-      setEmail('');
+    const clean = email.trim().toLowerCase();
+    if (!EMAIL_RE.test(clean)) {
+      setError('Please enter a valid email.');
+      return;
     }
+    setSubmitting(true);
+    setError('');
+    try {
+      const { error: dbError } = await supabase.from('fridge_waitlist').insert([{ email: clean }]);
+      if (dbError && dbError.code !== '23505') console.error('fridge_waitlist insert failed:', dbError);
+    } catch (err) {
+      console.error('fridge_waitlist insert threw:', err);
+    }
+    setSubmitting(false);
+    setSubmitted(true);
+    setEmail('');
   };
 
-  const highlights = [
-    { icon: <ChefHat className="w-5 h-5" />, title: 'Vetted Home Chefs', desc: 'Identity-verified, food-safety-quizzed, AHS-compliant home bakers from Edmonton.' },
-    { icon: <Sparkles className="w-5 h-5" />, title: 'Fresh-Baked Daily', desc: 'Every item is made that same day. Camera-verified freshness. No factory goods.' },
-    { icon: <Refrigerator className="w-5 h-5" />, title: 'Limited Batches', desc: 'When a batch sells out, it\'s gone. The next one comes tomorrow.' },
-  ];
-
   return (
-    <main className="bg-[#0f0f0f] min-h-screen font-sans overflow-x-hidden">
+    <main className="min-h-screen bg-[#F6F4EF] font-sans text-[#1A1A1A] antialiased">
 
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-5 sm:px-8 py-5 flex items-center justify-between">
+      {/* ── NAV ── */}
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-black/5 bg-[#F6F4EF]/85 px-5 py-3.5 backdrop-blur-md sm:px-8">
         <Link
           href="/"
-          className="flex items-center gap-2 text-[#EAB308] font-bold text-sm hover:opacity-70 transition-opacity duration-200 group"
+          className="group flex items-center gap-2 text-sm font-bold text-[#1A1A1A] transition-opacity hover:opacity-60"
         >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
+          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
           Back to Taeam
         </Link>
-        <img src="/taeam-logo.jpg" alt="Taeam" className="w-10 h-10 rounded-full" />
+        <img src="/taeam-logo.jpg" alt="Taeam" className="h-9 w-9 rounded-full" />
       </nav>
 
-      {/* Hero */}
-      <section className="relative flex flex-col items-center justify-center px-5 sm:px-8 pt-32 pb-16 overflow-hidden min-h-[70vh]">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#EAB308]/6 rounded-full blur-[150px] pointer-events-none" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#EAB308]/20 to-transparent" />
-
-        <div className={`relative z-10 text-center max-w-3xl mx-auto ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}>
-
-          {/* Coming Soon badge */}
-          <div className="inline-flex items-center gap-2 bg-[#EAB308]/10 border border-[#EAB308]/20 rounded-full px-4 py-2 mb-8">
-            <div className="w-2 h-2 bg-[#EAB308] rounded-full animate-pulse" />
-            <span className="text-[#EAB308] text-xs font-bold uppercase tracking-widest">
-              Coming Soon
-            </span>
+      {/* ── BANNER ── */}
+      <section className="px-3 pt-[68px] sm:px-5 sm:pt-[76px]">
+        <div className={`relative mx-auto max-w-6xl overflow-hidden rounded-2xl sm:rounded-3xl ${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
+          <div className="relative aspect-[16/9] w-full sm:aspect-[1376/676]">
+            <Image
+              src="/fridge-feature.jpg"
+              alt="The Fridge, homemade goods from local kitchens"
+              fill
+              priority
+              sizes="(max-width: 1152px) 100vw, 1152px"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5 sm:p-8 md:p-10">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/30 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white backdrop-blur-sm">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#EAB308]" /> Coming soon
+              </span>
+            </div>
           </div>
-
-          {/* Fridge icon */}
-          <div className="w-24 h-24 rounded-3xl bg-[#EAB308] flex items-center justify-center mx-auto mb-8 shadow-lg shadow-[#EAB308]/20">
-            <Refrigerator className="w-12 h-12 text-black" />
-          </div>
-
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none mb-6">
-            The <span className="text-gradient">Fridge</span>
-          </h1>
-          <p className="text-gray-400 text-lg sm:text-xl font-medium max-w-2xl mx-auto leading-relaxed mb-4">
-            Edmonton&apos;s homemade dessert marketplace. Baked fresh by verified local chefs. Delivered to your door.
-          </p>
-          <p className="text-gray-500 text-base font-medium max-w-xl mx-auto leading-relaxed">
-            We&apos;re building something special. The Fridge will launch after our core delivery platform is live and running.
-          </p>
         </div>
       </section>
 
-      {/* Highlights */}
-      <section className="px-5 sm:px-8 pb-16 max-w-4xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-4 mb-16">
-          {highlights.map((item, i) => (
-            <div
-              key={i}
-              className={`${mounted ? 'animate-fade-in-up' : 'opacity-0'} bg-[#141414] border border-white/5 rounded-2xl p-6 transition-all duration-300 hover:border-[#EAB308]/20`}
-              style={{ animationDelay: `${(i + 1) * 150}ms` }}
-            >
-              <div className="w-10 h-10 rounded-xl bg-[#EAB308]/10 border border-[#EAB308]/20 flex items-center justify-center text-[#EAB308] mb-4">
-                {item.icon}
-              </div>
-              <h3 className="text-white font-bold text-sm uppercase tracking-tight mb-2">{item.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
+      {/* ── HEADING ── */}
+      <section className="px-5 pb-2 pt-10 text-center sm:px-8 sm:pt-14">
+        <h1 className="mx-auto max-w-3xl text-5xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
+          The <span className="text-[#B7791F]">Fridge</span>
+        </h1>
+        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-[#52504A] sm:text-xl">
+          Home kitchens, opened up. A place for talented home cooks and bakers to sell
+          what they make, and for the rest of us to finally buy it.
+        </p>
+      </section>
 
-        {/* Waitlist */}
-        <div className="max-w-lg mx-auto">
-          <div className="bg-[#1a1a1a] border border-[#EAB308]/15 rounded-3xl p-7 sm:p-10 text-center">
-            <div className="w-12 h-12 rounded-full bg-[#EAB308]/10 border border-[#EAB308]/20 flex items-center justify-center mx-auto mb-5">
-              <Bell className="w-5 h-5 text-[#EAB308]" />
+      {/* ── TWO SIDES ── */}
+      <section className="px-5 py-10 sm:px-8">
+        <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
+          <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.35)]">
+            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[#EAB308]/12 text-[#B7791F]">
+              <ChefHat className="h-6 w-6" />
             </div>
-            <h2 className="text-xl font-black text-white uppercase tracking-tight mb-3">
-              Get Notified at Launch
-            </h2>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Be the first to know when The Fridge opens. Whether you want to buy or sell homemade desserts, drop your email below.
+            <h3 className="text-base font-bold">If you make it</h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-[#6B6963]">
+              Turn your home kitchen into a small business. Sell your desserts today, and one day,
+              full home-cooked meals, to your city.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.35)]">
+            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[#EAB308]/12 text-[#B7791F]">
+              <Cookie className="h-6 w-6" />
+            </div>
+            <h3 className="text-base font-bold">If you love it</h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-[#6B6963]">
+              Real homemade goods from people near you, not factory shelves. Made by hand,
+              the way it should be.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── NOTIFY ── */}
+      <section className="px-5 pb-16 sm:px-8">
+        <div className="mx-auto max-w-lg overflow-hidden rounded-3xl border border-[#EAB308]/30 bg-white shadow-[0_20px_60px_-25px_rgba(0,0,0,0.25)]">
+          <div className="h-1.5 w-full bg-gradient-to-r from-[#EAB308] via-[#F4C843] to-[#EAB308]" />
+          <div className="p-7 text-center sm:p-9">
+            <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#EAB308]/12 text-[#B7791F]">
+              <Bell className="h-5 w-5" />
+            </div>
+            <h2 className="text-xl font-black uppercase tracking-tight sm:text-2xl">Be first to know</h2>
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-[#52504A]">
+              Whether you want to sell from your kitchen or just be first in line to order,
+              leave your email and we&apos;ll reach out when The Fridge opens.
             </p>
 
             {submitted ? (
-              <div className="bg-green-400/10 border border-green-400/20 rounded-xl px-5 py-4">
-                <p className="text-green-400 text-sm font-semibold">You&apos;re on the list! We&apos;ll let you know when The Fridge is ready.</p>
+              <div className="mt-6 flex items-start gap-3 rounded-2xl border border-[#1E8A3F]/20 bg-[#1E8A3F]/8 p-5 text-left">
+                <CheckCircle className="mt-0.5 h-6 w-6 flex-shrink-0 text-[#1E8A3F]" />
+                <div>
+                  <p className="font-black text-[#166534]">You&apos;re on the list!</p>
+                  <p className="mt-1 text-sm leading-relaxed text-[#3F6B4A]">
+                    We&apos;ll let you know the moment The Fridge is ready.
+                  </p>
+                </div>
               </div>
             ) : (
-              <form onSubmit={handleWaitlist} className="flex gap-3">
+              <form onSubmit={handleWaitlist} className="mt-6 flex flex-col gap-2.5 sm:flex-row">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  required
-                  className="flex-1 bg-[#0f0f0f] border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-[#EAB308]/40 transition-colors"
+                  placeholder="you@email.com"
+                  disabled={submitting}
+                  autoComplete="email"
+                  className="flex-1 rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-[#EAB308] focus:bg-white focus:ring-2 focus:ring-[#EAB308]/30"
                 />
                 <button
                   type="submit"
-                  className="bg-[#EAB308] text-black font-bold px-5 py-3 rounded-xl text-sm transition-all duration-300 hover:bg-yellow-400 hover:scale-105 active:scale-95 whitespace-nowrap"
+                  disabled={submitting}
+                  className="group flex items-center justify-center gap-2 rounded-xl bg-[#1A1A1A] px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black active:scale-[0.98] disabled:opacity-60"
                 >
-                  Join Waitlist
+                  {submitting ? 'Joining…' : (<>Notify me <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></>)}
                 </button>
               </form>
             )}
+
+            {error && <p className="mt-3 text-sm font-semibold text-[#C0392B]">{error}</p>}
           </div>
         </div>
 
-        {/* Back link */}
-        <div className="text-center mt-12">
+        <div className="mt-10 text-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-gray-500 hover:text-[#EAB308] text-sm font-medium transition-colors duration-200 group"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-[#8A8880] transition-colors hover:text-[#B7791F]"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             Back to main page
           </Link>
         </div>
       </section>
 
-      {/* Footer */}
-      <div className="h-px bg-gradient-to-r from-transparent via-[#EAB308]/10 to-transparent" />
-      <div className="text-center py-6">
-        <p className="text-gray-700 text-xs tracking-wider uppercase">&copy; 2026 Taeam Technologies Inc.</p>
+      {/* ── FOOTER ── */}
+      <div className="h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+      <div className="py-6 text-center">
+        <p className="text-xs uppercase tracking-wider text-[#A8A69E]">© 2026 Taeam Technologies Inc.</p>
       </div>
     </main>
   );
