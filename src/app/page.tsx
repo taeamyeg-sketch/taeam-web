@@ -745,7 +745,7 @@ export default function Home() {
           {/* Footer Info */}
           <div className="animate-on-scroll stagger-4 text-center space-y-3 sm:space-y-4">
             <p className="text-gray-500 text-xs sm:text-sm">
-              Based in <span className="text-white">16506 21 Ave SW, Edmonton, Alberta, Canada</span>
+              Based in <span className="text-white">Edmonton, Alberta, Canada</span>
             </p>
             <p className="text-gray-500 text-[10px] sm:text-xs tracking-wider uppercase">
               © 2026 Taeam Technologies Inc. All Rights Reserved.
