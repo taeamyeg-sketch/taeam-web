@@ -1,0 +1,12 @@
+# Cloudflare Pages rewrites for deep-link routes with arbitrary ids.
+#
+# Static export only emits one HTML file per dynamic route (built from the
+# generateStaticParams placeholder, e.g. /orders/order/track). Real ids in the
+# URL (/orders/abc123/track) would otherwise 404, so rewrite them (200 =
+# rewrite, keep URL) onto the placeholder page. The page is a client component
+# that reads the real id from window.location, so the deep link stays correct.
+/orders/:id/track  /orders/order/track  200
+/orders/:id/rate   /orders/order/rate   200
+/restaurant/:id    /restaurant/restaurant  200
+/promo/:code       /promo/promo         200
+/merchant/orders/:id  /merchant/orders/order  200

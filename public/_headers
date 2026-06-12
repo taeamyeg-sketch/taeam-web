@@ -1,0 +1,8 @@
+# Cloudflare Pages headers.
+# The Apple App Site Association file has NO extension, so Pages would serve it
+# as text/plain by default. Apple's CDN requires application/json. Force it on
+# both the canonical .well-known path and the root path.
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+/apple-app-site-association
+  Content-Type: application/json
