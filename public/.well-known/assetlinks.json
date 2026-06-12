@@ -15,7 +15,8 @@
       "namespace": "android_app",
       "package_name": "com.taeam.taeam_driver",
       "sha256_cert_fingerprints": [
-        "F5:00:9A:34:FE:A1:6C:7F:25:A5:D9:E6:09:DE:53:85:E7:F6:8F:6F:6D:63:A6:A7:58:6C:27:7C:09:5C:B2:F3"
+        "F5:00:9A:34:FE:A1:6C:7F:25:A5:D9:E6:09:DE:53:85:E7:F6:8F:6F:6D:63:A6:A7:58:6C:27:7C:09:5C:B2:F3",
+        "BC:A4:8C:38:18:80:6F:B3:47:A3:8F:60:BC:B9:02:41:AD:5A:BF:11:9E:20:2E:D3:29:7A:68:53:D6:D4:9C:73"
       ]
     }
   },
