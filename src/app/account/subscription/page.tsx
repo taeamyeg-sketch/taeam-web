@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { AppFallback } from '@/components/AppFallback';
 
 export const metadata: Metadata = {
-  title: 'Manage your subscription · Taeam',
+  title: 'Manage your subscription',
   description: 'Manage your Taeam Plus subscription.',
   robots: { index: false, follow: false },
 };

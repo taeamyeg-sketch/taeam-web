@@ -1,150 +1,152 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Gift, X, ArrowRight } from 'lucide-react';
-import { supabase } from '@/lib/supabaseClient';
+import { useEffect, useState } from "react";
+import { X, ArrowRight, CheckCircle, ShieldCheck } from "@phosphor-icons/react";
+import { useModalDialog } from "@/lib/useModalDialog";
+import { submitWaitlist, alreadyJoined } from "@/lib/waitlist-submit";
 
-interface WaitlistModalProps {
-  onClose: () => void;
-  onSuccess: () => void;
-}
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function WaitlistModal({ onClose, onSuccess }: WaitlistModalProps) {
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState('');
+/**
+ * Global waitlist modal. Mounted once in the layout; opens on the
+ * `taeam:waitlist` event (see openWaitlist), fired by the header CTA, the logo
+ * hub menu, and the sub-page "join the waitlist" buttons. The home hero uses its
+ * own inline field instead. Shares submitWaitlist so behaviour matches the hero.
+ */
+export function WaitlistModal() {
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
+    const onOpen = () => setOpen(true);
+    window.addEventListener("taeam:waitlist", onOpen);
+    return () => window.removeEventListener("taeam:waitlist", onOpen);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  if (!open) return null;
+  return <WaitlistDialog onClose={() => setOpen(false)} />;
+}
+
+type Result = "new" | "existing";
+
+function WaitlistDialog({ onClose }: { onClose: () => void }) {
+  const panelRef = useModalDialog<HTMLDivElement>(onClose);
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [emailed, setEmailed] = useState(false);
+  const [error, setError] = useState("");
+  // If this device already joined, greet them with the "already in" state.
+  const [result, setResult] = useState<Result | null>(() =>
+    alreadyJoined() ? "existing" : null,
+  );
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email || !email.includes('@')) {
-      setError('Please enter a valid email');
+    const clean = email.trim().toLowerCase();
+    if (!EMAIL_RE.test(clean)) {
+      setError("Enter a valid email.");
       return;
     }
-    setIsSubmitting(true);
-    setError('');
-
-    try {
-      const { error: supabaseError } = await supabase
-        .from('waitlist')
-        .insert([{ email, bonus_points: 1000 }]);
-
-      if (supabaseError) {
-        if (supabaseError.code === '23505') {
-          // Already registered — still treat as success
-          setIsSuccess(true);
-          localStorage.setItem('taeam_waitlisted', 'true');
-          localStorage.setItem('taeam_waitlist_email', email);
-          setTimeout(() => onSuccess(), 1800);
-        } else {
-          throw supabaseError;
-        }
-      } else {
-        setIsSuccess(true);
-        localStorage.setItem('taeam_waitlisted', 'true');
-        localStorage.setItem('taeam_waitlist_email', email);
-        setTimeout(() => onSuccess(), 1800);
-      }
-    } catch (err) {
-      console.error(err);
-      setError('Something went wrong. Try again.');
-    } finally {
-      setIsSubmitting(false);
+    setSubmitting(true);
+    setError("");
+    const out = await submitWaitlist(clean);
+    setSubmitting(false);
+    if (out.status === "fail") {
+      setError("Something went wrong. Please try again.");
+      return;
     }
-  };
+    if (out.status === "new") setEmailed(out.emailed);
+    setResult(out.status);
+  }
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center px-4">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in"
+    <div className="fixed inset-0 z-[95] flex items-end justify-center sm:items-center">
+      <button
+        className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
+        aria-label="Close"
+        tabIndex={-1}
         onClick={onClose}
       />
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Join the Taeam waitlist"
+        className="relative z-10 max-h-[calc(100dvh-1rem)] w-full max-w-md overflow-y-auto overscroll-contain rounded-t-3xl bg-cream p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-sheet sm:rounded-3xl sm:p-8"
+      >
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute right-2 top-2 p-3 text-ink-mute transition-colors hover:text-ink"
+        >
+          <X className="h-5 w-5" />
+        </button>
 
-      {/* Modal Card */}
-      <div className="relative w-full max-w-md animate-pop-in">
-        <div className="bg-[#111111] border border-[#EAB308]/30 rounded-3xl p-8 shadow-[0_0_80px_rgba(234,179,8,0.15)]">
-          
-          {/* Close button */}
-          <button
-            onClick={onClose}
-            className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors duration-200 text-gray-400 hover:text-white"
-            aria-label="Close"
-          >
-            <X className="w-4 h-4" />
-          </button>
-
-          {!isSuccess ? (
-            <>
-              {/* Header */}
-              <div className="mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-[#EAB308] flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(234,179,8,0.4)]">
-                  <Gift className="w-6 h-6 text-black" />
-                </div>
-                <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">
-                  Join the Waitlist
-                </h2>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  Get <span className="text-[#EAB308] font-bold">1,000 Founding Points</span> + <span className="text-[#EAB308] font-bold">15% off</span> your first order when we launch.
-                </p>
-              </div>
-
-              {/* Form */}
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email address"
-                  disabled={isSubmitting}
-                  className="w-full bg-white/5 border border-white/10 focus:border-[#EAB308]/50 text-white placeholder-gray-500 rounded-xl px-4 py-3.5 outline-none transition-all duration-300 text-base focus:shadow-[0_0_20px_rgba(234,179,8,0.1)]"
-                />
-
-                {error && (
-                  <p className="text-red-400 text-xs px-1">{error}</p>
+        {result ? (
+          <div className="pt-2 text-center">
+            <CheckCircle className="mx-auto h-11 w-11 text-gold-deep" weight="fill" aria-hidden />
+            <p className="mt-3 text-xl font-black uppercase tracking-tight text-ink">
+              {result === "existing" ? "You're already in" : "You're on the list"}
+            </p>
+            <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-ink-mute">
+              {result === "existing"
+                ? "This email is already on the launch list. Your 50% off and 3,000 points are waiting for you the day we open."
+                : emailed
+                  ? "Your 50% off and 3,000 points are locked for launch day. Check your inbox for the details."
+                  : "Your 50% off and 3,000 points are locked for launch day. We’ll email you the moment we open."}
+            </p>
+            <button
+              onClick={onClose}
+              className="mt-6 w-full rounded-full bg-noir px-6 py-3 text-sm font-bold uppercase tracking-wide text-gold-bright transition-transform hover:-translate-y-px"
+            >
+              Done
+            </button>
+          </div>
+        ) : (
+          <>
+            <p className="text-[11px] font-black uppercase tracking-[0.16em] text-gold-deep">
+              Join the waitlist
+            </p>
+            <h2 className="mt-1.5 text-2xl font-black uppercase leading-tight tracking-tight text-ink">
+              50% off your first order
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-ink-mute">
+              Up to $10 off plus 3,000 points, added to your account when we launch in
+              Edmonton. Leave your email and we’ll hold your spot.
+            </p>
+            <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-2.5">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@email.com"
+                disabled={submitting}
+                autoComplete="email"
+                autoFocus
+                aria-label="Email address"
+                className="w-full rounded-full border border-black/10 bg-white px-4 py-3 text-base text-ink outline-none transition-all placeholder:text-gray-400 focus:border-gold-bright focus:ring-2 focus:ring-gold-bright/30"
+              />
+              <button
+                type="submit"
+                disabled={submitting}
+                className="flex items-center justify-center gap-1.5 rounded-full bg-noir px-6 py-3 text-sm font-bold uppercase tracking-wide text-gold-bright transition-transform hover:-translate-y-px active:scale-[0.98] disabled:opacity-70"
+              >
+                {submitting ? (
+                  "Joining…"
+                ) : (
+                  <>
+                    Join the waitlist
+                    <ArrowRight className="h-4 w-4" weight="bold" aria-hidden />
+                  </>
                 )}
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="group w-full bg-[#EAB308] text-black font-black py-3.5 rounded-xl hover:bg-yellow-400 transition-all duration-200 text-sm uppercase tracking-wider flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(234,179,8,0.4)] active:scale-95"
-                >
-                  {isSubmitting ? (
-                    <span className="animate-pulse">Joining...</span>
-                  ) : (
-                    <>
-                      Join Waitlist
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </>
-                  )}
-                </button>
-
-                <p className="text-center text-gray-500 text-xs">
-                  No spam. Just a heads-up when we launch.
-                </p>
-              </form>
-            </>
-          ) : (
-            /* Success State */
-            <div className="text-center py-4">
-              <div className="w-16 h-16 rounded-full bg-[#EAB308] flex items-center justify-center mx-auto mb-4 shadow-[0_0_40px_rgba(234,179,8,0.5)]">
-                <Gift className="w-8 h-8 text-black" />
-              </div>
-              <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">
-                You&apos;re In!
-              </h2>
-              <p className="text-gray-400 text-sm">
-                Welcome to Taeam. Your 1,000 founding points are waiting.
-              </p>
-            </div>
-          )}
-        </div>
+              </button>
+            </form>
+            {error && <p className="mt-2 text-xs font-semibold text-red">{error}</p>}
+            <p className="mt-3 flex items-center gap-1.5 text-xs text-ink-mute">
+              <ShieldCheck className="h-3.5 w-3.5" weight="bold" aria-hidden /> No spam. One heads-up
+              when we open.
+            </p>
+          </>
+        )}
       </div>
     </div>
   );

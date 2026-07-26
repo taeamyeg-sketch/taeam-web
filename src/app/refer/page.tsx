@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { AppFallback } from '@/components/AppFallback';
 
 export const metadata: Metadata = {
-  title: 'Refer a friend · Taeam',
+  title: 'Refer a friend',
   description: 'Invite friends to Taeam and earn rewards.',
 };
 

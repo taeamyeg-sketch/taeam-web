@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { AppFallbackClient } from '@/components/AppFallbackClient';
 
 export const metadata: Metadata = {
-  title: 'Rate your order · Taeam',
+  title: 'Rate your order',
   robots: { index: false, follow: false },
 };
 

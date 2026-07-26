@@ -1,8 +1,11 @@
-# Cloudflare Pages headers.
-# The Apple App Site Association file has NO extension, so Pages would serve it
-# as text/plain by default. Apple's CDN requires application/json. Force it on
-# both the canonical .well-known path and the root path.
-/.well-known/apple-app-site-association
-  Content-Type: application/json
-/apple-app-site-association
-  Content-Type: application/json
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# NOTE: there is deliberately no site-wide `X-Robots-Tag: noindex` here.
+# An HTTP header beats the per-page <meta name="robots"> tag, so a blanket rule
+# here silently overrode every page that asks to be indexed (terms, cookies,
+# privacy-policy, accessibility all set `robots: { index: true }` and were being
+# blocked anyway). Indexing is now decided in one place, app/robots.ts, which
+# follows the SEALED flag. Per-page opt-outs live in each page's metadata.

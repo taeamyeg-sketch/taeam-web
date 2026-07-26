@@ -5,8 +5,13 @@
 # URL (/orders/abc123/track) would otherwise 404, so rewrite them (200 =
 # rewrite, keep URL) onto the placeholder page. The page is a client component
 # that reads the real id from window.location, so the deep link stays correct.
+#
+# /restaurant/:id has NO rule here on purpose: those pages are real SSG pages
+# baked per-restaurant at build time, and a rewrite would shadow them all
+# (redirects run before static assets). Restaurants added after a build 404
+# until the next deploy.
 /orders/:id/track  /orders/order/track  200
 /orders/:id/rate   /orders/order/rate   200
-/restaurant/:id    /restaurant/restaurant  200
 /promo/:code       /promo/promo         200
 /merchant/orders/:id  /merchant/orders/order  200
+/refer/:code       /refer               200

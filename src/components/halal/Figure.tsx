@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { Camera } from 'lucide-react';
 
 /**
@@ -29,8 +29,10 @@ export default function Figure({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [hasImg, setHasImg] = useState(true);
+  const prefersReduced = useReducedMotion();
+  const still = !parallax || prefersReduced;
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], parallax ? ['-8%', '8%'] : ['0%', '0%']);
+  const y = useTransform(scrollYProgress, [0, 1], still ? ['0%', '0%'] : ['-8%', '8%']);
 
   return (
     <figure className={className}>
@@ -40,8 +42,14 @@ export default function Figure({
             src={src}
             alt={alt}
             style={{ y }}
+            loading="lazy"
+            decoding="async"
             onError={() => setHasImg(false)}
-            className="absolute inset-0 -top-[8%] h-[116%] w-full object-cover"
+            className={
+              still
+                ? 'absolute inset-0 h-full w-full object-cover'
+                : 'absolute inset-0 -top-[8%] h-[116%] w-full object-cover'
+            }
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-[linear-gradient(135deg,#efe7d6_0%,#e2d4bd_100%)]">

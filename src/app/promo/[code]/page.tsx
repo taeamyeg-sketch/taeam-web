@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { AppFallbackClient } from '@/components/AppFallbackClient';
 
 export const metadata: Metadata = {
-  title: 'Your promo · Taeam',
+  title: 'Your promo',
   description: 'Apply your Taeam promo code.',
   robots: { index: false, follow: false },
 };

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import HalalExperience from './HalalExperience';
 
 export const metadata: Metadata = {
-  title: 'The Halal Trust Gap · Taeam',
+  title: 'The Halal Trust Gap',
   description:
     'Almost two million Muslims in Canada still walk out of restaurants unsure the food is really halal. No single standard, unregulated certifiers, and "only the chicken is halal" labels. Here is the trust gap, and how Taeam closes it with transparency.',
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
       'No single standard. Unregulated certifiers. "Only the chicken is halal." The trust gap Canadian Muslims face, and how Taeam closes it.',
     type: 'article',
     url: 'https://taeam.ca/halal',
-    images: [{ url: '/taeam-logo.png', width: 512, height: 512, alt: 'Taeam, The Halal Trust Gap' }],
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Taeam, The Halal Trust Gap' }],
   },
 };
 

@@ -1,388 +1,352 @@
 @import "tailwindcss";
 
-:root {
-  --background: #050505;
-  --foreground: #FAFAFA;
+@theme {
+  /* ── Taeam brand (mirrors packages/taeam_ui TaeamColors) ── */
+  --color-ink: #121212;
+  --color-ink-soft: #333333;
+  --color-ink-mute: #6f6659;
+  --color-cream: #faf6ee;
+  --color-cream-deep: #f2ecdf;
+  --color-cream-line: #e5dcc9;
+  --color-gold: #eea742;
+  /* Darkened gold for small text on cream — raw brand gold fails contrast.
+     #8f5a0d clears WCAG AA (≈5:1 on cream) even at the 12px uppercase labels. */
+  --color-gold-deep: #8f5a0d;
+  /* Vivid brand gold — only on the dark (noir) surfaces, where it sings */
+  --color-gold-bright: #eab308;
+  --color-green: #2a9d8f;
+  --color-red: #e63946;
+
+  /* ── Dark register: the brand "islands" (hero, halal-proof band, footer) ── */
+  --color-noir: #0f0f0f; /* deep brand black */
+  --color-noir-soft: #181613; /* raised card on noir, faintly warm */
+  --color-noir-line: #2a2722; /* hairline on noir */
+
+  /* Display + body are one sans system now (Fraunces serif was retired as
+     off-brand). --font-display kept as a safety alias so any stray
+     `.font-display` renders sans, never serif. */
+  --font-display: var(--font-montserrat), system-ui, sans-serif;
+  --font-sans: var(--font-montserrat), system-ui, sans-serif;
+  /* The طعام wordmark. Defined here so every reference (hero, footer, site
+     menu, about) resolves to one controlled face instead of a per-device
+     system fallback. */
+  --font-arabic: var(--font-reem), "Reem Kufi", system-ui, sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(18 18 18 / 0.05), 0 8px 24px -12px rgb(18 18 18 / 0.18);
+  --shadow-sheet: 0 -8px 40px -12px rgb(18 18 18 / 0.25);
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Anchor targets land clear of the fixed h-20 header everywhere (legal and
+     halal pages previously compensated per-element with scroll-mt). */
+  scroll-padding-top: 5.5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  overflow-x: clip;
-  -webkit-overflow-scrolling: touch;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* iOS safe area support for notch/home bar */
-.safe-bottom {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-.safe-top {
-  padding-top: env(safe-area-inset-top, 0px);
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
 }
 
-/* Glass Card Effect */
-.glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.5rem;
+/* ── Keyboard focus ring ──
+   One consistent gold ring on every interactive control, shown only to
+   keyboard / assistive-tech users (:focus-visible), never on mouse click.
+   Element+pseudo specificity intentionally beats Tailwind's `outline-none`. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[role="button"]:focus-visible,
+[role="menuitem"]:focus-visible,
+[role="option"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
-/* ============================================
-   PREMIUM ANIMATION SYSTEM - TAEAM BRAND
-   ============================================ */
-
-/* --- KEYFRAME DEFINITIONS --- */
-
-/* Fade animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Safety alias only — no element uses this now; resolves to the sans stack. */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ── Entrance reveal: subtle rise, plays once ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px) scale(0.985);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: none;
 }
 
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-40px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ── On-load entrance: staggered fade-rise for above-the-fold content ── */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  opacity: 0;
+  animation: rise-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
+/* ── Hero dishes: the cut-out plates scattered on the black diagonal.
+   A slow, low-amplitude drift so the dark side feels alive under the brand
+   mark. Not a glow, not a hard loop you notice, just breath. Each dish carries
+   its own delay (see HeroDishes) so they never rise in unison.
 
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(40px); }
-  to { opacity: 1; transform: translateX(0); }
+   The drop shadow is what stops them reading as stickers. On #0f0f0f a shadow
+   can only go darker, which is exactly right: it lands as a contact shadow on a
+   dark table, not a halo. */
+@keyframes dish-drift {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
 }
-
-/* Scale animations */
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes popIn {
-  0% { opacity: 0; transform: scale(0.8); }
-  70% { transform: scale(1.05); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-/* Floating/Ambient animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes floatSlow {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(2deg); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(234, 179, 8, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(234, 179, 8, 0.6), 0 0 60px rgba(234, 179, 8, 0.3); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-/* Text reveal animations */
-@keyframes textReveal {
-  from { clip-path: inset(0 100% 0 0); }
-  to { clip-path: inset(0 0 0 0); }
-}
-
-@keyframes letterSpacing {
-  from { letter-spacing: -0.5em; opacity: 0; }
-  to { letter-spacing: inherit; opacity: 1; }
-}
-
-/* Rotate animations */
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Border glow */
-@keyframes borderGlow {
-  0%, 100% { border-color: rgba(234, 179, 8, 0.3); }
-  50% { border-color: rgba(234, 179, 8, 0.8); }
-}
-
-/* Breathing effect */
-@keyframes breathe {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.05); opacity: 0.8; }
-}
-
-/* Slide reveal */
-@keyframes slideReveal {
-  from { transform: scaleX(0); transform-origin: left; }
-  to { transform: scaleX(1); transform-origin: left; }
-}
-
-/* iOS-style appearance switch — the View Transitions API snapshots the old
-   theme and cross-dissolves to the new one (the same smooth fade iOS uses when
-   it changes appearance). Tune the timing here. */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.5s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+.dish {
+  /* `rotate` and `translate` are set as independent properties, never via
+     transform, so the per-dish rotation and the drift can't clobber each
+     other. */
+  animation: dish-drift 22s ease-in-out infinite;
+  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.65));
+  will-change: translate;
 }
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation-duration: 0.01ms;
+  .dish {
+    animation: none;
+    translate: none;
   }
 }
 
-/* --- ANIMATION UTILITY CLASSES --- */
-
-/* Base animation setup - for scroll triggered */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+/* Quiet text link with an underline that draws in on hover */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-underline:hover {
+  background-size: 100% 1.5px;
 }
 
-.animate-on-scroll.in-view {
-  opacity: 1;
-  transform: translateY(0);
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
-/* Stagger delays for children */
-.stagger-1 { transition-delay: 0.1s; }
-.stagger-2 { transition-delay: 0.2s; }
-.stagger-3 { transition-delay: 0.3s; }
-.stagger-4 { transition-delay: 0.4s; }
-.stagger-5 { transition-delay: 0.5s; }
-.stagger-6 { transition-delay: 0.6s; }
-
-/* Immediate animations (page load) */
-.animate-fade-in {
-  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+/* ── Route transition: noir veil + the brand lockup ──
+   The page dims to near-black, the gold logo + TAEAM lockup rises in and
+   drifts while the route swaps underneath, then lifts away as the veil fades
+   off the new page. The mark's motion is the whole show — no wipes, no
+   panels. Driven by data-phase on .pt-root (see PageTransition.tsx). */
+.pt-root {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+}
+.pt-root[data-phase="cover"],
+.pt-root[data-phase="hold"],
+.pt-root[data-phase="reveal"] {
+  visibility: visible;
+  pointer-events: auto;
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-fade-in-down {
-  animation: fadeInDown 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-fade-in-left {
-  animation: fadeInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-fade-in-right {
-  animation: fadeInRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-pop-in {
-  animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* Continuous animations */
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-float-slow {
-  animation: floatSlow 8s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(234, 179, 8, 0.3), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 3s infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradientShift 4s ease infinite;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
-}
-
-.animate-breathe {
-  animation: breathe 4s ease-in-out infinite;
-}
-
-.animate-border-glow {
-  animation: borderGlow 2s ease-in-out infinite;
-}
-
-/* Text animations */
-.animate-text-reveal {
-  animation: textReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-letter-spacing {
-  animation: letterSpacing 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Line reveal */
-.animate-line-reveal {
-  animation: slideReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Animation delays */
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
-.delay-600 { animation-delay: 0.6s; }
-.delay-700 { animation-delay: 0.7s; }
-.delay-800 { animation-delay: 0.8s; }
-.delay-1000 { animation-delay: 1s; }
-
-/* Start hidden for delayed animations */
-.animate-hidden {
-  opacity: 0;
-}
-
-/* --- ENHANCED HOVER EFFECTS --- */
-
-/* Magnetic button effect */
-.hover-magnetic {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.hover-magnetic:hover {
-  transform: scale(1.02);
-}
-
-/* Lift effect */
-.hover-lift {
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
-              box-shadow 0.4s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* Glow on hover */
-.hover-glow {
-  transition: box-shadow 0.4s ease, border-color 0.4s ease;
-}
-
-.hover-glow:hover {
-  box-shadow: 0 0 30px rgba(234, 179, 8, 0.4);
-}
-
-/* Underline reveal */
-.hover-underline {
-  position: relative;
-}
-
-.hover-underline::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #EAB308;
-  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hover-underline:hover::after {
-  width: 100%;
-}
-
-/* --- SPECIAL EFFECTS --- */
-
-/* Grain texture overlay */
-.grain-overlay::before {
-  content: '';
+.pt-veil {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 100;
+  background: var(--color-noir);
+  opacity: 0;
+  will-change: opacity;
+}
+.pt-root[data-phase="cover"] .pt-veil,
+.pt-root[data-phase="hold"] .pt-veil {
+  opacity: 1;
+}
+.pt-root[data-phase="cover"] .pt-veil {
+  transition: opacity 0.55s ease;
+}
+/* Veil lets the mark lead the exit by a beat before fading off the page. */
+.pt-root[data-phase="reveal"] .pt-veil {
+  opacity: 0;
+  transition: opacity 0.72s ease 0.1s;
 }
 
-/* Gradient text — static sheen (no perpetual animation; calmer, less "AI demo") */
-.text-gradient {
-  background: linear-gradient(120deg, #EAB308 0%, #fde047 50%, #EAB308 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Glow text */
-.text-glow {
-  text-shadow: 0 0 20px rgba(234, 179, 8, 0.5), 
-               0 0 40px rgba(234, 179, 8, 0.3),
-               0 0 60px rgba(234, 179, 8, 0.1);
-}
-
-/* Card shine effect on hover */
-.card-shine {
-  position: relative;
-  overflow: hidden;
-}
-
-.card-shine::before {
-  content: '';
+.pt-mark {
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  transition: left 0.7s ease;
-  pointer-events: none;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  opacity: 0;
+  transform: translateY(24px);
+}
+.pt-root[data-phase="cover"] .pt-mark {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.45s ease 0.24s,
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.24s;
+}
+.pt-root[data-phase="hold"] .pt-mark {
+  opacity: 1;
+  transform: translateY(-8px);
+  transition: transform 0.65s linear;
+}
+.pt-root[data-phase="reveal"] .pt-mark {
+  opacity: 0;
+  transform: translateY(-34px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.5s cubic-bezier(0.55, 0, 0.14, 1);
 }
 
-.card-shine:hover::before {
-  left: 100%;
+/* Gold rendition of the brand mark: the black-on-transparent logo-mark.png
+   used as a mask over a gold fill. The mark is the whole show now (no wordmark),
+   so it sits a touch larger to own the centre of the veil. */
+.pt-logo {
+  width: 4.25rem;
+  height: 4.9rem;
+  background: var(--color-gold-bright);
+  -webkit-mask: url("/logo-mark.png") no-repeat center / contain;
+  mask: url("/logo-mark.png") no-repeat center / contain;
 }
 
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .pt-root {
+    display: none;
+  }
+}
+
+/* Hide scrollbar on horizontal chip rails without killing scroll */
+.rail {
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Hybrid seam system ──
+   The site alternates dark "brand islands" (hero, halal-proof band, footer)
+   with light ordering surfaces. Every boundary is deliberate: a short gradient
+   that fades one register into the next, so the eye never hits a hard edge. */
+.seam {
+  height: 5rem;
+  width: 100%;
+}
+.seam-to-noir {
+  background: linear-gradient(to bottom, var(--color-cream), var(--color-noir));
+}
+.seam-to-cream {
+  background: linear-gradient(to bottom, var(--color-noir), var(--color-cream));
+}
+
+/* Faint film grain for the dark bands: keeps the flat black feeling rich and
+   stops gradient seams from banding. Not a glow — a texture. Parent needs
+   position: relative. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* The diagonal is the brand's signature cut. Reused so it reads as a system,
+   not a one-off hero flourish. */
+.diag-mask {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+/* Home hero video. On md+ (desktop/laptop — unchanged look) the frame sits
+   zoomed-out bottom-right and its left edge dissolves into the noir wedge via
+   this mask. Below md the video is a bottom band instead and the blending is
+   done with overlay gradients in MarketingHero, so no mask applies there. */
+@media (min-width: 768px) {
+  .hero-video-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 42%, rgba(0, 0, 0, 0.2) 52%, rgba(0, 0, 0, 0.55) 61%, rgba(0, 0, 0, 0.85) 70%, #000 78%);
+    mask-image: linear-gradient(to right, transparent 0%, transparent 42%, rgba(0, 0, 0, 0.2) 52%, rgba(0, 0, 0, 0.55) 61%, rgba(0, 0, 0, 0.85) 70%, #000 78%);
+  }
+}
+
+/* ── Search bar animated placeholder ──
+   Mirrors taeam_app's EnhancedSearchBar: the hint fades + slides up into place
+   every few seconds instead of a typewriter. Each new hint replays this. */
+@keyframes hint-cycle {
+  from {
+    opacity: 0;
+    transform: translateY(70%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hint-cycle {
+  animation: hint-cycle 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Arbaab button tracing outline ──
+   Replaces the old rotating conic-gradient, which spun a CIRCULAR sweep over a
+   rounded-SQUARE button (so it drifted off the edge), broke at 0°/360° where the
+   gradient wrapped, and read as a soft brush smear. This strokes the button's
+   real border instead: the rect carries pathLength="100", so dash + gap sum to
+   exactly one lap and the segment travels the shape at a constant rate with no
+   seam and a crisp, even line. */
+@keyframes arbaab-trace {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+.arbaab-trace {
+  stroke-dasharray: 22 78;
+  stroke-dashoffset: 0;
+  animation: arbaab-trace 3s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hint-cycle,
+  .arbaab-trace {
+    animation: none;
   }
 }

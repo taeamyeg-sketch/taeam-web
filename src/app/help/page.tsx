@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { AppFallback } from '@/components/AppFallback';
 
 export const metadata: Metadata = {
-  title: 'Help & support · Taeam',
+  title: 'Help & support',
   description: 'Get help with your Taeam order or account.',
 };
 

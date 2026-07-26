@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { Fraunces, Newsreader, Aref_Ruqaa } from 'next/font/google';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
 import Reveal from '@/components/halal/Reveal';
 import CountUp from '@/components/halal/CountUp';
@@ -17,7 +17,7 @@ const calligraphy = Aref_Ruqaa({ subsets: ['arabic'], weight: ['400', '700'], di
 /* ── Inline reference marker ── */
 function Cite({ n }: { n: number }) {
   return (
-    <a href={`#ref-${n}`} className="ml-0.5 align-super text-[0.6em] font-semibold text-[#B8860B] no-underline hover:underline">
+    <a href={`#ref-${n}`} className="-m-1 ml-0.5 inline-block p-1 align-super text-[0.6em] font-semibold text-[#B8860B] no-underline hover:underline">
       {n}
     </a>
   );
@@ -71,7 +71,10 @@ export default function HalalExperience() {
   }, []);
 
   return (
-    <main className={`${body.className} relative min-h-screen overflow-x-clip bg-[#FAF7F0] antialiased selection:bg-[#EAB308] selection:text-black`} style={{ color: '#3a342d' }}>
+    // reducedMotion="user" turns every framer-motion reveal/parallax on this
+    // page into a no-op for prefers-reduced-motion users.
+    <MotionConfig reducedMotion="user">
+    <main className={`${body.className} relative min-h-svh overflow-x-clip bg-[#FAF7F0] antialiased selection:bg-[#EAB308] selection:text-black`} style={{ color: '#3a342d' }}>
       {/* Reading progress */}
       <motion.div className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-[#EAB308]" style={{ scaleX: progress }} />
 
@@ -124,7 +127,7 @@ export default function HalalExperience() {
         <Figure
           src="/halal/scene-table.jpg"
           alt="A shared meal at an Edmonton table"
-          sizeClass="h-[58vh] sm:h-[72vh]"
+          sizeClass="h-[58svh] sm:h-[72vh]"
           rounded={false}
           className="my-6"
         />
@@ -205,7 +208,7 @@ export default function HalalExperience() {
               </Aside>
             </div>
           </div>
-          <Reveal y={50} className="lg:sticky lg:top-24">
+          <Reveal y={50} className="mx-auto w-full max-w-md lg:mx-0 lg:max-w-none lg:sticky lg:top-24">
             <Figure
               src="/halal/mixed-grill.jpg"
               alt="A grill with both halal and non-halal items"
@@ -236,7 +239,7 @@ export default function HalalExperience() {
         <Figure
           src="/halal/community.jpg"
           alt="The Muslim community in Edmonton"
-          sizeClass="h-[50vh] sm:h-[64vh]"
+          sizeClass="h-[50svh] sm:h-[64vh]"
           rounded={false}
           className="my-6"
         />
@@ -248,7 +251,7 @@ export default function HalalExperience() {
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#B8860B]">By the numbers</span>
           <h2 className={`${display.className} mt-3 text-3xl font-semibold text-[#1a1714] sm:text-5xl`}>A large, underserved community</h2>
         </Reveal>
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { node: <CountUp to={1775715} />, label: 'Muslims in Canada in 2021, more than double the 2001 figure', ref: 1 },
             { node: <>4<span className="text-xl"> in </span>10</>, label: 'fast-food spots that could not verify their halal slaughter method', ref: 2 },
@@ -256,7 +259,7 @@ export default function HalalExperience() {
             { node: <><span className="text-2xl align-top">$</span><CountUp to={1} suffix="B+" /></>, label: 'estimated Canadian halal market, growing around 13% a year', ref: 8 },
           ].map((s, i) => (
             <Reveal key={i} delay={i * 0.08} className="text-center">
-              <div className={`${display.className} text-4xl font-semibold tracking-tight text-[#1a1714] sm:text-5xl`}>{s.node}</div>
+              <div className={`${display.className} text-3xl font-semibold tracking-tight text-[#1a1714] sm:text-4xl xl:text-5xl`}>{s.node}</div>
               <p className="mx-auto mt-3 max-w-[15rem] text-sm leading-relaxed text-[#6b6560]">
                 {s.label}<Cite n={s.ref} />
               </p>
@@ -326,5 +329,6 @@ export default function HalalExperience() {
         </div>
       </section>
     </main>
+    </MotionConfig>
   );
 }

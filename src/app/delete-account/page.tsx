@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from '@phosphor-icons/react/dist/ssr';
 
 export const metadata: Metadata = {
-  title: 'Delete Your Account · Taeam',
+  title: 'Delete your account',
   description:
     'How to request deletion of your Taeam or Tawsil account and the data we hold on you.',
   robots: { index: true, follow: true },
@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 
 export default function DeleteAccountPage() {
   return (
-    <main className="min-h-screen bg-[#0f0f0f] text-gray-200 font-sans">
+    <main className="min-h-svh bg-cream text-ink">
       <nav className="px-5 sm:px-8 py-5">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition"
+          className="inline-flex items-center gap-2 text-sm text-ink-mute hover:text-ink transition"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Taeam
@@ -24,11 +24,11 @@ export default function DeleteAccountPage() {
 
       <article className="max-w-2xl mx-auto px-5 sm:px-8 py-8 pb-24">
         <header className="mb-10">
-          <h1 className="text-4xl font-bold text-white mb-3">Delete Your Account</h1>
-          <p className="text-sm text-amber-400 font-medium">Last updated: May 2026</p>
-          <p className="mt-4 text-base leading-relaxed text-gray-300">
-            This page covers account deletion for both the <strong className="text-white">Taeam</strong>{' '}
-            customer app and the <strong className="text-white">Tawsil</strong> driver app. You can
+          <h1 className="font-black uppercase tracking-tight text-3xl sm:text-4xl text-ink mb-3">Delete Your Account</h1>
+          <p className="text-sm text-gold-deep font-medium">Last updated: May 2026</p>
+          <p className="mt-4 text-base leading-relaxed text-ink-mute">
+            This page covers account deletion for both the <strong className="text-ink">Taeam</strong>{' '}
+            customer app and the <strong className="text-ink">Tawsil</strong> driver app. You can
             delete your account from inside the app, or email us if you can&apos;t.
           </p>
         </header>
@@ -36,11 +36,11 @@ export default function DeleteAccountPage() {
         <section className="space-y-6">
           <Section title="Option 1: Delete from inside the app (fastest)">
             <p>
-              <strong className="text-white">Taeam customer app:</strong> open the app → Profile →
+              <strong className="text-ink">Taeam customer app:</strong> open the app → Profile →
               Account → <em>Delete account</em>. Confirm. Your account is closed immediately.
             </p>
             <p>
-              <strong className="text-white">Tawsil driver app:</strong> open the app → Profile →
+              <strong className="text-ink">Tawsil driver app:</strong> open the app → Profile →
               Account settings → <em>Delete account</em>. Confirm. Your account is closed
               immediately.
             </p>
@@ -53,7 +53,7 @@ export default function DeleteAccountPage() {
             <p>
               If you can&apos;t access the app, for example you&apos;ve lost your phone or your
               account is locked, send an email to{' '}
-              <a href="mailto:contact@taeam.ca" className="text-amber-400 hover:underline">
+              <a href="mailto:contact@taeam.ca" className="text-gold-deep hover:underline">
                 contact@taeam.ca
               </a>{' '}
               from the email address on your account. Include:
@@ -77,7 +77,7 @@ export default function DeleteAccountPage() {
               <li>Your driver&apos;s license number, vehicle documents, and bank info (Tawsil)</li>
               <li>Your chat history with restaurants and drivers</li>
               <li>Your push notification token (you&apos;ll stop receiving notifications)</li>
-              <li>Your sign-in credentials (Google/Apple links and account password/PIN)</li>
+              <li>Your sign-in credentials (Google/Apple links and your PIN)</li>
             </ul>
             <p>
               Stripe deletes your saved payment cards on their side; we never had your full card
@@ -93,16 +93,16 @@ export default function DeleteAccountPage() {
             </p>
             <ul className="list-disc list-inside space-y-1 ml-2">
               <li>
-                <strong className="text-white">Order and earnings records</strong>, kept for{' '}
-                <strong className="text-white">7 years</strong> to meet Canada Revenue Agency tax
+                <strong className="text-ink">Order and earnings records</strong>, kept for{' '}
+                <strong className="text-ink">7 years</strong> to meet Canada Revenue Agency tax
                 record requirements
               </li>
               <li>
-                <strong className="text-white">Payment receipts and refund records</strong>, kept
-                for <strong className="text-white">7 years</strong> for tax and dispute purposes
+                <strong className="text-ink">Payment receipts and refund records</strong>, kept
+                for <strong className="text-ink">7 years</strong> for tax and dispute purposes
               </li>
               <li>
-                <strong className="text-white">Fraud and safety records</strong>: if your account
+                <strong className="text-ink">Fraud and safety records</strong>: if your account
                 was flagged for fraud, abuse, or a safety incident, the relevant records are
                 retained to prevent re-registration and to comply with law-enforcement requests
               </li>
@@ -140,13 +140,13 @@ export default function DeleteAccountPage() {
           <Section title="Contact">
             <p>
               Questions about deletion or anything else:{' '}
-              <a href="mailto:contact@taeam.ca" className="text-amber-400 hover:underline">
+              <a href="mailto:contact@taeam.ca" className="text-gold-deep hover:underline">
                 contact@taeam.ca
               </a>
               .
             </p>
             <p className="mt-2">
-              Taeam Inc.
+              Taeam Technologies Inc.
               <br />
               Edmonton, Alberta, Canada
             </p>
@@ -159,9 +159,9 @@ export default function DeleteAccountPage() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-[#1a1a1a] border border-gray-800 rounded-xl p-6">
-      <h2 className="text-xl font-bold text-white mb-4">{title}</h2>
-      <div className="space-y-3 text-base leading-relaxed text-gray-300">{children}</div>
+    <div className="bg-white/60 border border-cream-line rounded-2xl shadow-card p-6">
+      <h2 className="font-black uppercase tracking-tight text-lg text-ink mb-4">{title}</h2>
+      <div className="space-y-3 text-base leading-relaxed text-ink-mute">{children}</div>
     </div>
   );
 }

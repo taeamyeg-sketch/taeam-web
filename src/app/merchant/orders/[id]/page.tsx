@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { AppFallbackClient } from '@/components/AppFallbackClient';
 
 export const metadata: Metadata = {
-  title: 'Order · Taeam for Restaurants',
+  title: { absolute: 'Order · Taeam for Restaurants' },
   description: 'View this order in the Taeam restaurant app.',
   robots: { index: false, follow: false },
 };

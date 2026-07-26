@@ -41,6 +41,10 @@ export default function CountUp({
 
   useEffect(() => {
     if (!inView) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setValue(to);
+      return;
+    }
     let raf = 0;
     let startTime: number | undefined;
 
