@@ -8,8 +8,10 @@ import { CartUI } from "@/components/cart/CartUI";
 import { PageTransitionProvider } from "@/components/transition/PageTransition";
 import { LaunchGate } from "@/components/LaunchGate";
 import { CookieConsent } from "@/components/CookieConsent";
+import { MetaPixel } from "@/components/MetaPixel";
 import { WaitlistModal } from "@/components/WaitlistModal";
 import { SEALED } from "@/lib/launch";
+import { META_PIXEL_BASE_CODE, META_PIXEL_ID } from "@/lib/meta-pixel";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -67,9 +69,26 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Meta pixel base code, inline in <head> on every page — Meta's
+            standard install. Runs before hydration so a bounce still counts.
+            Route-change PageViews come from <MetaPixel /> below. */}
+        <script dangerouslySetInnerHTML={{ __html: META_PIXEL_BASE_CODE }} />
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            alt=""
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+          />
+        </noscript>
+      </head>
       <body
         className={`${montserrat.variable} ${reemKufi.variable} antialiased`}
       >
+        <MetaPixel />
         <AuthProvider>
           <CartProvider>
             <PageTransitionProvider>

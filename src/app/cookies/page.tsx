@@ -17,9 +17,9 @@ export default function CookiesPage() {
       intro={
         <>
           The short version: taeam.ca stores a handful of things in your browser
-          so the site works. Your sign-in, your address, your cart. There are
-          no advertising cookies and no cross-site tracking. Here&apos;s the
-          full list.
+          so the site works. Your sign-in, your address, your cart. One
+          advertising tool runs alongside them, the Meta pixel, so we can tell
+          which ads bring people here. Here&apos;s the full list.
         </>
       }
     >
@@ -57,7 +57,7 @@ export default function CookiesPage() {
 
       <LegalSection id="third-parties" title="Third parties">
         <p>
-          Three outside services touch your browser, each for one job:
+          Four outside services touch your browser, each for one job:
         </p>
         <ul className="list-disc space-y-2 pl-5">
           <li>
@@ -76,8 +76,27 @@ export default function CookiesPage() {
             our database and authentication; your session token comes from
             here.
           </li>
+          <li>
+            <strong className="font-semibold text-ink">Meta:</strong> the Meta
+            pixel loads on every page and sets Meta&apos;s own cookies. It tells
+            us which of our ads led to a page view or a waitlist signup. It
+            never receives your email, your name, or anything you type.
+          </li>
         </ul>
-        <p>We don&apos;t run third-party advertising or analytics cookies.</p>
+        <p>
+          The Meta pixel is the only advertising or analytics tool on the site.
+          Turning it off is up to you and your browser: any tracker blocker, or
+          Meta&apos;s own{" "}
+          <a
+            href="https://www.facebook.com/help/568137493302217"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-gold-deep underline decoration-gold-deep/40 underline-offset-2 hover:decoration-gold-deep"
+          >
+            ad settings
+          </a>
+          , stops it. Nothing on the site breaks when it is blocked.
+        </p>
       </LegalSection>
 
       <LegalSection id="control" title="Clearing it">

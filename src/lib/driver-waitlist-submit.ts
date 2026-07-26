@@ -2,6 +2,7 @@
 
 import { supabase } from "@/lib/supabase";
 import { BACKEND_URL } from "@/lib/backend";
+import { trackDriverSignup } from "@/lib/meta-pixel";
 
 export type DriverWaitlistResult =
   | { status: "new"; emailed: boolean }
@@ -26,6 +27,10 @@ export function alreadyJoinedDriver(): boolean {
  * 23505 = "already in". Sends the branded confirmation email for a genuinely
  * new signup only (never re-emails a duplicate), and remembers the device so a
  * return visit is greeted as already-in.
+ *
+ * Fires the pixel's custom `DriverSignup` event — NOT the `Lead` the customer
+ * waitlist uses. Two funnels, two events, so driver-recruitment ads never
+ * optimize against customer signups or vice versa.
  */
 export async function submitDriverWaitlist(rawEmail: string): Promise<DriverWaitlistResult> {
   const email = rawEmail.trim().toLowerCase();
@@ -44,6 +49,10 @@ export async function submitDriverWaitlist(rawEmail: string): Promise<DriverWait
     console.error("driver_signups insert threw:", err);
     return { status: "fail" };
   }
+
+  // Row is in. Count the conversion before the (slower, failure-tolerant)
+  // confirmation-email call, so a flaky backend can't cost us a signup event.
+  if (status === "new") trackDriverSignup();
 
   let emailed = false;
   if (status === "new") {

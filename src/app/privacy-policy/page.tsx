@@ -61,7 +61,16 @@ export default function PrivacyPolicyPage() {
           never see or store your full card number. We use Supabase to host the
           database and FCM to deliver push notifications.
         </p>
-        <p>We don&apos;t sell your data, and we don&apos;t share it with advertisers.</p>
+        <p>
+          We don&apos;t sell your data. The one advertising platform that sees
+          anything is Meta, through the pixel on our website: it learns that a
+          browser viewed a page or joined the waitlist, never who you are or
+          what you typed. Details are on the{" "}
+          <Link href="/cookies" className="font-medium text-gold-deep underline decoration-gold-deep/40 underline-offset-2 hover:decoration-gold-deep">
+            Cookies &amp; Storage
+          </Link>{" "}
+          page.
+        </p>
       </LegalSection>
 
       <LegalSection id="security" title="How we keep it safe">
@@ -120,9 +129,11 @@ export default function PrivacyPolicyPage() {
         <p>
           The app stores small bits of data on your device to remember
           you&apos;re signed in and to remember your preferences (theme,
-          language, default address). We don&apos;t use third-party advertising
-          cookies. Basic crash and usage analytics help us spot bugs and slow
-          screens.
+          language, default address). Basic crash and usage analytics help us
+          spot bugs and slow screens. On the website we also run the Meta pixel,
+          which reports page views and waitlist signups back to Meta so we can
+          measure our ads. It never sends your email or anything you type, and
+          any tracker blocker stops it.
         </p>
         <p>
           The full list of what the website stores in your browser is on the{" "}
