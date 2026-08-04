@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Reem_Kufi } from "next/font/google";
+import { Montserrat, Amiri } from "next/font/google";
 import { AuthProvider } from "@/components/auth/AuthContext";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { AppSuggestBanner } from "@/components/AppSuggestBanner";
@@ -19,13 +19,15 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-// Arabic display face for the طعام wordmark. Reem Kufi is a bold, geometric
-// Kufic designed to pair with Latin sans — it matches the uppercase TAEAM mark
-// and, crucially, renders identically on every device (previously the wordmark
-// fell back to whatever Arabic font the visitor's OS happened to ship).
-const reemKufi = Reem_Kufi({
+// Arabic display face for the طعام wordmark and all Arabic on the site. Amiri
+// is a classical Naskh built for formal and Quranic typesetting; it is the same
+// face the /halal research pages use, so Arabic renders identically everywhere
+// (previously the wordmark fell back to whatever the visitor's OS shipped).
+const amiri = Amiri({
   subsets: ["arabic"],
-  variable: "--font-reem",
+  weight: ["400", "700"],
+  variable: "--font-amiri",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -86,7 +88,7 @@ export default function RootLayout({
         </noscript>
       </head>
       <body
-        className={`${montserrat.variable} ${reemKufi.variable} antialiased`}
+        className={`${montserrat.variable} ${amiri.variable} antialiased`}
       >
         <MetaPixel />
         <AuthProvider>

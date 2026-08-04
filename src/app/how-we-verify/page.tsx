@@ -313,6 +313,18 @@ export default function HowWeVerifyPage() {
                   →
                 </span>
               </Link>
+              <Link
+                href="/halal/hand-vs-machine"
+                className="group inline-flex items-center gap-1 text-sm font-semibold text-ink transition-colors hover:text-gold-deep"
+              >
+                Hand or machine, explained
+                <span
+                  aria-hidden
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              </Link>
             </div>
           </div>
         </Reveal>

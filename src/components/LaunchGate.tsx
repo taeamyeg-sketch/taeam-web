@@ -26,7 +26,7 @@ export function LaunchGate() {
     <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-gold-bright">
       <span
         className="text-[18vw] font-black leading-none text-noir sm:text-[10vw]"
-        style={{ fontFamily: "var(--font-reem)" }}
+        style={{ fontFamily: "var(--font-arabic)" }}
         lang="ar"
         dir="rtl"
       >

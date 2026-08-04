@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { Fraunces, Newsreader, Aref_Ruqaa } from 'next/font/google';
+import { Fraunces, Newsreader, Amiri } from 'next/font/google';
 import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
 import Reveal from '@/components/halal/Reveal';
@@ -12,7 +12,7 @@ import Figure from '@/components/halal/Figure';
 // Editorial display + reading body, plus a calligraphic Arabic for the motif.
 const display = Fraunces({ subsets: ['latin'], weight: ['400', '500', '600', '900'], style: ['normal', 'italic'], display: 'swap' });
 const body = Newsreader({ subsets: ['latin'], weight: ['300', '400', '500'], style: ['normal', 'italic'], display: 'swap' });
-const calligraphy = Aref_Ruqaa({ subsets: ['arabic'], weight: ['400', '700'], display: 'swap' });
+const calligraphy = Amiri({ subsets: ['arabic'], weight: ['400', '700'], display: 'swap' });
 
 /* ── Inline reference marker ── */
 function Cite({ n }: { n: number }) {
@@ -180,8 +180,8 @@ export default function HalalExperience() {
         <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(115% 75% at 50% 45%, transparent 45%, rgba(0,0,0,0.6))' }} />
         <div className="relative mx-auto max-w-4xl px-6 text-center">
           <Reveal>
-            <p className={`${calligraphy.className} text-[26vw] leading-none text-[#EAB308] sm:text-[12rem]`}>أمانة</p>
-            <p className="mt-2 text-sm uppercase tracking-[0.3em] text-white/40">Amanah · trust</p>
+            <p dir="rtl" className={`${calligraphy.className} text-[20vw] leading-[1.6] text-[#EAB308] sm:text-[10rem]`}>أمانة</p>
+            <p className="mt-4 text-sm uppercase tracking-[0.3em] text-white/40">Amanah · trust</p>
             <p className={`${display.className} mx-auto mt-10 max-w-2xl text-3xl font-medium leading-tight text-[#FAF7F0] sm:text-5xl`}>
               Being served haram meat unknowingly breaks something sacred.
             </p>
@@ -292,9 +292,15 @@ export default function HalalExperience() {
           <p className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-white/55">
             Know exactly what you are eating, every protein and every method, before you order.
           </p>
-          <Link href="/" className="group mt-9 inline-flex items-center gap-2 rounded-full bg-[#EAB308] px-7 py-4 text-sm font-bold uppercase tracking-wide text-black transition-transform hover:scale-[1.03]">
-            Get Taeam <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-5">
+            <Link href="/" className="group inline-flex items-center gap-2 rounded-full bg-[#EAB308] px-7 py-4 text-sm font-bold uppercase tracking-wide text-black transition-transform hover:scale-[1.03]">
+              Get Taeam <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link href="/halal/hand-vs-machine" className="group inline-flex items-center gap-1 text-sm font-semibold text-white/70 transition-colors hover:text-[#EAB308]">
+              Next: Hand or Machine
+              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </Link>
+          </div>
         </Reveal>
       </section>
 

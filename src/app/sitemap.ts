@@ -17,6 +17,7 @@ const STATIC_ROUTES = [
   "/restaurants",
   "/rewards",
   "/halal",
+  "/halal/hand-vs-machine",
   "/how-we-verify",
   "/about",
   "/drive",

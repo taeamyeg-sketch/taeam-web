@@ -122,6 +122,11 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/halal/hand-vs-machine" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                    Hand or machine
+                  </Link>
+                </li>
+                <li>
                   <Link href="/how-we-verify" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
                     How we verify
                   </Link>
