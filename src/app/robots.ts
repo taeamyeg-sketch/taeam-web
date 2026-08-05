@@ -19,8 +19,13 @@ export const dynamic = "force-static";
  */
 
 // Never useful in search, sealed or not: transactional, per-user, or internal.
+// `/partners` is the founding-restaurant offer, handed out on a printed sheet
+// and reached by scanning its QR. It carries commission rates we do not want a
+// customer (or a competitor) finding in search, so it is unlinked sitewide,
+// absent from the sitemap, and noindex on the page itself.
 const ALWAYS_PRIVATE = [
   "/account",
+  "/partners",
   "/orders",
   "/merchant",
   "/promo",

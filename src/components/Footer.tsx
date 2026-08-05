@@ -148,6 +148,9 @@ export function Footer() {
                 Partner
               </Eyebrow>
               <ul className="space-y-1">
+                {/* /partners is deliberately unlinked sitewide: it is the
+                    founding-partner offer, reached only by the QR on the
+                    printed sheet. Customers should never stumble into it. */}
                 <li>
                   <span className="cursor-default text-cream/40" title="Coming soon">
                     Add your restaurant

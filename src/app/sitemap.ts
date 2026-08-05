@@ -21,6 +21,7 @@ const STATIC_ROUTES = [
   "/how-we-verify",
   "/about",
   "/drive",
+  // "/partners" is intentionally absent: QR-only, and robots.ts disallows it.
   "/fridge",
   "/arbaab",
   "/reserve",
