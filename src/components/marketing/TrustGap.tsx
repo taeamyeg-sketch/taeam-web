@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Khatam } from "@/components/Pattern";
 import { Reveal } from "@/components/Reveal";
@@ -113,6 +114,18 @@ export function TrustGap() {
           </div>
 
           <Reveal delay={140}>
+            {/* The trade the audit actually inspects, above the card that
+                states what the audit produces. Photo then proof. */}
+            <div className="relative mb-6 aspect-[4/5] overflow-hidden rounded-3xl border border-noir-line sm:aspect-[4/3]">
+              <Image
+                src="/trust-butcher.webp"
+                alt="A butcher wrapping a parcel in paper behind the counter of a small independent halal butcher shop"
+                fill
+                sizes="(max-width: 768px) 100vw, 40vw"
+                className="object-cover"
+              />
+              <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-noir/60 via-transparent to-transparent" />
+            </div>
             <div className="rounded-3xl border border-noir-line bg-noir-soft p-6 sm:p-7">
               <div className="mb-4 flex items-center gap-2">
                 <Khatam className="h-4 w-4 text-gold-bright" />

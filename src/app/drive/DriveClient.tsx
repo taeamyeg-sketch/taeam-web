@@ -240,6 +240,16 @@ export default function DrivePage() {
       {/* ── HOW PAY WORKS ── */}
       <section className="px-5 py-12 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-5xl">
+          {/* What the job actually is at 9pm in February. */}
+          <div className="animate-on-scroll relative mb-12 aspect-[3/2] overflow-hidden rounded-2xl sm:aspect-[21/9]">
+            <Image
+              src="/drive-night.webp"
+              alt="A driver parked on a residential Edmonton street at night, insulated delivery bag on the passenger side"
+              fill
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              className="object-cover object-[65%_center]"
+            />
+          </div>
           <div className="animate-on-scroll mb-10 text-center">
             <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-gold-deep">The pay</p>
             <h2 className="text-3xl font-black uppercase tracking-tight sm:text-4xl">
@@ -335,6 +345,15 @@ export default function DrivePage() {
       {/* ── WHY DRIVE WITH US ── */}
       <section className="px-5 py-16 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-5xl">
+          <div className="animate-on-scroll relative mb-12 aspect-[21/9] overflow-hidden rounded-2xl">
+            <Image
+              src="/drive-winter.webp"
+              alt="A residential Edmonton street in deep winter, a lone figure walking the sidewalk with a bag"
+              fill
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              className="object-cover"
+            />
+          </div>
           <div className="animate-on-scroll mb-10 text-center">
             <h2 className="text-3xl font-black uppercase tracking-tight sm:text-4xl">Why drive with us</h2>
             <div className="mx-auto mt-3 h-0.5 w-12 rounded-full bg-gold-bright" />

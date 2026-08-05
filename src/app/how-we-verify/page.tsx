@@ -158,6 +158,17 @@ export default function HowWeVerifyPage() {
             </div>
           </Reveal>
           <Reveal delay={120}>
+            {/* What a supplier check actually looks like: boxes on a prep
+                table at the back door, before the paperwork gets read. */}
+            <div className="relative mb-6 aspect-[3/2] overflow-hidden rounded-3xl border border-cream-line">
+              <Image
+                src="/verify-supplier.webp"
+                alt="Plain cardboard boxes stacked on a stainless prep table at the back door of a restaurant kitchen"
+                fill
+                sizes="(max-width: 1024px) 100vw, 45vw"
+                className="object-cover"
+              />
+            </div>
             <div className="rounded-3xl bg-noir p-6 text-white sm:p-7">
               <div className="mb-4 flex items-center gap-2">
                 <Khatam className="h-4 w-4 text-gold-bright" />
@@ -246,19 +257,34 @@ export default function HowWeVerifyPage() {
         </div>
       </section>
 
-      {/* ── Light: the hard lines ── */}
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-        <Reveal>
-          <Eyebrow>Non-negotiable</Eyebrow>
-          <h2 className="mt-3 text-3xl font-black uppercase leading-tight tracking-tight text-ink sm:text-4xl">
-            Our hard lines.
-          </h2>
-          <p className="mt-3 max-w-xl leading-relaxed text-ink-mute">
-            We are not onboarding any restaurant that is partially halal. These
-            three rules have no exceptions and no workarounds.
-          </p>
-        </Reveal>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* ── The hard lines. The band photo (a kitchen closed for the night) is
+          near-black, so rather than dropping a dark rectangle into a cream
+          section it carries the heading itself: the image IS the header
+          treatment, and the refusal cards stay on cream below it. ── */}
+      <section className="pb-20 sm:pb-28">
+        <div className="relative isolate overflow-hidden bg-noir">
+          <Image
+            src="/verify-lines.webp"
+            alt="A small commercial kitchen closed for the night, wiped down, lit by a single lamp above the pass"
+            fill
+            sizes="100vw"
+            className="object-cover object-center opacity-70"
+          />
+          <span className="absolute inset-0 bg-gradient-to-r from-noir via-noir/75 to-noir/25" />
+          <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
+            <Reveal>
+              <Eyebrow tone="bright">Non-negotiable</Eyebrow>
+              <h2 className="mt-3 text-3xl font-black uppercase leading-tight tracking-tight text-white sm:text-4xl">
+                Our hard lines.
+              </h2>
+              <p className="mt-3 max-w-xl leading-relaxed text-white/70">
+                We are not onboarding any restaurant that is partially halal.
+                These three rules have no exceptions and no workarounds.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+        <div className="mx-auto mt-10 grid max-w-6xl gap-4 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
           {HARD_LINES.map((line, i) => (
             <Reveal key={line.title} delay={(i % 3) * 90}>
               <div className="h-full rounded-3xl border border-cream-line bg-cream p-6 shadow-card">
@@ -278,6 +304,7 @@ export default function HowWeVerifyPage() {
       </section>
 
       {/* ── Light: closing CTA ── */}
+
       <section className="mx-auto max-w-6xl px-4 pb-20 text-center sm:px-6 sm:pb-28">
         <Reveal>
           <div className="rounded-3xl bg-cream-deep px-6 py-14 sm:py-16">

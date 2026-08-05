@@ -3,8 +3,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
   ArrowLeft, ArrowRight, CheckCircle, Clock, Calendar, Phone,
-  ShieldCheck, UtensilsCrossed, Image as ImageIcon, MapPin,
+  ShieldCheck, UtensilsCrossed, MapPin,
 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { BACKEND_URL } from '@/lib/backend';
 
@@ -245,16 +246,24 @@ export default function ReservePage() {
           {/* ───────────────────────── PITAVIBE INTRO ───────────────────────── */}
           <section className="px-3 pt-[68px] sm:px-5 sm:pt-[76px]">
             <div className={`relative mx-auto max-w-4xl ${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
-              {/* PLACEHOLDER hero. Founder: drop a real <Image src="/pitavibe-hero.jpg" .../>
-                  here later (images are unoptimized in this static export). */}
-              <div className="relative flex aspect-[16/9] w-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#EAB308]/20 bg-gradient-to-br from-[#FFF6E5] via-[#F6F4EF] to-[#F1E7CE] sm:aspect-[1376/620] sm:rounded-3xl">
-                <span className="inline-flex max-w-[calc(100%-2rem)] flex-wrap items-center justify-center gap-2 rounded-full border border-[#EAB308]/30 bg-white/70 px-3 py-1.5 text-center text-[11px] font-bold uppercase tracking-widest text-[#B7791F] backdrop-blur-sm">
+              {/* Hero. NOTE: this image is generated, not a photograph of the
+                  real Pitavibe room. Swap it for a real one before this page
+                  goes to a wider audience — a reservation page is a promise
+                  about a specific place. */}
+              <div className="relative flex aspect-[16/9] w-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#EAB308]/20 sm:aspect-[1376/620] sm:rounded-3xl">
+                <Image
+                  src="/pitavibe-hero.webp"
+                  alt="The interior of a small casual halal pita and shawarma restaurant in the late afternoon"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 896px"
+                  className="object-cover object-center"
+                />
+                <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
+                <span className="relative inline-flex max-w-[calc(100%-2rem)] flex-wrap items-center justify-center gap-2 rounded-full border border-[#EAB308]/40 bg-black/35 px-3 py-1.5 text-center text-[11px] font-bold uppercase tracking-widest text-[#F5D98B] backdrop-blur-sm">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#EAB308]" /> Edmonton · Invite-only soft launch
                 </span>
-                <h1 className="mt-4 text-4xl font-black uppercase tracking-tight text-[#1A1A1A] min-[400px]:text-5xl sm:text-7xl">Pitavibe</h1>
-                <p className="mt-1 flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-[#A8895A]">
-                  <ImageIcon className="h-3.5 w-3.5" /> Photo coming soon
-                </p>
+                <h1 className="relative mt-6 text-4xl font-black uppercase leading-none tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] min-[400px]:text-5xl sm:mt-8 sm:text-7xl">Pitavibe</h1>
               </div>
             </div>
           </section>

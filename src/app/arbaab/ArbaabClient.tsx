@@ -6,6 +6,7 @@ import {
   ArrowLeft, ArrowRight, PaperPlaneTilt, Sun, Moon, MagnifyingGlass,
   ShoppingCart, ArrowCounterClockwise, Star, NavigationArrow,
 } from '@phosphor-icons/react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { TransitionLink } from '@/components/transition/PageTransition';
 import { SEALED, orderHref } from '@/lib/launch';
@@ -154,7 +155,26 @@ export default function ArbaabPage() {
       </nav>
 
       {/* ── HERO ── */}
-      <section className="px-5 pt-28 text-center sm:px-8 sm:pt-32">
+      {/* The moment Arbaab is for: someone on the sofa at night deciding what
+          they want. Deliberately faint and heavily scrimmed — it sets mood
+          behind the headline, it is not meant to be looked at directly. */}
+      <section className="relative isolate px-5 pt-28 text-center sm:px-8 sm:pt-32">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-16 -z-10 h-[420px] overflow-hidden">
+          <Image
+            src="/arbaab-craving.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className={`object-cover object-center ${isDark ? 'opacity-25' : 'opacity-[0.12]'}`}
+          />
+          <span
+            className={`absolute inset-0 ${
+              isDark
+                ? 'bg-gradient-to-b from-noir via-noir/70 to-noir'
+                : 'bg-gradient-to-b from-cream via-cream/80 to-cream'
+            }`}
+          />
+        </div>
         <div className={`mx-auto max-w-3xl ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold-bright/30 bg-gold-bright/10 px-3.5 py-1.5">
             <img src="/takinator_avatar.png" className="h-3.5 w-3.5 object-contain" alt="Arbaab" />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -148,8 +149,22 @@ export default function RewardsPage() {
     <>
       <Header overlay overlayTone="dark" />
 
-      {/* ── Dark brand island: the promise ── */}
+      {/* ── Dark brand island: the promise. A real weeknight takeout spread
+          sits behind it at low opacity so the numbers land on food, not on a
+          flat black field. ── */}
       <section className="grain relative overflow-hidden bg-noir pb-20 pt-32 text-white sm:pb-24 sm:pt-40">
+        <Image
+          src="/rewards-hero.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="pointer-events-none object-cover object-right opacity-25"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-noir via-noir/85 to-noir/40"
+        />
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
           <div className="rise" style={{ animationDelay: "60ms" }}>
             <Eyebrow tone="bright">Taeam Rewards</Eyebrow>
@@ -379,6 +394,17 @@ export default function RewardsPage() {
       <section className="bg-cream-deep py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Reveal>
+            <div className="relative mb-10 aspect-[21/9] overflow-hidden rounded-3xl">
+              <Image
+                src="/rewards-everyday.webp"
+                alt="Two friends eating shawarma on an Edmonton sidewalk on an autumn evening"
+                fill
+                sizes="(max-width: 1024px) 100vw, 1152px"
+                className="object-cover object-center"
+              />
+            </div>
+          </Reveal>
+          <Reveal>
             <Eyebrow>Beyond the order</Eyebrow>
             <h2 className="mt-3 text-3xl font-black uppercase leading-tight tracking-tight text-ink sm:text-4xl">
               More ways to earn.
@@ -415,8 +441,20 @@ export default function RewardsPage() {
         </div>
       </section>
 
-      {/* ── Dark brand island: Taeam Plus ── */}
+      {/* ── Dark brand island: Taeam Plus. The handover at the door sits behind
+          the price so "the fees, handled" has the moment it pays for. ── */}
       <section className="grain relative overflow-hidden bg-noir py-20 text-white sm:py-28">
+        <Image
+          src="/rewards-plus.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="pointer-events-none object-cover object-left opacity-25"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-l from-noir via-noir/85 to-noir/45"
+        />
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
             <Reveal>

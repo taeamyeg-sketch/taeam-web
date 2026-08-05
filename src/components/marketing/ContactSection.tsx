@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { InstagramLogo, EnvelopeSimple, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
@@ -28,6 +29,19 @@ const CHANNELS = [
 export function ContactSection() {
   return (
     <section id="contact" className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+      {/* The table after everyone's gone home — the quiet end of the page,
+          right before the footer. */}
+      <Reveal>
+        <div className="relative mb-14 aspect-[21/9] overflow-hidden rounded-3xl">
+          <Image
+            src="/contact-band.webp"
+            alt="A restaurant table after a shared meal has ended, plates pushed together under a single warm pendant"
+            fill
+            sizes="(max-width: 1024px) 100vw, 1152px"
+            className="object-cover"
+          />
+        </div>
+      </Reveal>
       <Reveal>
         <Eyebrow>Get in touch</Eyebrow>
         <h2 className="mt-3 text-3xl font-black uppercase leading-tight tracking-tight text-ink sm:text-4xl">

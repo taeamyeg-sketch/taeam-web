@@ -107,6 +107,19 @@ export default function FridgePage() {
 
       {/* ── TWO SIDES ── */}
       <section className="px-5 py-10 sm:px-8">
+        {/* The person the Fridge is actually for. Sits above both cards rather
+            than inside one of them, so the two-up grid stays balanced. */}
+        <div className="mx-auto mb-4 max-w-3xl">
+          <div className="relative aspect-[21/9] overflow-hidden rounded-2xl">
+            <Image
+              src="/fridge-homecook.webp"
+              alt="A woman packing food she has cooked into containers on a home kitchen counter"
+              fill
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover object-[55%_38%]"
+            />
+          </div>
+        </div>
         <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
           <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.35)]">
             <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gold-bright/12 text-gold-deep">

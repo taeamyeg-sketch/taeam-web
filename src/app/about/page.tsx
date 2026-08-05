@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -30,6 +31,22 @@ export default function AboutPage() {
           <h1 className="mt-4 font-black uppercase tracking-tight text-4xl leading-tight text-ink sm:text-5xl">
             We made halal the whole point.
           </h1>
+        </Reveal>
+
+        {/* The room this is all for: an ordinary Edmonton halal table on a
+            winter night. Sits between the headline and the argument so the
+            page has a face before it has a case. */}
+        <Reveal>
+          <div className="relative mt-10 aspect-[3/2] overflow-hidden rounded-2xl border border-cream-line">
+            <Image
+              src="/about-table.webp"
+              alt="Four friends sharing a late dinner around a table in an Edmonton halal restaurant on a winter evening"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover"
+            />
+          </div>
         </Reveal>
 
         <Reveal>
@@ -74,6 +91,21 @@ export default function AboutPage() {
                 </p>
               </div>
             ))}
+          </div>
+        </Reveal>
+
+        {/* "Starting where we live" needs to show the place. Full-bleed out of
+            the max-w-3xl column so it reads as a break in the page, not a
+            figure inside it. */}
+        <Reveal>
+          <div className="relative mt-14 aspect-[21/9] w-screen max-w-none -translate-x-1/2 left-1/2 overflow-hidden sm:aspect-[21/8]">
+            <Image
+              src="/about-city.webp"
+              alt="A strip of small independent shopfronts on an Edmonton avenue at dusk in early spring"
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
           </div>
         </Reveal>
 
