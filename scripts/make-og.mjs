@@ -1,19 +1,20 @@
 import sharp from "sharp";
 
-// 1200x630 Open Graph card: cream field, ink mark, gold khatam accents.
+// 1200x630 Open Graph card: cream field, ink mark, gold rule accents.
+//
+// The corner accents used to be khatams (eight-pointed stars). That motif is
+// gone from the whole site — see components/Pattern.tsx — so the share card
+// uses the same short gold rule the pages do.
 const W = 1200, H = 630;
 
-const khatam = (x, y, s, color, opacity) => `
-  <g transform="translate(${x} ${y}) rotate(0)" opacity="${opacity}">
-    <rect x="${-s / 2}" y="${-s / 2}" width="${s}" height="${s}" fill="none" stroke="${color}" stroke-width="2"/>
-    <rect x="${-s / 2}" y="${-s / 2}" width="${s}" height="${s}" fill="none" stroke="${color}" stroke-width="2" transform="rotate(45)"/>
-  </g>`;
+const rule = (x, y, w, color, opacity) => `
+  <rect x="${x - w / 2}" y="${y}" width="${w}" height="2" fill="${color}" opacity="${opacity}"/>`;
 
 const svg = `
 <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
   <rect width="${W}" height="${H}" fill="#faf6ee"/>
-  ${khatam(90, 90, 46, "#eea742", 0.9)}
-  ${khatam(1110, 540, 46, "#eea742", 0.9)}
+  ${rule(90, 90, 64, "#eea742", 0.9)}
+  ${rule(1110, 540, 64, "#eea742", 0.9)}
   <text x="600" y="415" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="88" font-weight="600" fill="#121212">Halal, delivered.</text>
   <text x="600" y="490" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#6f6659">Every kitchen verified · Edmonton</text>
 </svg>`;

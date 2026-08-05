@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 import type { Restaurant } from "@/lib/types";
-import { Khatam } from "./Pattern";
+import { Seal } from "./Pattern";
 
 export function verificationLabel(status: string | null): string | null {
   switch (status) {
@@ -24,7 +24,7 @@ export function slaughterLabel(r: Restaurant): string | null {
 
 /**
  * The halal-transparency badge — the thing the big platforms can't show.
- * Gold khatam for restaurants Taeam verified ourselves; quiet outline for
+ * Gold seal for restaurants Taeam verified ourselves; quiet outline for
  * owner declarations.
  */
 export function VerifiedBadge({
@@ -52,7 +52,7 @@ export function VerifiedBadge({
         className,
       )}
     >
-      <Khatam className="h-3 w-3" strokeWidth={1.8} />
+      <Seal className="h-3 w-3" strokeWidth={1.8} />
       {label}
     </span>
   );

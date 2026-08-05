@@ -7,7 +7,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { CheckCircle, Phone } from "@phosphor-icons/react";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { Khatam } from "@/components/Pattern";
+import { Rule } from "@/components/Pattern";
 import { useAuth } from "@/components/auth/AuthContext";
 import { LiveMap, type MapPin } from "@/components/track/LiveMap";
 import { requestRoute } from "@/lib/api";
@@ -352,7 +352,7 @@ function TrackInner() {
             </div>
 
             <p className="flex items-center gap-2 text-xs text-ink-mute">
-              <Khatam className="h-3 w-3 text-gold" strokeWidth={1.8} />
+              <Rule className="w-4 text-gold" />
               Updates live, no need to refresh.
             </p>
           </div>

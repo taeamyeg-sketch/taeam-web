@@ -11,7 +11,7 @@ import {
   AuthBackendError,
 } from "@/lib/auth-backend";
 import { GoogleSignInButton } from "./GoogleSignInButton";
-import { Khatam } from "@/components/Pattern";
+import { Seal } from "@/components/Pattern";
 import { cn } from "@/lib/cn";
 
 /**
@@ -242,7 +242,7 @@ export function AuthPanel({
       {error && <p className="mt-4 text-sm font-medium text-red">{error}</p>}
 
       <p className="mt-6 flex items-center gap-2 text-xs text-ink-mute">
-        <Khatam className="h-3 w-3 text-gold" strokeWidth={1.8} />
+        <Seal className="h-3 w-3 text-gold" strokeWidth={1.8} />
         Every kitchen on Taeam is halal. Verified, not filtered.
       </p>
     </div>

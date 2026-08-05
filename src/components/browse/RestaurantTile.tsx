@@ -5,7 +5,7 @@ import { openStatus } from "@/lib/hours";
 import { etaLabel, money } from "@/lib/format";
 import { distanceLabel } from "@/lib/geo";
 import { verificationLabel } from "@/components/VerifiedBadge";
-import { Khatam } from "@/components/Pattern";
+import { Seal } from "@/components/Pattern";
 import type { Restaurant } from "@/lib/types";
 import { cn } from "@/lib/cn";
 
@@ -57,7 +57,7 @@ export function RestaurantTile({
         )}
 
         {/* Trust badge — the thing the big platforms can't show. Same treatment
-            as <VerifiedBadge> (Khatam icon, gap, weight); only the background
+            as <VerifiedBadge> (Seal icon, gap, weight); only the background
             opacity differs so it stays legible over the photo. */}
         {trust && (
           <span
@@ -68,7 +68,7 @@ export function RestaurantTile({
                 : "bg-cream/90 text-ink-mute",
             )}
           >
-            <Khatam className="h-3 w-3" strokeWidth={1.8} />
+            <Seal className="h-3 w-3" strokeWidth={1.8} />
             {verified ? "Verified" : "Halal"}
           </span>
         )}

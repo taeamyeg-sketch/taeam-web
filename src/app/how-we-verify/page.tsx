@@ -6,7 +6,7 @@ import { Header } from "@/components/Header";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
 import { TransitionLink } from "@/components/transition/PageTransition";
-import { Khatam } from "@/components/Pattern";
+import { Seal } from "@/components/Pattern";
 import { SEALED, orderHref } from "@/lib/launch";
 import { JoinWaitlistButton } from "@/components/JoinWaitlistButton";
 
@@ -171,7 +171,7 @@ export default function HowWeVerifyPage() {
             </div>
             <div className="rounded-3xl bg-noir p-6 text-white sm:p-7">
               <div className="mb-4 flex items-center gap-2">
-                <Khatam className="h-4 w-4 text-gold-bright" />
+                <Seal className="h-4 w-4 text-gold-bright" />
                 <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/80">
                   Taeam Verified
                 </span>
@@ -239,7 +239,7 @@ export default function HowWeVerifyPage() {
               <Reveal key={card.title} delay={i * 90}>
                 <div className="h-full rounded-3xl border border-noir-line bg-noir-soft p-8">
                   <div className="flex items-center gap-2">
-                    <Khatam className="h-5 w-5 text-gold-bright" />
+                    <Seal className="h-5 w-5 text-gold-bright" />
                     <h3 className="font-semibold text-gold-bright">
                       {card.title}
                     </h3>

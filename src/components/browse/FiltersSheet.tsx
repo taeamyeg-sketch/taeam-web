@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Hand, Gear, ArrowsLeftRight, CheckCircle } from "@phosphor-icons/react";
-import { Khatam } from "@/components/Pattern";
+import { X, Hand, Gear, ArrowsLeftRight, CheckCircle, SlidersHorizontal } from "@phosphor-icons/react";
 import { type HalalFilter, EMPTY_HALAL_FILTER } from "@/lib/halal-filter";
 import { QUICK_FILTERS } from "@/lib/collections";
 import { useModalDialog } from "@/lib/useModalDialog";
@@ -83,7 +82,7 @@ function FiltersDialog({
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15 text-gold-deep">
-              <Khatam className="h-5 w-5" strokeWidth={1.8} />
+              <SlidersHorizontal className="h-5 w-5" weight="bold" />
             </span>
             <div>
               <h2 className="text-lg font-black uppercase tracking-tight text-ink">Filters</h2>

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Copy, Check, SignOut, Crown, ArrowRight } from "@phosphor-icons/react";
 import { AccountShell } from "@/components/account/AccountShell";
 import { useAuth } from "@/components/auth/AuthContext";
-import { Khatam } from "@/components/Pattern";
+import { Rule } from "@/components/Pattern";
 
 export default function AccountPage() {
   const { user, profile, signOut } = useAuth();
@@ -138,7 +138,7 @@ export default function AccountPage() {
       </div>
 
       <p className="mt-10 flex items-center gap-2 text-xs text-ink-mute">
-        <Khatam className="h-3 w-3 text-gold" strokeWidth={1.8} />
+        <Rule className="w-4 text-gold" />
         Same account as the Taeam app, everything stays in sync.
       </p>
     </AccountShell>

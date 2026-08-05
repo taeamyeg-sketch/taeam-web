@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { Divider, Khatam } from "@/components/Pattern";
+import { Divider, Rule } from "@/components/Pattern";
 import { Reveal } from "@/components/Reveal";
 import { SEALED, orderHref } from "@/lib/launch";
 import { JoinWaitlistButton } from "@/components/JoinWaitlistButton";
@@ -111,7 +111,7 @@ export default function AboutPage() {
 
         <Reveal>
           <div className="mt-14 rounded-3xl bg-ink p-8 text-cream sm:p-10">
-            <Khatam className="h-6 w-6 text-gold" />
+            <Rule className="w-10 text-gold" />
             <h2 className="mt-4 font-black uppercase tracking-tight text-2xl sm:text-3xl">
               Hungry already?
             </h2>

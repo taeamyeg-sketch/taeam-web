@@ -12,7 +12,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { Khatam } from "@/components/Pattern";
+import { Seal } from "@/components/Pattern";
 import { MenuBrowser } from "@/components/menu/MenuBrowser";
 import { VerifiedBadge, slaughterLabel } from "@/components/VerifiedBadge";
 import { getMenu, getRestaurant } from "@/lib/data";
@@ -179,7 +179,7 @@ export default async function RestaurantPage({ params }: Params) {
               <div className="mt-5 flex flex-col gap-2 border-t border-cream-line pt-4 text-sm text-ink-mute sm:flex-row sm:items-center sm:gap-6">
                 {halal && (
                   <span className="inline-flex items-center gap-2">
-                    <Khatam className="h-4 w-4 text-gold-deep" strokeWidth={1.6} />
+                    <Seal className="h-4 w-4 text-gold-deep" strokeWidth={1.6} />
                     {halal}
                   </span>
                 )}

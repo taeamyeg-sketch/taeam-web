@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Khatam } from "@/components/Pattern";
+import { Seal } from "@/components/Pattern";
 import { Reveal } from "@/components/Reveal";
 
 /**
@@ -88,7 +88,7 @@ export function TrustGap() {
         {/* Taeam's answer */}
         <Reveal>
           <div className="mt-14 flex items-start gap-4 border-t border-noir-line pt-10">
-            <Khatam className="mt-1.5 h-6 w-6 shrink-0 text-gold-bright" />
+            <Seal className="mt-1.5 h-6 w-6 shrink-0 text-gold-bright" />
             <p className="max-w-2xl font-black uppercase tracking-tight text-2xl leading-snug sm:text-3xl">
               Taeam shows the full breakdown, before you order. Here is what that
               means.
@@ -128,7 +128,7 @@ export function TrustGap() {
             </div>
             <div className="rounded-3xl border border-noir-line bg-noir-soft p-6 sm:p-7">
               <div className="mb-4 flex items-center gap-2">
-                <Khatam className="h-4 w-4 text-gold-bright" />
+                <Seal className="h-4 w-4 text-gold-bright" />
                 <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/80">
                   Taeam Verified
                 </span>

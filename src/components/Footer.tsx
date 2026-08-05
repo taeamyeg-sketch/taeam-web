@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Eyebrow } from "@/components/Eyebrow";
-import { Khatam } from "./Pattern";
+import { Rule } from "./Pattern";
 import { SEALED } from "@/lib/launch";
 
 /**
@@ -234,7 +234,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col items-start gap-4 border-t border-cream/10 pt-6 text-xs text-cream/45 sm:flex-row sm:items-center sm:justify-between">
           <span className="inline-flex items-center gap-2.5">
-            <Khatam className="h-3.5 w-3.5 text-gold-bright/60" />
+            <Rule className="w-4 text-gold-bright/60" />
             © 2026 Taeam Technologies Inc. · Edmonton, Alberta · All rights reserved.
           </span>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
