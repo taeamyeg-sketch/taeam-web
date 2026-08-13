@@ -60,8 +60,8 @@ const VERIFY = [
 const RATES = [
   { label: "Uber Eats, SkipTheDishes, DoorDash", rate: "20–30%", tone: "them" },
   { label: "Your first three months on Taeam", rate: "12%", tone: "key" },
-  { label: "From month four, 60+ orders a month", rate: "15%", tone: "us" },
-  { label: "From month four, below 60", rate: "17%", tone: "us" },
+  { label: "From month four, 100+ orders a month", rate: "15%", tone: "us" },
+  { label: "From month four, below 100", rate: "17%", tone: "us" },
 ] as const;
 
 const PAID = [
@@ -87,6 +87,55 @@ const NEEDS = [
   {
     title: "Twenty minutes",
     copy: "One signature, one test order through the kitchen, and you are live.",
+  },
+];
+
+/**
+ * The questions owners actually ask, in the order they ask them. Every number
+ * here is the one the platform bills on, so it moves with
+ * config.commission_rates and lib/commission.js. See the migration
+ * 20260812_01_founding_rate_3_months_volume_100.sql before editing any of it.
+ */
+const ANSWERS = [
+  {
+    q: "Are there any other fees?",
+    a: "No. The commission is the only thing we take. No processing or transaction fees, no monthly fee, no setup cost, and nothing for the menu page and photos we build for you.",
+  },
+  {
+    q: "Is the 12% permanent?",
+    a: "It runs for your first three months. After that it is 15% if you are doing 100 or more orders a month, and 17% below that. If you want a longer founding term, say so and we will talk about it.",
+  },
+  {
+    q: "Is there a contract or exclusivity?",
+    a: "Neither. Stay on every other platform you are on. There is no minimum term and no cancellation fee, so you can leave whenever you want.",
+  },
+  {
+    q: "How often do we get paid?",
+    a: "Every week. We settle Sunday night and the transfer lands in your bank in one to three business days, with the order by order breakdown behind it.",
+  },
+  {
+    q: "Who handles the drivers?",
+    a: "We do. Taeam recruits, manages and pays the drivers, and dispatches them to your door. You cook and hand off the order. Nothing else changes in your kitchen.",
+  },
+  {
+    q: "What happens with refunds and complaints?",
+    a: "We split them by fault. If the mistake is ours or the driver's, you keep your money in full. If it is a kitchen error, it costs you 70% of the refund and we absorb the rest. We handle the customer either way.",
+  },
+  {
+    q: "Can we set our own prices?",
+    a: "Yes, and you can change them yourself at any time. We do not mark up your menu, and we do not ask you to charge more on Taeam than you do in the restaurant.",
+  },
+  {
+    q: "Who pays for promotions?",
+    a: "We do. When a customer uses a promo code or a deal, you are still paid on your full menu price. The discount comes off our side, not yours.",
+  },
+  {
+    q: "What area do you deliver to?",
+    a: "Edmonton, up to 15 km from your kitchen. From most locations that covers most of the city.",
+  },
+  {
+    q: "Are you in other cities?",
+    a: "Not yet. Edmonton is our first launch and our only focus until it works properly here.",
   },
 ];
 
@@ -194,8 +243,12 @@ export default function PartnersPage() {
 
           <Reveal delay={150}>
             <div className="mt-5 flex flex-col gap-3 text-sm text-ink-mute sm:flex-row sm:items-center sm:justify-between">
-              <span>We review your volume with you before your rate changes.</span>
-              <span className="font-semibold text-ink">
+              <span>
+                The commission is the only thing we take. No processing fees, no
+                monthly fee, and we review your volume with you before your rate
+                changes.
+              </span>
+              <span className="shrink-0 font-semibold text-ink">
                 No upfront cost · No hardware · No exclusivity · Cancel anytime
               </span>
             </div>
@@ -321,8 +374,39 @@ export default function PartnersPage() {
         </div>
       </section>
 
+      {/* ── The ten questions every owner asks, answered in full ── */}
+      <section id="questions" className="scroll-mt-24 bg-cream-deep py-20 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal>
+            <Eyebrow>Straight answers</Eyebrow>
+            <h2 className="mt-3 max-w-2xl text-3xl font-black uppercase leading-tight tracking-tight text-ink sm:text-4xl">
+              Everything owners ask us before signing.
+            </h2>
+            <p className="mt-4 max-w-xl leading-relaxed text-ink-mute">
+              If something here is not clear, call and ask. We would rather
+              answer it now than have you find out later.
+            </p>
+          </Reveal>
+
+          <dl className="mt-12 grid gap-x-12 gap-y-9 md:grid-cols-2">
+            {ANSWERS.map((item, i) => (
+              <Reveal key={item.q} delay={(i % 2) * 90}>
+                <div className="border-t border-cream-line pt-6">
+                  <dt className="text-lg font-black uppercase leading-snug tracking-tight text-ink">
+                    {item.q}
+                  </dt>
+                  <dd className="mt-2 leading-relaxed text-ink-mute">
+                    {item.a}
+                  </dd>
+                </div>
+              </Reveal>
+            ))}
+          </dl>
+        </div>
+      </section>
+
       {/* ── Closing CTA ── */}
-      <section className="mx-auto max-w-6xl px-4 pb-20 text-center sm:px-6 sm:pb-28">
+      <section className="mx-auto max-w-6xl px-4 py-20 text-center sm:px-6 sm:py-28">
         <Reveal>
           <div className="rounded-3xl bg-cream-deep px-6 py-14 sm:py-16">
             <h2 className="mx-auto max-w-2xl text-3xl font-black uppercase leading-tight tracking-tight text-ink sm:text-4xl">
