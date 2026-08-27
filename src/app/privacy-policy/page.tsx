@@ -111,12 +111,15 @@ export default function PrivacyPolicyPage() {
         </p>
         <p>
           When you chat with it, your message text and the restaurant data it
-          needs to answer get sent to OpenAI for processing. We don&apos;t send
-          your name, phone number, address, or payment info. Chats aren&apos;t
-          kept on OpenAI&apos;s side after the response is generated. We do
-          keep an audit log of any actions it takes inside the app (like adding
-          items to a cart) for security reasons, and that&apos;s the action,
-          not the chat.
+          needs to answer get sent to an AI provider for processing. We use
+          two: OpenAI and Google (Gemini), depending on which one is answering.
+          We don&apos;t send your name, phone number, address, or payment info.
+          Arbaab can see the labels on your saved addresses, like Home or Work,
+          so it can offer you one, but not the street lines themselves. Chats
+          aren&apos;t kept on the provider&apos;s side after the response is
+          generated. We do keep an audit log of any actions it takes inside the
+          app (like adding items to a cart) for security reasons, and
+          that&apos;s the action, not the chat.
         </p>
         <p>
           Arbaab never places or pays for an order on its own. Checkout always
