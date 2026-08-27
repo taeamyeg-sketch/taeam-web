@@ -16,7 +16,7 @@ import { Seal } from "@/components/Pattern";
 export const metadata: Metadata = {
   title: "Partner with Taeam",
   description:
-    "Founding restaurant partners in Edmonton pay 12% for three months, then 15% or 17%. Weekly payouts, no hardware, no exclusivity, and halal verification the customer can actually read.",
+    "Founding restaurant partners in Edmonton pay 12% for three months, then 15% or 17%. Weekly payouts, a tablet on us, no exclusivity, and halal verification the customer can actually read.",
   robots: { index: false, follow: false },
   openGraph: {
     title: "Partner with Taeam · Founding restaurants",
@@ -99,7 +99,11 @@ const NEEDS = [
 const ANSWERS = [
   {
     q: "Are there any other fees?",
-    a: "No. The commission is the only thing we take. No processing or transaction fees, no monthly fee, no setup cost, and nothing for the menu page and photos we build for you.",
+    a: "No. The commission is the only thing we take. No processing or transaction fees, no monthly fee, no setup cost, nothing for the tablet, and nothing for the menu page and photos we build for you.",
+  },
+  {
+    q: "Do we need our own tablet?",
+    a: "No. We bring you one set up and ready, and orders come through on it. If you would rather run it on a tablet you already have, that works too.",
   },
   {
     q: "Is the 12% permanent?",
@@ -249,7 +253,7 @@ export default function PartnersPage() {
                 changes.
               </span>
               <span className="shrink-0 font-semibold text-ink">
-                No upfront cost · No hardware · No exclusivity · Cancel anytime
+                No upfront cost · Tablet included · No exclusivity · Cancel anytime
               </span>
             </div>
           </Reveal>
@@ -410,7 +414,7 @@ export default function PartnersPage() {
         <Reveal>
           <div className="rounded-3xl bg-cream-deep px-6 py-14 sm:py-16">
             <h2 className="mx-auto max-w-2xl text-3xl font-black uppercase leading-tight tracking-tight text-ink sm:text-4xl">
-              Launching October 15, 2026.
+              Launching this fall.
             </h2>
             <p className="mx-auto mt-3 max-w-md leading-relaxed text-ink-mute">
               Founding rates are for the kitchens that open with us. Call and we
