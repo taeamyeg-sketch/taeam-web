@@ -82,7 +82,7 @@ const MORE_WAYS = [
     icon: <InstagramLogo className="h-5 w-5" weight="bold" />,
     title: "Tag & earn",
     pts: "+1,000 once",
-    copy: "Post your order, tag @taeam.ca, and a one-time thousand-point thank you is yours.",
+    copy: "Post your order, tag @taeam.ca and include #ad, and a one-time thousand-point thank you is yours.",
   },
   {
     icon: <Barcode className="h-5 w-5" weight="bold" />,
@@ -176,7 +176,8 @@ export default function RewardsPage() {
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
               Points land automatically on everything you order, free points
               stack every day you show up, and 1,000 points is a straight
-              dollar off your food. No punch cards, no fine print.
+              dollar off your food. No punch cards, no fine print. Points
+              expire 18 months after they are earned.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-5">
               <a
