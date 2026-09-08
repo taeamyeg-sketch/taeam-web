@@ -58,7 +58,7 @@ const VERIFY = [
 // Rates are the live values in public.config → commission_rates. If that row
 // changes, this table changes with it, and so does the printed sheet.
 const RATES = [
-  { label: "Uber Eats, SkipTheDishes, DoorDash", rate: "20–30%", tone: "them" },
+  { label: "Uber Eats, SkipTheDishes, DoorDash", rate: "20% to 30%", tone: "them" },
   { label: "Your first three months on Taeam", rate: "12%", tone: "key" },
   { label: "From month four, 100+ orders a month", rate: "15%", tone: "us" },
   { label: "From month four, below 100", rate: "17%", tone: "us" },
