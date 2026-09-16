@@ -71,7 +71,7 @@ const PAID = [
   },
   {
     title: "Refunds split by fault",
-    copy: "Our mistake or the driver's, you keep your money. A kitchen mistake costs you 70% of it, and we absorb the rest rather than passing the whole ticket back.",
+    copy: "Our mistake or the driver's, you keep your money. A kitchen mistake costs you 70% of what you earned on that order, and we absorb the rest rather than passing the whole ticket back.",
   },
 ];
 
@@ -82,7 +82,7 @@ const NEEDS = [
   },
   {
     title: "Your supplier",
-    copy: "Their name, and a copy of the halal certificate you already keep.",
+    copy: "Their name, a copy of the halal certificate you already keep, and one recent invoice.",
   },
   {
     title: "Twenty minutes",
@@ -111,7 +111,7 @@ const ANSWERS = [
   },
   {
     q: "Is there a contract or exclusivity?",
-    a: "Neither. Stay on every other platform you are on. There is no minimum term and no cancellation fee, so you can leave whenever you want.",
+    a: "There is a partner agreement to sign, and no exclusivity anywhere in it. Stay on every other platform you are on. There is no minimum term and no cancellation fee, so you can leave whenever you want.",
   },
   {
     q: "How often do we get paid?",
@@ -123,7 +123,7 @@ const ANSWERS = [
   },
   {
     q: "What happens with refunds and complaints?",
-    a: "We split them by fault. If the mistake is ours or the driver's, you keep your money in full. If it is a kitchen error, it costs you 70% of the refund and we absorb the rest. We handle the customer either way.",
+    a: "We split them by fault. If the mistake is ours or the driver's, you keep your money in full. If it is a kitchen error, it costs you 70% of what you earned on that order and we absorb the rest. We handle the customer either way.",
   },
   {
     q: "Can we set our own prices?",
@@ -249,8 +249,7 @@ export default function PartnersPage() {
             <div className="mt-5 flex flex-col gap-3 text-sm text-ink-mute sm:flex-row sm:items-center sm:justify-between">
               <span>
                 The commission is the only thing we take. No processing fees, no
-                monthly fee, and we review your volume with you before your rate
-                changes.
+                monthly fee, and we tell you whenever your rate changes.
               </span>
               <span className="shrink-0 font-semibold text-ink">
                 No upfront cost · Tablet included · No exclusivity · Cancel anytime
