@@ -71,7 +71,7 @@ const PAID = [
   },
   {
     title: "Refunds split by fault",
-    copy: "Our mistake or the driver's, you keep your money. A kitchen mistake costs you 70% of what you earned on that order, and we absorb the rest rather than passing the whole ticket back.",
+    copy: "Our mistake or the driver's, you keep your money. A kitchen mistake costs you 70% of what you earned on the items refunded, and we absorb the rest rather than passing the whole ticket back.",
   },
 ];
 
@@ -123,7 +123,7 @@ const ANSWERS = [
   },
   {
     q: "What happens with refunds and complaints?",
-    a: "We split them by fault. If the mistake is ours or the driver's, you keep your money in full. If it is a kitchen error, it costs you 70% of what you earned on that order and we absorb the rest. We handle the customer either way.",
+    a: "We split them by fault. If the mistake is ours or the driver's, you keep your money in full. If it is a kitchen error, it costs you 70% of what you earned on the items refunded and we absorb the rest. We handle the customer either way.",
   },
   {
     q: "Can we set our own prices?",
@@ -252,7 +252,7 @@ export default function PartnersPage() {
                 monthly fee, and we tell you whenever your rate changes.
               </span>
               <span className="shrink-0 font-semibold text-ink">
-                No upfront cost · Tablet included · No exclusivity · Cancel anytime
+                No upfront cost · Tablet on loan · No exclusivity · Cancel anytime
               </span>
             </div>
           </Reveal>
