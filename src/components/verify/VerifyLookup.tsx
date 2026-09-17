@@ -12,7 +12,10 @@ interface VerifyRecord {
   restaurant_legal_name: string;
   restaurant_address: string | null;
   certifying_body: string | null;
-  certificate_number: string | null;
+  // No certificate_number. A supplier's halal certificate number can often be
+  // looked up against the body that issued it, which names the supplier, and
+  // Agreement s.4.7 says Taeam does not publish that. It stays in the private
+  // table and out of halal_verification_public.
   certificate_expiry: string | null;
   documents_reviewed: string | null;
   verified_on: string;
@@ -143,8 +146,8 @@ export function VerifyLookup() {
         <p className="mt-6 text-ink-mute">
           No record matches that number. Check the digits on the certificate, or
           email{" "}
-          <a className="link-underline" href="mailto:restaurants@taeam.ca">
-            restaurants@taeam.ca
+          <a className="link-underline" href="mailto:contact@taeam.ca">
+            contact@taeam.ca
           </a>{" "}
           and we will confirm it by hand.
         </p>
@@ -154,8 +157,8 @@ export function VerifyLookup() {
         <p className="mt-6 text-ink-mute">
           We could not reach the register just now. Try again in a moment, or
           email{" "}
-          <a className="link-underline" href="mailto:restaurants@taeam.ca">
-            restaurants@taeam.ca
+          <a className="link-underline" href="mailto:contact@taeam.ca">
+            contact@taeam.ca
           </a>
           .
         </p>
@@ -180,7 +183,6 @@ export function VerifyLookup() {
             {[
               ["Record number", record.record_no],
               ["Certifying body", record.certifying_body],
-              ["Certificate number", record.certificate_number],
               ["Certificate expiry", fmtDate(record.certificate_expiry)],
               ["Documents reviewed", record.documents_reviewed],
               ["Date verified", fmtDate(record.verified_on)],
