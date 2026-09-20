@@ -16,6 +16,7 @@ import { Seal } from "@/components/Pattern";
 import { MenuBrowser } from "@/components/menu/MenuBrowser";
 import { VerifiedBadge, slaughterLabel } from "@/components/VerifiedBadge";
 import { getMenu, getRestaurant } from "@/lib/data";
+import { jsonLdScript } from "@/lib/json-ld";
 import { openStatus } from "@/lib/hours";
 import { etaLabel, money } from "@/lib/format";
 import { cn } from "@/lib/cn";
@@ -202,7 +203,7 @@ export default async function RestaurantPage({ params }: Params) {
       <Footer />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
     </>
   );

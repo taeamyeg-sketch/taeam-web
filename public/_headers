@@ -3,6 +3,15 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
 
+  # Added 2026-09-19. Cloudflare Pages serves this site over HTTPS only and
+  # redirects HTTP, but without HSTS the very first visit of a session can still
+  # be stripped to HTTP on a hostile network before that redirect is followed.
+  # One year, apex only: deliberately NO includeSubDomains and NO preload,
+  # because those commit every current and future taeam.ca subdomain to HTTPS
+  # and preload is slow to undo. The restaurant portal sets the stronger form on
+  # its own hostname, where the subdomain set is known.
+  Strict-Transport-Security: max-age=31536000
+
 # NOTE: there is deliberately no site-wide `X-Robots-Tag: noindex` here.
 # An HTTP header beats the per-page <meta name="robots"> tag, so a blanket rule
 # here silently overrode every page that asks to be indexed (terms, cookies,
