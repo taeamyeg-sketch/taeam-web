@@ -23,9 +23,19 @@ import { cn } from "@/lib/cn";
 
 type Params = { params: Promise<{ id: string }> };
 
+const NO_RESTAURANTS_SENTINEL = "__no_restaurants__";
+
 export async function generateStaticParams() {
   const { getRestaurants } = await import("@/lib/data");
   const restaurants = await getRestaurants();
+  // `output: export` refuses a dynamic route that yields no paths at all, and
+  // the visible-restaurant count is legitimately allowed to be zero: it is zero
+  // right now with the placeholders closed, and it is zero again between
+  // deleting them (P0-12) and the first real partner going live. Falling back
+  // to one sentinel keeps the build independent of the catalogue. The page
+  // calls notFound() for an id it cannot resolve, so the sentinel exports as a
+  // 404 and never appears in the sitemap.
+  if (restaurants.length === 0) return [{ id: NO_RESTAURANTS_SENTINEL }];
   return restaurants.map((r) => ({ id: r.id }));
 }
 

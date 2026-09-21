@@ -33,7 +33,12 @@ function cuisinesOf(restaurants: Restaurant[]): Map<string, string> {
 
 export async function generateStaticParams() {
   const restaurants = await getRestaurants();
-  return [...cuisinesOf(restaurants).keys()].map((cuisine) => ({ cuisine }));
+  const cuisines = [...cuisinesOf(restaurants).keys()];
+  // See the note in restaurant/[id]: zero visible restaurants means zero
+  // cuisines, and `output: export` will not accept a dynamic route with no
+  // paths. The page calls notFound() for a cuisine it cannot resolve.
+  if (cuisines.length === 0) return [{ cuisine: "__no_cuisines__" }];
+  return cuisines.map((cuisine) => ({ cuisine }));
 }
 
 type Params = { params: Promise<{ cuisine: string }> };
