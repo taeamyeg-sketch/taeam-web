@@ -48,17 +48,17 @@ const STATUS = {
   current: {
     label: "This record is current",
     body: "Taeam reviewed the documents below on the date shown and this restaurant is an active partner.",
-    className: "border-green/40 bg-green/10 text-green",
+    className: "text-green",
   },
   withdrawn: {
     label: "This record has been withdrawn",
     body: "Taeam has withdrawn this record. Any printed certificate carrying this number should no longer be on display, and you should not rely on it.",
-    className: "border-red/40 bg-red/10 text-red",
+    className: "text-red",
   },
   expired: {
     label: "This record has lapsed",
     body: "This record passed its review date and has not been renewed. Ask the restaurant for its current certificate.",
-    className: "border-gold-deep/40 bg-gold/10 text-gold-deep",
+    className: "text-gold-deep",
   },
 } as const;
 
@@ -166,8 +166,8 @@ export function VerifyLookup() {
 
       {state === "found" && record && (
         <section className="mt-10">
-          <div className={`rounded-xl border px-5 py-4 ${STATUS[record.status].className}`}>
-            <p className="font-semibold">{STATUS[record.status].label}</p>
+          <div className="rounded-xl border border-cream-line bg-white px-5 py-4">
+            <p className={`font-semibold ${STATUS[record.status].className}`}>{STATUS[record.status].label}</p>
             <p className="mt-1 text-sm text-ink-soft">{STATUS[record.status].body}</p>
           </div>
 

@@ -176,10 +176,7 @@ export default function ArbaabPage() {
           />
         </div>
         <div className={`mx-auto max-w-3xl ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}>
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold-bright/30 bg-gold-bright/10 px-3.5 py-1.5">
-            <img src="/takinator_avatar.png" className="h-3.5 w-3.5 object-contain" alt="Arbaab" />
-            <span className="text-xs font-bold uppercase tracking-widest text-gold-deep">AI Food Assistant</span>
-          </div>
+          <p className="mb-5 text-xs font-bold uppercase tracking-widest text-gold-deep">Food assistant</p>
           <h1 className="text-5xl font-black uppercase leading-none tracking-tight sm:text-6xl md:text-7xl">
             Meet <span className="text-gold-deep">Arbaab</span>
           </h1>

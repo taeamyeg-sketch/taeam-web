@@ -160,7 +160,7 @@ function FiltersDialog({
           onClick={() => setHalal((d) => ({ ...d, verifiedOnly: !d.verifiedOnly }))}
           className={cn(
             "mt-5 flex w-full items-center gap-3 rounded-2xl border p-3.5 text-left transition-colors",
-            halal.verifiedOnly ? "border-green/40 bg-green/10" : "border-cream-line bg-cream-deep",
+            halal.verifiedOnly ? "border-ink bg-white" : "border-cream-line bg-cream-deep",
           )}
         >
           <CheckCircle

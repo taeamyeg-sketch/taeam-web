@@ -158,7 +158,7 @@ export function PointsCalculator() {
           aria-pressed={dailyStack}
           className={`mt-4 flex w-full items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-colors ${
             dailyStack
-              ? "border-gold-bright/60 bg-gold-bright/10"
+              ? "border-gold-bright bg-white/[0.04]"
               : "border-noir-line bg-white/[0.04] hover:border-white/20"
           }`}
         >

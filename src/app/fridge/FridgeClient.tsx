@@ -159,11 +159,11 @@ export default function FridgePage() {
             </p>
 
             {submitted ? (
-              <div className="mt-6 flex items-start gap-3 rounded-2xl border border-green/20 bg-green/8 p-5 text-left">
+              <div className="mt-6 flex items-start gap-3 text-left">
                 <CheckCircle className="mt-0.5 h-6 w-6 flex-shrink-0 text-green" weight="fill" />
                 <div>
-                  <p className="font-black text-green">You&apos;re on the list!</p>
-                  <p className="mt-1 text-sm leading-relaxed text-green">
+                  <p className="font-black text-ink">You&apos;re on the list.</p>
+                  <p className="mt-1 text-sm leading-relaxed text-ink-mute">
                     We&apos;ll let you know the moment The Fridge is ready.
                   </p>
                 </div>

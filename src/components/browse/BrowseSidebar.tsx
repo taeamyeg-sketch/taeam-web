@@ -104,7 +104,7 @@ export function BrowseSidebar({
           className={cn(
             "mt-4 flex w-full items-center gap-2.5 rounded-2xl border px-3.5 py-3 text-left transition-colors",
             filters.halal.verifiedOnly
-              ? "border-green/40 bg-green/10"
+              ? "border-ink bg-white"
               : "border-cream-line bg-cream-deep hover:border-gold/40",
           )}
         >

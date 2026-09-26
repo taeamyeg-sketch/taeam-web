@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import {
   ArrowLeft, ArrowRight, Car, Clock, MapPin, CheckCircle,
-  NavigationArrow, CurrencyCircleDollar, ShieldCheck, Sparkle,
+  CurrencyCircleDollar, ShieldCheck, Sparkle,
 } from '@phosphor-icons/react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -197,11 +197,11 @@ export default function DrivePage() {
                 </button>
               </form>
             ) : (
-              <div className="mt-6 flex items-start gap-3 rounded-2xl border border-green/20 bg-green/8 p-5">
+              <div className="mt-6 flex items-start gap-3">
                 <CheckCircle className="mt-0.5 h-6 w-6 flex-shrink-0 text-green" weight="fill" />
                 <div>
-                  <p className="font-black text-green">You&apos;re on the list!</p>
-                  <p className="mt-1 text-sm leading-relaxed text-green">
+                  <p className="font-black text-ink">You&apos;re on the list.</p>
+                  <p className="mt-1 text-sm leading-relaxed text-ink-mute">
                     {existing
                       ? 'You\'re already on the driver waitlist. We\'ll be in touch the moment applications open.'
                       : emailed
@@ -299,10 +299,7 @@ export default function DrivePage() {
         <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2 md:gap-16">
           {/* Copy */}
           <div className="animate-on-scroll order-2 md:order-1">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold-bright/30 bg-gold-bright/10 px-3.5 py-1.5">
-              <NavigationArrow className="h-3.5 w-3.5 text-gold-bright" weight="bold" />
-              <span className="text-xs font-bold uppercase tracking-widest text-gold-bright">We&apos;re bringing change</span>
-            </div>
+            <p className="mb-5 text-xs font-bold uppercase tracking-widest text-gold-bright">We&apos;re bringing change</p>
             <h2 className="text-3xl font-black uppercase leading-tight tracking-tight sm:text-4xl md:text-5xl">
               Navigation that <span className="text-gold-bright">speaks your language</span>
             </h2>
