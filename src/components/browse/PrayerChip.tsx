@@ -62,7 +62,7 @@ export function PrayerChip({
       >
         <Mosque
           weight="fill"
-          className={cn("h-4 w-4", light ? "text-gold-bright" : "text-gold-deep")}
+          className={cn("h-4 w-4", light ? "text-gold" : "text-gold-deep")}
         />
         <span className="hidden lg:inline">{next.name}</span>
         <span className={light ? "text-white" : "text-ink"}>
@@ -83,7 +83,7 @@ export function PrayerChip({
                   key={name}
                   className={cn(
                     "flex items-center justify-between rounded-lg px-2.5 py-1.5 text-sm",
-                    isNext ? "bg-gold/15" : "",
+                    isNext ? "bg-cream-deep" : "",
                   )}
                 >
                   <span

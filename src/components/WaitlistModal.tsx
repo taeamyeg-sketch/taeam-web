@@ -61,7 +61,7 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-[95] flex items-end justify-center sm:items-center">
       <button
-        className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-ink/50"
         aria-label="Close"
         tabIndex={-1}
         onClick={onClose}
@@ -71,7 +71,7 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
         role="dialog"
         aria-modal="true"
         aria-label="Join the Taeam waitlist"
-        className="relative z-10 max-h-[calc(100dvh-1rem)] w-full max-w-md overflow-y-auto overscroll-contain rounded-t-3xl bg-cream p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-sheet sm:rounded-3xl sm:p-8"
+        className="relative z-10 max-h-[calc(100dvh-1rem)] w-full max-w-md overflow-y-auto overscroll-contain rounded-t-2xl bg-cream p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-sheet sm:rounded-2xl sm:p-8"
       >
         <button
           onClick={onClose}
@@ -96,7 +96,7 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
             </p>
             <button
               onClick={onClose}
-              className="mt-6 w-full rounded-full bg-noir px-6 py-3 text-sm font-bold uppercase tracking-wide text-gold-bright transition-transform hover:-translate-y-px"
+              className="mt-6 w-full rounded-full bg-noir px-6 py-3 text-sm font-bold uppercase tracking-wide text-gold"
             >
               Done
             </button>
@@ -123,12 +123,12 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
                 autoComplete="email"
                 autoFocus
                 aria-label="Email address"
-                className="w-full rounded-full border border-black/10 bg-white px-4 py-3 text-base text-ink outline-none transition-all placeholder:text-gray-400 focus:border-gold-bright focus:ring-2 focus:ring-gold-bright/30"
+                className="w-full rounded-full border border-black/10 bg-white px-4 py-3 text-base text-ink outline-none transition-all placeholder:text-gray-400 focus:border-gold focus:ring-2 focus:ring-gold/30"
               />
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex items-center justify-center gap-1.5 rounded-full bg-noir px-6 py-3 text-sm font-bold uppercase tracking-wide text-gold-bright transition-transform hover:-translate-y-px active:scale-[0.98] disabled:opacity-70"
+                className="flex items-center justify-center gap-1.5 rounded-full bg-noir px-6 py-3 text-sm font-bold uppercase tracking-wide text-gold disabled:opacity-70"
               >
                 {submitting ? (
                   "Joining…"
@@ -142,8 +142,8 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
             </form>
             {error && <p className="mt-2 text-xs font-semibold text-red">{error}</p>}
             <p className="mt-3 flex items-center gap-1.5 text-xs text-ink-mute">
-              <ShieldCheck className="h-3.5 w-3.5" weight="bold" aria-hidden /> No spam. One heads-up
-              when we open.
+              <ShieldCheck className="h-3.5 w-3.5" weight="bold" aria-hidden /> We only email you
+              about the launch.
             </p>
           </>
         )}

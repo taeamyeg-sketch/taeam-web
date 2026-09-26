@@ -18,7 +18,7 @@ export function Eyebrow({
   tone?: "deep" | "bright";
   className?: string;
 }) {
-  const color = tone === "bright" ? "text-gold-bright" : "text-gold-deep";
+  const color = tone === "bright" ? "text-gold" : "text-gold-deep";
   return (
     <p
       className={`text-xs font-bold uppercase tracking-[0.2em] ${color} ${className}`}

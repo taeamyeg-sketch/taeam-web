@@ -306,13 +306,13 @@ function EmptyState({
       : "Kitchens are being onboarded. Check back soon.";
 
   return (
-    <div className="mt-6 rounded-3xl border border-cream-line bg-cream-deep px-6 py-16 text-center">
+    <div className="mt-6 rounded-xl border border-cream-line bg-cream-deep px-6 py-16 text-center">
       <p className="text-lg font-black uppercase tracking-tight text-ink">{title}</p>
       <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-ink-mute">{body}</p>
       {outOfArea && (
         <button
           onClick={onShowAll}
-          className="mt-6 rounded-full bg-gold px-6 py-3 text-sm font-bold uppercase tracking-wide text-ink shadow-sm transition-transform hover:-translate-y-0.5"
+          className="mt-6 rounded-full bg-gold px-6 py-3 text-sm font-bold uppercase tracking-wide text-ink shadow-sm"
         >
           Show all kitchens
         </button>
@@ -320,7 +320,7 @@ function EmptyState({
       {anyFilter && !outOfArea && (
         <button
           onClick={onClearFilters}
-          className="mt-6 rounded-full bg-gold px-6 py-3 text-sm font-bold uppercase tracking-wide text-ink shadow-sm transition-transform hover:-translate-y-0.5"
+          className="mt-6 rounded-full bg-gold px-6 py-3 text-sm font-bold uppercase tracking-wide text-ink shadow-sm"
         >
           Clear filters
         </button>

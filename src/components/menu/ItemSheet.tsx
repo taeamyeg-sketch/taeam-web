@@ -58,7 +58,7 @@ export function ItemSheet({
         role="dialog"
         aria-modal="true"
         aria-label={item.name}
-        className="relative max-h-[88svh] w-full overflow-y-auto overscroll-contain rounded-t-3xl bg-cream shadow-sheet sm:max-w-lg sm:rounded-3xl"
+        className="relative max-h-[88svh] w-full overflow-y-auto overscroll-contain rounded-t-2xl bg-cream shadow-sheet sm:max-w-lg sm:rounded-2xl"
       >
         {item.image_url && (
           <div className="relative aspect-[16/9] w-full bg-cream-deep">
@@ -165,7 +165,7 @@ export function ItemSheet({
               disabled={!status.open}
               className={
                 status.open
-                  ? "flex-1 rounded-full bg-gold px-5 py-3.5 text-base font-semibold text-ink transition-transform hover:-translate-y-px"
+                  ? "flex-1 rounded-full bg-gold px-5 py-3.5 text-base font-semibold text-ink"
                   : "flex-1 rounded-full bg-cream-deep px-5 py-3.5 text-base font-semibold text-ink-mute"
               }
             >

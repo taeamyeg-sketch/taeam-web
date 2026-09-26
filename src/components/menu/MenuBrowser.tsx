@@ -76,7 +76,7 @@ export function MenuBrowser({
   return (
     <div>
       {/* Category rail, sticks under the site header */}
-      <nav className="rail sticky top-20 z-30 -mx-4 overflow-x-auto border-b border-cream-line bg-cream/95 px-4 py-3 backdrop-blur-sm sm:-mx-6 sm:px-6">
+      <nav className="rail sticky top-20 z-30 -mx-4 overflow-x-auto border-b border-cream-line bg-cream px-4 py-3 sm:-mx-6 sm:px-6">
         <div className="flex w-max gap-2">
           {sections.map((s) => (
             <button
@@ -113,7 +113,7 @@ export function MenuBrowser({
                     className={cn(
                       "group flex w-full items-stretch justify-between gap-4 rounded-2xl border border-cream-line bg-cream p-4 text-left transition-all",
                       item.is_available
-                        ? "hover:-translate-y-0.5 hover:shadow-card"
+                        ? " hover:shadow-card"
                         : "opacity-50",
                     )}
                   >

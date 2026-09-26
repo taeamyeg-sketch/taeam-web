@@ -57,7 +57,6 @@ const CAPABILITIES = [
 ];
 
 export default function ArbaabPage() {
-  const [mounted, setMounted] = useState(false);
   const [isDark, setIsDark] = useState(false);          // page is LIGHT by default
   const [messages, setMessages] = useState<DemoMessage[]>([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -67,7 +66,6 @@ export default function ArbaabPage() {
 
   useEffect(() => {
     requestAnimationFrame(() => window.scrollTo(0, 0));
-    setMounted(true);
   }, []);
 
   useEffect(() => {
@@ -82,8 +80,8 @@ export default function ArbaabPage() {
       const goingDark = !isDark;
       const userText = goingDark ? 'Switch to dark mode' : 'Switch to light mode';
       const reply = goingDark
-        ? 'Done. Lights off, switching to dark mode. 🌙'
-        : 'Done. Bringing the lights back up. ☀️';
+        ? 'Done. Switching to dark mode.'
+        : 'Done. Switching to light mode.';
       setMessages([{ role: 'user', text: userText }]);
       await wait(320);
       setIsTyping(true);
@@ -138,17 +136,17 @@ export default function ArbaabPage() {
     >
       {/* ── NAV ── */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b py-3.5 pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] pt-[max(0.875rem,env(safe-area-inset-top))] backdrop-blur-md transition-colors duration-300 sm:pl-[max(2rem,env(safe-area-inset-left))] sm:pr-[max(2rem,env(safe-area-inset-right))] ${
-          isDark ? 'border-white/5 bg-noir/85' : 'border-black/5 bg-cream/85'
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b py-3.5 pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] pt-[max(0.875rem,env(safe-area-inset-top))] transition-colors duration-300 sm:pl-[max(2rem,env(safe-area-inset-left))] sm:pr-[max(2rem,env(safe-area-inset-right))] ${
+          isDark ? 'border-white/5 bg-noir' : 'border-black/5 bg-cream'
         }`}
       >
         <Link
           href="/"
           className={`group flex items-center gap-2 text-sm font-bold transition-opacity hover:opacity-60 ${
-            isDark ? 'text-gold-bright' : 'text-ink'
+            isDark ? 'text-gold' : 'text-ink'
           }`}
         >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" weight="bold" />
+          <ArrowLeft className="h-4 w-4" weight="bold" />
           Back to Taeam
         </Link>
         <img src="/taeam-logo.jpg" alt="Taeam" className="h-9 w-9 rounded-full" />
@@ -175,7 +173,7 @@ export default function ArbaabPage() {
             }`}
           />
         </div>
-        <div className={`mx-auto max-w-3xl ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}>
+        <div className="mx-auto max-w-3xl">
           <p className="mb-5 text-xs font-bold uppercase tracking-widest text-gold-deep">Food assistant</p>
           <h1 className="text-5xl font-black uppercase leading-none tracking-tight sm:text-6xl md:text-7xl">
             Meet <span className="text-gold-deep">Arbaab</span>
@@ -216,14 +214,14 @@ export default function ArbaabPage() {
                       isDark ? 'border-white/5 bg-noir' : 'border-black/5 bg-cream'
                     }`}
                   >
-                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gold-bright">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gold">
                       <img src="/takinator_avatar.png" className="h-4 w-4 object-contain" alt="Arbaab" />
                     </div>
                     <div className="min-w-0">
                       <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-ink'}`}>Arbaab</p>
-                      <p className={`text-[11px] ${isDark ? 'text-white/40' : 'text-ink-mute'}`}>Your personal food boss</p>
+                      <p className={`text-[11px] ${isDark ? 'text-white/40' : 'text-ink-mute'}`}>Taeam&apos;s food assistant</p>
                     </div>
-                    <span className="ml-auto flex items-center gap-1.5 rounded-full bg-green/12 px-2 py-1">
+                    <span className="ml-auto flex items-center gap-1.5">
                       <span className="h-1.5 w-1.5 rounded-full bg-green" />
                       <span className="text-[10px] font-bold text-green">Online</span>
                     </span>
@@ -233,11 +231,11 @@ export default function ArbaabPage() {
                   <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
                     {messages.length === 0 && !isTyping && (
                       <div className="flex items-start gap-2.5">
-                        <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gold-bright">
+                        <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gold">
                           <img src="/takinator_avatar.png" className="h-3.5 w-3.5 object-contain" alt="Arbaab" />
                         </div>
                         <div className={`max-w-[78%] rounded-2xl rounded-tl-sm px-3.5 py-2.5 text-[13px] leading-relaxed ${isDark ? 'bg-white/5 text-white/80' : 'bg-cream-deep text-ink-mute'}`}>
-                          Assalamu Alaikum! Tap a command below and watch what happens.
+                          Assalamu alaikum. Tap a command below and watch what happens.
                         </div>
                       </div>
                     )}
@@ -245,14 +243,14 @@ export default function ArbaabPage() {
                     {messages.map((msg, i) => (
                       <div key={i} className={`flex items-start gap-2.5 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                         {msg.role === 'arbaab' && (
-                          <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gold-bright">
+                          <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gold">
                             <img src="/takinator_avatar.png" className="h-3.5 w-3.5 object-contain" alt="Arbaab" />
                           </div>
                         )}
                         <div
                           className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed ${
                             msg.role === 'user'
-                              ? 'rounded-tr-sm bg-gold-bright font-medium text-black'
+                              ? 'rounded-tr-sm bg-gold font-medium text-black'
                               : isDark
                                 ? 'rounded-tl-sm bg-white/5 text-white/80'
                                 : 'rounded-tl-sm bg-cream-deep text-ink-mute'
@@ -265,14 +263,14 @@ export default function ArbaabPage() {
 
                     {isTyping && (
                       <div className="flex items-start gap-2.5">
-                        <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gold-bright">
+                        <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gold">
                           <img src="/takinator_avatar.png" className="h-3.5 w-3.5 object-contain" alt="Arbaab" />
                         </div>
                         <div className={`rounded-2xl rounded-tl-sm px-3.5 py-3 ${isDark ? 'bg-white/5' : 'bg-cream-deep'}`}>
                           <div className="flex h-3 items-center gap-1.5">
-                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold-bright" style={{ animationDelay: '0ms' }} />
-                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold-bright" style={{ animationDelay: '150ms' }} />
-                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold-bright" style={{ animationDelay: '300ms' }} />
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold" style={{ animationDelay: '0ms' }} />
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold" style={{ animationDelay: '150ms' }} />
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold" style={{ animationDelay: '300ms' }} />
                           </div>
                         </div>
                       </div>
@@ -290,10 +288,10 @@ export default function ArbaabPage() {
                           disabled={isTyping}
                           className={`flex min-h-9 items-center gap-1 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all disabled:opacity-40 ${
                             activeDemo === chip.key
-                              ? 'border-gold-bright bg-gold-bright text-black'
+                              ? 'border-gold bg-gold text-black'
                               : isDark
-                                ? 'border-white/10 bg-white/5 text-white/60 hover:border-gold-bright/40 hover:text-gold-bright'
-                                : 'border-black/10 bg-white text-ink-mute hover:border-gold-bright/50 hover:text-gold-deep'
+                                ? 'border-white/10 bg-white/5 text-white/60 hover:border-gold/40 hover:text-gold'
+                                : 'border-black/10 bg-white text-ink-mute hover:border-gold/50 hover:text-gold-deep'
                           }`}
                         >
                           {chip.icon}
@@ -310,14 +308,14 @@ export default function ArbaabPage() {
                         placeholder="Ask Arbaab anything…"
                         className={`min-w-0 flex-1 rounded-xl border px-3 py-2.5 text-base outline-none transition-all ${
                           isDark
-                            ? 'border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-gold-bright/40'
-                            : 'border-black/10 bg-white text-ink placeholder-ink-mute focus:border-gold-bright/60'
+                            ? 'border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-gold/40'
+                            : 'border-black/10 bg-white text-ink placeholder-ink-mute focus:border-gold/60'
                         }`}
                       />
                       <button
                         onClick={handleSend}
                         disabled={isTyping}
-                        className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gold-bright text-black transition-colors hover:bg-yellow-400 disabled:opacity-50"
+                        className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gold text-black transition-colors hover:brightness-95 disabled:opacity-50"
                       >
                         <PaperPlaneTilt className="h-4 w-4" weight="fill" />
                       </button>
@@ -344,13 +342,11 @@ export default function ArbaabPage() {
               {CAPABILITIES.map((cap, i) => (
                 <div
                   key={i}
-                  className={`rounded-2xl border p-4 transition-colors duration-300 ${
-                    isDark ? 'border-white/5 bg-noir-soft' : 'border-black/5 bg-white shadow-[0_8px_24px_-20px_rgba(0,0,0,0.4)]'
+                  className={`rounded-xl border p-4 transition-colors duration-300 ${
+                    isDark ? 'border-white/5 bg-noir-soft' : 'border-black/5 bg-white'
                   }`}
                 >
-                  <div className="mb-2.5 flex h-9 w-9 items-center justify-center rounded-xl bg-gold-bright/12 text-gold-deep">
-                    {cap.icon}
-                  </div>
+                  <div className={`mb-2 ${isDark ? 'text-gold' : 'text-gold-deep'}`}>{cap.icon}</div>
                   <h3 className={`text-sm font-bold ${isDark ? 'text-white' : 'text-ink'}`}>{cap.title}</h3>
                   <p className={`mt-1 text-xs leading-relaxed ${isDark ? 'text-white/45' : 'text-ink-mute'}`}>{cap.desc}</p>
                 </div>
@@ -361,14 +357,14 @@ export default function ArbaabPage() {
 
         {/* Privacy note */}
         <div
-          className={`mx-auto mt-12 max-w-xl rounded-2xl border p-5 text-center transition-colors duration-300 ${
+          className={`mx-auto mt-12 max-w-xl rounded-xl border p-5 text-center transition-colors duration-300 ${
             isDark ? 'border-white/5 bg-noir-soft text-white/55' : 'border-black/5 bg-white text-ink-mute'
           }`}
         >
           <p className="text-xs leading-relaxed">
             <span className={`font-bold ${isDark ? 'text-white' : 'text-ink'}`}>Your data stays yours.</span>{' '}
             Arbaab only accesses what you allow: search, order history and app navigation.
-            No payment info, no personal details. You control every permission in Settings.
+            It never sees your payment details. You control every permission in Settings.
           </p>
         </div>
 
@@ -381,17 +377,17 @@ export default function ArbaabPage() {
             Arbaab lives inside the Taeam app. Start with the menu and Arbaab takes it from there.
           </p>
           {SEALED ? (
-            <JoinWaitlistButton className="group mt-6 inline-flex items-center gap-2 rounded-xl bg-gold-bright px-7 py-3.5 text-sm font-black uppercase tracking-wide text-black transition-all hover:brightness-95 active:scale-[0.98]">
+            <JoinWaitlistButton className="group mt-6 inline-flex items-center gap-2 rounded-xl bg-gold px-7 py-3.5 text-sm font-black uppercase tracking-wide text-black transition-all hover:brightness-95">
               Join the waitlist
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" weight="bold" />
+              <ArrowRight className="h-4 w-4" weight="bold" />
             </JoinWaitlistButton>
           ) : (
             <TransitionLink
               href={orderHref()}
-              className="group mt-6 inline-flex items-center gap-2 rounded-xl bg-gold-bright px-7 py-3.5 text-sm font-black uppercase tracking-wide text-black transition-all hover:brightness-95 active:scale-[0.98]"
+              className="group mt-6 inline-flex items-center gap-2 rounded-xl bg-gold px-7 py-3.5 text-sm font-black uppercase tracking-wide text-black transition-all hover:brightness-95"
             >
               Start ordering
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" weight="bold" />
+              <ArrowRight className="h-4 w-4" weight="bold" />
             </TransitionLink>
           )}
         </div>
@@ -401,17 +397,17 @@ export default function ArbaabPage() {
           <Link
             href="/"
             className={`group inline-flex items-center gap-2 text-sm font-medium transition-colors ${
-              isDark ? 'text-white/40 hover:text-gold-bright' : 'text-ink-mute hover:text-gold-deep'
+              isDark ? 'text-white/40 hover:text-gold' : 'text-ink-mute hover:text-gold-deep'
             }`}
           >
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" weight="bold" />
+            <ArrowLeft className="h-4 w-4" weight="bold" />
             Back to main page
           </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <div className="h-px bg-gradient-to-r from-transparent via-gold-bright/15 to-transparent" />
+      <div className="h-px bg-gold/15" />
       <div className="py-6 text-center">
         <p className={`text-xs uppercase tracking-wider ${isDark ? 'text-white/30' : 'text-ink-mute'}`}>
           © 2026 Taeam Technologies Inc.

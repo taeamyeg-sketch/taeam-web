@@ -18,7 +18,7 @@ function SignInInner() {
         <span className="text-3xl font-black uppercase tracking-tight text-ink">Taeam</span>
       </Link>
 
-      <div className="w-full max-w-sm rounded-3xl bg-white/60 p-7 shadow-card sm:p-8">
+      <div className="w-full max-w-sm rounded-xl bg-white/60 p-7 shadow-card sm:p-8">
         <AuthPanel next={next} onDone={() => router.push(next)} />
       </div>
     </main>

@@ -197,9 +197,7 @@ export function KitchensMap({
         aria-expanded={open}
         className="flex w-full items-center gap-3 px-4 py-3 text-left"
       >
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gold/15 text-gold-deep">
-          <MapTrifold weight="fill" className="h-4 w-4" />
-        </span>
+        <MapTrifold weight="fill" className="h-5 w-5 shrink-0 text-gold-deep" />
         <span className="flex-1">
           <span className="block text-sm font-black uppercase tracking-tight text-ink">
             Map · kitchens near you

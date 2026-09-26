@@ -80,7 +80,7 @@ export function CategoryRail({
   return (
     <div
       className={cn(
-        "rail sticky top-20 z-30 -mx-4 overflow-x-auto border-y border-cream-line bg-cream/90 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6",
+        "rail sticky top-20 z-30 -mx-4 overflow-x-auto border-y border-cream-line bg-cream px-4 py-3 sm:-mx-6 sm:px-6",
         className,
       )}
     >

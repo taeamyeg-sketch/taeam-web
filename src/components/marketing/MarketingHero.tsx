@@ -85,7 +85,7 @@ export function MarketingHero() {
   const checking = status.kind === "checking";
 
   return (
-    <section className="relative min-h-[92svh] overflow-hidden bg-gold-bright">
+    <section className="relative min-h-[92svh] overflow-hidden bg-gold">
       {/* Dark diagonal (lower-right): the taeam.ca signature cut. The black
           triangle now carries the founder's hero.mp4 instead of cut-out dishes,
           clipped to the diagonal by diag-mask so the video only fills the noir
@@ -140,8 +140,7 @@ export function MarketingHero() {
 
       {/* TAEAM, black, upper-left over the gold */}
       <div
-        className="rise absolute left-[7%] top-[19%] z-10 md:left-[12%]"
-        style={{ animationDelay: "0ms" }}
+        className="absolute left-[7%] top-[19%] z-10 md:left-[12%]"
       >
         <h1 className="font-sans text-[15vw] font-black uppercase leading-none tracking-tighter text-noir sm:text-[11vw] md:text-[8vw]">
           Taeam
@@ -155,11 +154,10 @@ export function MarketingHero() {
           mark lives inside the bottom address stack (below) so it can never
           collide with the card. Hidden on very short landscape viewports. */}
       <div
-        className="rise absolute z-10 hidden text-right md:block md:bottom-[32%] md:right-[12%] [@media(max-height:480px)]:hidden"
-        style={{ animationDelay: "120ms" }}
+        className="absolute z-10 hidden text-right md:block md:bottom-[32%] md:right-[12%] [@media(max-height:480px)]:hidden"
       >
         <p
-          className="text-[13vw] font-black leading-none text-gold-bright sm:text-[10vw] md:text-[9vw]"
+          className="text-[13vw] font-black leading-none text-gold sm:text-[10vw] md:text-[9vw]"
           style={{
             textShadow: "0 6px 40px rgba(0,0,0,0.55)",
             fontFamily: "var(--font-arabic)",
@@ -170,7 +168,7 @@ export function MarketingHero() {
           طعام
         </p>
         <span
-          className="mt-1 inline-block text-base font-semibold tracking-[0.06em] text-gold-bright/70 md:text-xl"
+          className="mt-1 inline-block text-base font-semibold tracking-[0.06em] text-gold/70 md:text-xl"
           style={{ fontFamily: "var(--font-arabic)" }}
           lang="ar"
           dir="rtl"
@@ -181,8 +179,7 @@ export function MarketingHero() {
 
       {/* Address search, compact, bottom center over the black side */}
       <div
-        className="rise absolute inset-x-0 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 flex flex-col items-center gap-2 px-4 md:bottom-14"
-        style={{ animationDelay: "240ms" }}
+        className="absolute inset-x-0 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 flex flex-col items-center gap-2 px-4 md:bottom-14"
       >
         {/* Phones: the mark rides directly above the address stack, so it
             clears the card no matter which state (pill / resume / out-of-zone)
@@ -190,7 +187,7 @@ export function MarketingHero() {
             glyph stays on the black side of the diagonal. */}
         <div className="mb-1 w-full pr-[6%] text-right md:hidden [@media(max-height:480px)]:hidden">
           <p
-            className="text-[11vw] font-black leading-none text-gold-bright"
+            className="text-[11vw] font-black leading-none text-gold"
             style={{
               textShadow: "0 6px 40px rgba(0,0,0,0.55)",
               fontFamily: "var(--font-arabic)",
@@ -201,7 +198,7 @@ export function MarketingHero() {
             طعام
           </p>
           <span
-            className="mt-1 inline-block text-sm font-semibold tracking-[0.06em] text-gold-bright/70"
+            className="mt-1 inline-block text-sm font-semibold tracking-[0.06em] text-gold/70"
             style={{ fontFamily: "var(--font-arabic)" }}
             lang="ar"
             dir="rtl"
@@ -218,7 +215,7 @@ export function MarketingHero() {
             </p>
             <button
               onClick={() => navigate("/restaurants")}
-              className="mt-3 w-full rounded-full bg-gold-bright px-6 py-3 text-sm font-bold uppercase tracking-wide text-noir transition-transform hover:-translate-y-px"
+              className="mt-3 w-full rounded-full bg-gold px-6 py-3 text-sm font-bold uppercase tracking-wide text-noir"
             >
               Look around anyway
             </button>
@@ -235,7 +232,7 @@ export function MarketingHero() {
             </p>
             <button
               onClick={() => navigate("/restaurants")}
-              className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-full bg-noir px-6 py-3 text-sm font-bold uppercase tracking-wide text-gold-bright transition-transform hover:-translate-y-px"
+              className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-full bg-noir px-6 py-3 text-sm font-bold uppercase tracking-wide text-gold"
             >
               Browse kitchens
               <ArrowRight className="h-4 w-4" weight="bold" aria-hidden />
@@ -274,7 +271,7 @@ export function MarketingHero() {
                   useLocation();
                 }}
                 disabled={checking}
-                className="flex shrink-0 items-center gap-1.5 rounded-full bg-noir px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-gold-bright transition-transform hover:scale-[1.03] active:scale-95 disabled:opacity-70 sm:px-5"
+                className="flex shrink-0 items-center gap-1.5 rounded-full bg-noir px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-gold disabled:opacity-70 sm:px-5"
               >
                 {checking ? (
                   <CircleNotch className="h-4 w-4 animate-spin" aria-hidden />
@@ -287,7 +284,7 @@ export function MarketingHero() {
               </button>
             </div>
             {nudge && (
-              <p className="text-xs font-semibold text-gold-bright">
+              <p className="text-xs font-semibold text-gold">
                 Pick your address from the list to continue.
               </p>
             )}

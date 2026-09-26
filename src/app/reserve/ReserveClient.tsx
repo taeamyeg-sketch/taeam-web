@@ -64,7 +64,6 @@ const STEPS = [
 ];
 
 export default function ReservePage() {
-  const [mounted, setMounted] = useState(false);
 
   const [days, setDays] = useState<Day[] | null>(null);
   const [loadingSlots, setLoadingSlots] = useState(true);
@@ -98,23 +97,8 @@ export default function ReservePage() {
 
   useEffect(() => {
     requestAnimationFrame(() => window.scrollTo(0, 0));
-    setMounted(true);
     loadSlots();
   }, [loadSlots]);
-
-  // Re-register the scroll observer when content changes (slots load async,
-  // confirmed view swaps in). animate-on-scroll starts hidden, so anything
-  // rendered after the first pass needs to be observed again.
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    );
-    const t = setTimeout(() => {
-      document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
-    }, 80);
-    return () => { clearTimeout(t); observer.disconnect(); };
-  }, [mounted, days, confirmed]);
 
   useEffect(() => {
     if (!error) return;
@@ -187,12 +171,12 @@ export default function ReservePage() {
     <main className="min-h-svh bg-[#F6F4EF] font-sans text-[#1A1A1A] antialiased">
 
       {/* ── NAV ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-black/5 bg-[#F6F4EF]/85 py-3.5 pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] pt-[max(0.875rem,env(safe-area-inset-top))] backdrop-blur-md sm:pl-[max(2rem,env(safe-area-inset-left))] sm:pr-[max(2rem,env(safe-area-inset-right))]">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-black/5 bg-cream py-3.5 pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] pt-[max(0.875rem,env(safe-area-inset-top))] sm:pl-[max(2rem,env(safe-area-inset-left))] sm:pr-[max(2rem,env(safe-area-inset-right))]">
         <Link
           href="/"
           className="group flex items-center gap-2 text-sm font-bold text-[#1A1A1A] transition-opacity hover:opacity-60"
         >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+          <ArrowLeft className="h-4 w-4" />
           Back to Taeam
         </Link>
         <img src="/taeam-logo.jpg" alt="Taeam" className="h-9 w-9 rounded-full" />
@@ -202,16 +186,13 @@ export default function ReservePage() {
         /* ───────────────────────── CONFIRMED STATE ───────────────────────── */
         <section className="px-5 pb-20 pt-[96px] sm:px-8 sm:pt-[120px]">
           <div className="mx-auto max-w-2xl">
-            <div className="overflow-hidden rounded-3xl border border-[#1E8A3F]/25 bg-white shadow-[0_20px_60px_-25px_rgba(0,0,0,0.25)]">
-              <div className="h-1.5 w-full bg-gradient-to-r from-[#1E8A3F] via-[#36A85A] to-[#1E8A3F]" />
+            <div className="overflow-hidden rounded-xl border border-cream-line bg-white">
               <div className="p-7 text-center sm:p-10">
-                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#1E8A3F]/10">
-                  <CheckCircle className="h-9 w-9 text-[#1E8A3F]" />
-                </div>
-                <h1 className="text-3xl font-black uppercase tracking-tight sm:text-4xl">You&apos;re booked!</h1>
+                <CheckCircle className="mx-auto mb-4 h-10 w-10 text-[#2F7D55]" />
+                <h1 className="text-3xl font-black uppercase tracking-tight sm:text-4xl">You&apos;re booked</h1>
 
-                <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#EAB308]/30 bg-[#FFF6E5] p-5 text-left">
-                  <p className="text-xs font-black uppercase tracking-widest text-[#B7791F]">Your window</p>
+                <div className="mx-auto mt-6 max-w-sm rounded-xl border border-cream-line bg-cream p-5 text-left">
+                  <p className="text-xs font-black uppercase tracking-widest text-gold-deep">Your window</p>
                   <p className="mt-1.5 text-xl font-black">{fmtDate(confirmed.date)}</p>
                   <p className="mt-0.5 text-base font-semibold text-[#52504A]">
                     {fmtRange(confirmed.startTime, confirmed.endTime)}, Edmonton time
@@ -232,10 +213,10 @@ export default function ReservePage() {
 
                 <Link
                   href="/"
-                  className="group mt-8 inline-flex items-center gap-2 rounded-xl bg-[#1A1A1A] px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black active:scale-[0.98]"
+                  className="group mt-8 inline-flex items-center gap-2 rounded-xl bg-[#1A1A1A] px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black"
                 >
                   Back to Taeam
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>
@@ -245,12 +226,12 @@ export default function ReservePage() {
         <>
           {/* ───────────────────────── PITAVIBE INTRO ───────────────────────── */}
           <section className="px-3 pt-[68px] sm:px-5 sm:pt-[76px]">
-            <div className={`relative mx-auto max-w-4xl ${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
+            <div className="relative mx-auto max-w-4xl">
               {/* Hero. NOTE: this image is generated, not a photograph of the
                   real Pitavibe room. Swap it for a real one before this page
                   goes to a wider audience — a reservation page is a promise
                   about a specific place. */}
-              <div className="relative flex aspect-[16/9] w-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#EAB308]/20 sm:aspect-[1376/620] sm:rounded-3xl">
+              <div className="relative flex aspect-[16/9] w-full flex-col items-center justify-center overflow-hidden rounded-xl border border-gold/20 sm:aspect-[1376/620] sm:rounded-2xl">
                 <Image
                   src="/pitavibe-hero.webp"
                   alt="The interior of a small casual halal pita and shawarma restaurant in the late afternoon"
@@ -260,8 +241,8 @@ export default function ReservePage() {
                   className="object-cover object-center"
                 />
                 <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
-                <span className="relative inline-flex max-w-[calc(100%-2rem)] flex-wrap items-center justify-center gap-2 rounded-full border border-[#EAB308]/40 bg-black/35 px-3 py-1.5 text-center text-[11px] font-bold uppercase tracking-widest text-[#F5D98B] backdrop-blur-sm">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#EAB308]" /> Edmonton · Invite-only soft launch
+                <span className="relative inline-flex max-w-[calc(100%-2rem)] flex-wrap items-center justify-center gap-2 rounded-md bg-noir px-3 py-1.5 text-center text-[11px] font-bold uppercase tracking-widest text-white">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Edmonton · Invite-only soft launch
                 </span>
                 <h1 className="relative mt-6 text-4xl font-black uppercase leading-none tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] min-[400px]:text-5xl sm:mt-8 sm:text-7xl">Pitavibe</h1>
               </div>
@@ -270,7 +251,7 @@ export default function ReservePage() {
 
           <section className="px-5 pb-2 pt-8 text-center sm:px-8 sm:pt-10">
             <h2 className="mx-auto max-w-2xl text-3xl font-black uppercase leading-[1] tracking-tight sm:text-5xl">
-              Reserve your <span className="text-[#B7791F]">Pitavibe</span> window
+              Reserve your <span className="text-gold-deep">Pitavibe</span> window
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-[#52504A]">
               Pitavibe makes fresh halal pitas and bowls in Edmonton. Warm bread, good spice, the
@@ -287,7 +268,7 @@ export default function ReservePage() {
               {['The pitas', 'The bowls', 'The spot'].map((cap, i) => (
                 <div
                   key={i}
-                  className={`flex aspect-square flex-col items-center justify-center rounded-2xl border border-black/5 bg-white text-[#C7BFA8] ${i === 2 ? 'hidden sm:flex' : ''}`}
+                  className={`flex aspect-square flex-col items-center justify-center rounded-xl border border-black/5 bg-white text-[#C7BFA8] ${i === 2 ? 'hidden sm:flex' : ''}`}
                 >
                   <UtensilsCrossed className="h-6 w-6" />
                   <span className="mt-2 text-[11px] font-bold uppercase tracking-widest">{cap}</span>
@@ -300,17 +281,17 @@ export default function ReservePage() {
           {/* ───────────────────────── HOW IT WORKS ───────────────────────── */}
           <section className="px-5 py-14 sm:px-8 sm:py-16">
             <div className="mx-auto max-w-2xl">
-              <div className="animate-on-scroll mb-8 text-center">
-                <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#B7791F]">The plan</p>
+              <div className="mb-8 text-center">
+                <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-gold-deep">The plan</p>
                 <h2 className="text-2xl font-black uppercase tracking-tight sm:text-3xl">How this works</h2>
               </div>
               <div className="space-y-3">
                 {STEPS.map((step, i) => (
                   <div
                     key={i}
-                    className="animate-on-scroll flex items-center gap-4 rounded-xl border border-black/5 bg-white px-5 py-4"
+                    className="flex items-center gap-4 rounded-xl border border-black/5 bg-white px-5 py-4"
                   >
-                    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#EAB308]">
+                    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-gold">
                       <span className="text-xs font-black text-black">{i + 1}</span>
                     </div>
                     <p className="text-sm font-medium leading-relaxed text-[#3A3833]">{step}</p>
@@ -323,7 +304,7 @@ export default function ReservePage() {
           {/* ───────────────────────── SLOT PICKER ───────────────────────── */}
           <section className="px-5 sm:px-8">
             <div className="mx-auto max-w-3xl">
-              <div className="animate-on-scroll mb-8 text-center">
+              <div className="mb-8 text-center">
                 <h2 className="text-2xl font-black uppercase tracking-tight sm:text-3xl">Pick your window</h2>
                 <p className="mx-auto mt-3 max-w-md leading-relaxed text-[#52504A]">
                   Each window holds one delivery. When a window fills up it closes on its own.
@@ -337,18 +318,18 @@ export default function ReservePage() {
                       <div className="mb-3 h-4 w-40 animate-pulse rounded bg-black/10" />
                       <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
                         {[0, 1, 2].map((s) => (
-                          <div key={s} className="h-[88px] animate-pulse rounded-2xl bg-black/[0.06]" />
+                          <div key={s} className="h-[88px] animate-pulse rounded-xl bg-black/[0.06]" />
                         ))}
                       </div>
                     </div>
                   ))}
                 </div>
               ) : slotsError ? (
-                <div className="rounded-2xl border border-[#C0392B]/20 bg-[#C0392B]/5 p-6 text-center">
+                <div className="p-6 text-center">
                   <p className="text-sm font-semibold text-[#C0392B]">{slotsError}</p>
                   <button
                     onClick={loadSlots}
-                    className="mt-4 rounded-xl bg-[#1A1A1A] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-black active:scale-[0.98]"
+                    className="mt-4 rounded-xl bg-[#1A1A1A] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-black"
                   >
                     Try again
                   </button>
@@ -358,7 +339,7 @@ export default function ReservePage() {
                   {days.map((day) => (
                     <div key={day.date}>
                       <h3 className="mb-3 flex items-center gap-2 text-sm font-black uppercase tracking-wide text-[#1A1A1A]">
-                        <Calendar className="h-4 w-4 text-[#B7791F]" />
+                        <Calendar className="h-4 w-4 text-gold-deep" />
                         {fmtDate(day.date)}
                       </h3>
                       <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
@@ -369,7 +350,7 @@ export default function ReservePage() {
                               <div
                                 key={slot.id}
                                 aria-disabled
-                                className="cursor-not-allowed rounded-2xl border border-black/5 bg-[#F1EFE9] px-4 py-4 opacity-80"
+                                className="cursor-not-allowed rounded-xl border border-black/5 bg-[#F1EFE9] px-4 py-4 opacity-80"
                               >
                                 <p className="flex items-center gap-1.5 text-sm font-bold text-[#A8A69E] line-through">
                                   <Clock className="h-3.5 w-3.5" />
@@ -389,14 +370,15 @@ export default function ReservePage() {
                               key={slot.id}
                               type="button"
                               onClick={() => { setSelectedSlotId(slot.id); setError(''); }}
-                              className={`rounded-2xl border px-4 py-4 text-left transition-all active:scale-[0.98] ${
+                              aria-pressed={selected}
+                              className={`rounded-xl border px-4 py-4 text-left transition-colors ${
                                 selected
-                                  ? 'border-[#EAB308] bg-[#EAB308]/10 ring-2 ring-[#EAB308]/30'
-                                  : 'border-black/10 bg-white hover:border-[#EAB308]/50 hover:shadow-[0_10px_30px_-22px_rgba(0,0,0,0.35)]'
+                                  ? 'border-gold bg-white ring-1 ring-gold'
+                                  : 'border-black/10 bg-white hover:border-gold/50'
                               }`}
                             >
                               <p className="flex items-center gap-1.5 text-sm font-bold text-[#1A1A1A]">
-                                <Clock className={`h-3.5 w-3.5 ${selected ? 'text-[#B7791F]' : 'text-[#9A988F]'}`} />
+                                <Clock className={`h-3.5 w-3.5 ${selected ? 'text-gold-deep' : 'text-[#9A988F]'}`} />
                                 {fmtRange(slot.startTime, slot.endTime)}
                               </p>
                               {slot.label && (
@@ -414,10 +396,10 @@ export default function ReservePage() {
                   ))}
                 </div>
               ) : (
-                <div className="rounded-2xl border border-black/5 bg-white p-8 text-center">
+                <div className="rounded-xl border border-black/5 bg-white p-8 text-center">
                   <p className="text-[15px] leading-relaxed text-[#52504A]">
                     All the windows are spoken for right now. Follow{' '}
-                    <a href="https://instagram.com/taeam.ca" target="_blank" rel="noreferrer noopener" className="font-bold text-[#B7791F] underline underline-offset-2">@taeam.ca</a>{' '}
+                    <a href="https://instagram.com/taeam.ca" target="_blank" rel="noreferrer noopener" className="font-bold text-gold-deep underline underline-offset-2">@taeam.ca</a>{' '}
                     and we&apos;ll post when more open up.
                   </p>
                 </div>
@@ -427,16 +409,15 @@ export default function ReservePage() {
 
           {/* ───────────────────────── FORM ───────────────────────── */}
           <section className="px-5 py-14 sm:px-8 sm:py-16">
-            <div className="animate-on-scroll mx-auto max-w-2xl overflow-hidden rounded-3xl border border-[#EAB308]/30 bg-white shadow-[0_20px_60px_-25px_rgba(0,0,0,0.25)]">
-              <div className="h-1.5 w-full bg-gradient-to-r from-[#EAB308] via-[#F4C843] to-[#EAB308]" />
+            <div className="mx-auto max-w-2xl overflow-hidden rounded-xl border border-cream-line bg-white">
               <div className="p-7 sm:p-10">
                 <h2 className="text-2xl font-black uppercase tracking-tight sm:text-3xl">Your details</h2>
 
                 {/* selected window summary */}
-                <div className="mt-4 rounded-2xl border border-black/5 bg-[#FBFAF7] px-5 py-4">
+                <div className="mt-4 rounded-xl border border-black/5 bg-[#FBFAF7] px-5 py-4">
                   {selectedSlot ? (
                     <>
-                      <p className="text-xs font-black uppercase tracking-widest text-[#B7791F]">Your window</p>
+                      <p className="text-xs font-black uppercase tracking-widest text-gold-deep">Your window</p>
                       <p className="mt-1 text-base font-bold text-[#1A1A1A]">
                         {fmtDate(selectedDate)}, {fmtRange(selectedSlot.startTime, selectedSlot.endTime)}
                       </p>
@@ -454,7 +435,7 @@ export default function ReservePage() {
                     placeholder="Your name"
                     disabled={submitting}
                     autoComplete="name"
-                    className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-[#EAB308] focus:bg-white focus:ring-2 focus:ring-[#EAB308]/30"
+                    className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/30"
                   />
                   <input
                     type="email"
@@ -463,7 +444,7 @@ export default function ReservePage() {
                     placeholder="you@email.com"
                     disabled={submitting}
                     autoComplete="email"
-                    className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-[#EAB308] focus:bg-white focus:ring-2 focus:ring-[#EAB308]/30"
+                    className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/30"
                   />
                   <input
                     type="tel"
@@ -472,16 +453,16 @@ export default function ReservePage() {
                     placeholder="Phone number"
                     disabled={submitting}
                     autoComplete="tel"
-                    className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-[#EAB308] focus:bg-white focus:ring-2 focus:ring-[#EAB308]/30"
+                    className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/30"
                   />
 
                   <button
                     type="submit"
                     disabled={submitting || !selectedSlotId}
-                    className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A1A1A] px-6 py-4 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A1A1A] px-6 py-4 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {submitting ? 'Booking…' : (
-                      <>Confirm my window <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></>
+                      <>Confirm my window <ArrowRight className="h-4 w-4" /></>
                     )}
                   </button>
                 </form>
@@ -492,7 +473,7 @@ export default function ReservePage() {
                   <Phone className="h-3.5 w-3.5" /> We only use your phone to coordinate the delivery.
                 </p>
                 <p className="mt-2 flex items-center gap-1.5 text-xs text-[#8A8880]">
-                  <ShieldCheck className="h-3.5 w-3.5" /> No spam. One confirmation now, then your download link before your window.
+                  <ShieldCheck className="h-3.5 w-3.5" /> One confirmation now, then your download link before your window.
                 </p>
               </div>
             </div>
@@ -500,9 +481,9 @@ export default function ReservePage() {
             <div className="mt-10 text-center">
               <Link
                 href="/"
-                className="group inline-flex items-center gap-2 text-sm font-medium text-[#8A8880] transition-colors hover:text-[#B7791F]"
+                className="group inline-flex items-center gap-2 text-sm font-medium text-[#8A8880] transition-colors hover:text-gold-deep"
               >
-                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                <ArrowLeft className="h-4 w-4" />
                 Back to main page
               </Link>
             </div>
@@ -511,7 +492,7 @@ export default function ReservePage() {
       )}
 
       {/* ── FOOTER ── */}
-      <div className="h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+      <div className="h-px bg-black/10" />
       <div className="flex items-center justify-center gap-1.5 py-6">
         <MapPin className="h-3 w-3 text-[#A8A69E]" />
         <p className="text-xs uppercase tracking-wider text-[#A8A69E]">Edmonton, Alberta · © 2026 Taeam Technologies Inc.</p>

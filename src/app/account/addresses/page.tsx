@@ -84,7 +84,7 @@ export default function AddressesPage() {
                   <p className="font-semibold text-ink">
                     {address.label || "Address"}
                     {address.is_default && (
-                      <span className="ml-2 rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold-deep">
+                      <span className="ml-2 text-[10px] font-semibold uppercase tracking-wide text-gold-deep">
                         Default
                       </span>
                     )}

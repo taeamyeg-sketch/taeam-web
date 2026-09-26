@@ -87,7 +87,7 @@ export function SearchRow({
         className={cn(
           "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border transition-colors",
           filterCount > 0
-            ? "border-gold bg-gold/15 text-gold-deep"
+            ? "border-gold bg-white text-ink ring-1 ring-gold"
             : "border-cream-line bg-cream-deep text-ink-soft hover:border-gold/50",
         )}
       >
@@ -103,7 +103,7 @@ export function SearchRow({
       <Link
         href="/arbaab"
         aria-label="Ask Arbaab"
-        className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gold shadow-sm transition-transform hover:scale-105"
+        className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gold shadow-sm"
       >
         {/* A single crisp segment running the button's ACTUAL rounded-square
             border. pathLength normalises the perimeter to 100 so the dash + gap

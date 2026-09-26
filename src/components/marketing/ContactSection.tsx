@@ -32,7 +32,7 @@ export function ContactSection() {
       {/* The table after everyone's gone home — the quiet end of the page,
           right before the footer. */}
       <Reveal>
-        <div className="relative mb-14 aspect-[21/9] overflow-hidden rounded-3xl">
+        <div className="relative mb-14 aspect-[21/9] overflow-hidden rounded-2xl">
           <Image
             src="/contact-band.webp"
             alt="A restaurant table after a shared meal has ended, plates pushed together under a single warm pendant"
@@ -59,11 +59,9 @@ export function ContactSection() {
             <a
               href={c.href}
               {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="group flex items-center gap-4 rounded-2xl border border-cream-line bg-white p-5 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-0.5 hover:border-gold-bright/40"
+              className="group flex items-center gap-4 rounded-xl border border-cream-line bg-white p-5 transition-colors hover:border-gold/40"
             >
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gold-bright/12 text-gold-deep transition-colors group-hover:bg-gold-bright group-hover:text-noir">
-                <c.icon className="h-6 w-6" weight="bold" aria-hidden />
-              </span>
+              <c.icon className="h-6 w-6 shrink-0 text-gold-deep" weight="bold" aria-hidden />
               <span className="min-w-0 flex-1">
                 <span className="block text-[11px] font-black uppercase tracking-[0.14em] text-ink-mute">
                   {c.label}
@@ -73,7 +71,7 @@ export function ContactSection() {
                 </span>
               </span>
               <ArrowUpRight
-                className="h-5 w-5 shrink-0 text-ink-mute transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold-deep"
+                className="h-5 w-5 shrink-0 text-ink-mute transition-colors group-hover:text-gold-deep"
                 weight="bold"
                 aria-hidden
               />

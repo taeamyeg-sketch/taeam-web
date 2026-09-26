@@ -85,7 +85,7 @@ export function AppSuggestBanner() {
       aria-hidden={!open}
       inert={!open || undefined}
     >
-      <div className="mx-3 mb-3 overflow-hidden rounded-3xl border border-cream-line bg-cream shadow-sheet">
+      <div className="mx-3 mb-3 overflow-hidden rounded-xl border border-cream-line bg-cream shadow-sheet">
         <div className="h-1.5 w-full bg-gold" />
         <div className="flex items-center gap-3.5 p-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-noir">
@@ -120,7 +120,7 @@ export function AppSuggestBanner() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={dismiss}
-            className="flex flex-1 items-center justify-center rounded-full bg-noir px-5 py-3 text-[13px] font-bold uppercase tracking-wide text-gold-bright transition-transform active:scale-[0.98]"
+            className="flex flex-1 items-center justify-center rounded-full bg-noir px-5 py-3 text-[13px] font-bold uppercase tracking-wide text-gold"
           >
             Get it on {storeName}
           </a>

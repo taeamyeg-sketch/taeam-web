@@ -32,8 +32,8 @@ interface HubLink {
 // surfaces that make Taeam more than a delivery app.
 const HUB: HubLink[] = [
   { href: "/restaurants", label: "Order food", desc: "Halal kitchens near you", icon: Storefront },
-  { href: "/arbaab", label: "Arbaab", desc: "Your food boss, by chat", icon: Robot },
-  { href: "/halal", label: "The Halal Gap", desc: "Why we verify, not filter", icon: SealCheck },
+  { href: "/arbaab", label: "Arbaab", desc: "Taeam's food assistant", icon: Robot },
+  { href: "/halal", label: "The halal gap", desc: "Why we verify, not filter", icon: SealCheck },
   { href: "/fridge", label: "Taeam Fridge", desc: "Home kitchens, near you", icon: Basket },
   { href: "/drive", label: "Drive with Taeam", desc: "Earn on your schedule", icon: Car },
   { href: "/rewards", label: "Rewards & Plus", desc: "Points and flat delivery", icon: Coins },
@@ -93,7 +93,7 @@ export function SiteMenu({ light = false }: { light?: boolean }) {
           height={50}
           priority
           className={cn(
-            "h-10 w-auto transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-0.5 group-hover:scale-[1.06] group-active:scale-95",
+            "h-10 w-auto ease-[cubic-bezier(0.22,1,0.36,1)]",
             light && "invert",
           )}
         />
@@ -101,19 +101,17 @@ export function SiteMenu({ light = false }: { light?: boolean }) {
           weight="bold"
           className={cn(
             "h-4 w-4 transition-transform duration-300",
-            open ? "rotate-180" : "group-hover:translate-y-0.5",
+            open ? "rotate-180" : "",
             light ? "text-white/80" : "text-ink-mute",
           )}
         />
       </button>
 
-      {/* Panel — kept mounted so it can animate both in and out */}
+      {/* Panel, kept mounted so it can fade both in and out */}
       <div
         className={cn(
-          "absolute left-0 top-full z-50 mt-2 max-h-[calc(100dvh-6.5rem)] w-[min(92vw,520px)] origin-top-left overflow-y-auto overscroll-contain rounded-3xl border border-cream-line bg-cream p-3 shadow-card transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
-          open
-            ? "visible translate-y-0 scale-100 opacity-100"
-            : "invisible -translate-y-2 scale-[0.97] opacity-0",
+          "absolute left-0 top-full z-50 mt-2 max-h-[calc(100dvh-6.5rem)] w-[min(92vw,520px)] origin-top-left overflow-y-auto overscroll-contain rounded-2xl border border-cream-line bg-cream p-3 shadow-card transition-opacity duration-150",
+          open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >
         <div className="px-3 pb-2 pt-1">
@@ -121,13 +119,9 @@ export function SiteMenu({ light = false }: { light?: boolean }) {
         </div>
 
         <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
-          {MENU_ITEMS.map((item, i) => {
-            const rowClass = cn(
-              "group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition-all duration-300",
-              open ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0",
-              "hover:bg-cream-deep",
-            );
-            const style = { transitionDelay: open ? `${60 + i * 28}ms` : "0ms" };
+          {MENU_ITEMS.map((item) => {
+            const rowClass =
+              "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-cream-deep";
             const inner = (
               <>
                 <item.icon
@@ -153,7 +147,6 @@ export function SiteMenu({ light = false }: { light?: boolean }) {
                     setOpen(false);
                     openWaitlist();
                   }}
-                  style={style}
                   className={cn(rowClass, "w-full")}
                 >
                   {inner}
@@ -165,7 +158,6 @@ export function SiteMenu({ light = false }: { light?: boolean }) {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                style={style}
                 className={rowClass}
               >
                 {inner}

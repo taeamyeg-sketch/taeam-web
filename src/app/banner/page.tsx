@@ -12,7 +12,7 @@ export const metadata: Metadata = {
  */
 export default function Banner() {
   return (
-    <main className="fixed inset-0 w-full h-full bg-gold-bright overflow-hidden font-sans select-none">
+    <main className="fixed inset-0 w-full h-full bg-gold overflow-hidden font-sans select-none">
       {/* Black diagonal overlay (bottom-left triangle) */}
       <div
         className="absolute inset-0 bg-noir z-0 pointer-events-none"
@@ -31,10 +31,10 @@ export default function Banner() {
 
       {/* طعام — on the black side */}
       <div className="absolute right-[8%] sm:right-[10%] md:right-[12%] bottom-[38%] sm:bottom-[35%] md:bottom-[30%] z-10 text-right">
-        <p className="text-gold-bright text-[12vw] sm:text-[14vw] md:text-[10vw] font-black leading-none">
+        <p className="text-gold text-[12vw] sm:text-[14vw] md:text-[10vw] font-black leading-none">
           طعام
         </p>
-        <span className="text-gold-bright/50 text-[10px] sm:text-xs md:text-sm tracking-[0.1em] sm:tracking-[0.15em] mt-1 sm:mt-2 inline-block">
+        <span className="text-gold/50 text-[10px] sm:text-xs md:text-sm tracking-[0.1em] sm:tracking-[0.15em] mt-1 sm:mt-2 inline-block">
           طعم الثقة
         </span>
       </div>

@@ -54,7 +54,7 @@ export function CookieConsent() {
       aria-hidden={!visible}
       inert={!visible || undefined}
     >
-      <div className="flex w-full max-w-2xl flex-col items-center gap-3 rounded-2xl border border-cream-line bg-cream/95 p-3.5 shadow-sheet backdrop-blur-md sm:flex-row sm:gap-4 sm:px-5">
+      <div className="flex w-full max-w-2xl flex-col items-center gap-3 rounded-xl border border-cream-line bg-cream p-3.5 shadow-sheet sm:flex-row sm:gap-4 sm:px-5">
         <Cookie
           className="hidden h-5 w-5 shrink-0 text-gold-deep sm:block"
           weight="fill"
@@ -71,7 +71,7 @@ export function CookieConsent() {
         </p>
         <button
           onClick={accept}
-          className="w-full shrink-0 rounded-full bg-noir px-6 py-2.5 text-[13px] font-bold uppercase tracking-wide text-gold-bright transition-transform hover:-translate-y-px active:scale-[0.98] sm:w-auto"
+          className="w-full shrink-0 rounded-full bg-noir px-6 py-2.5 text-[13px] font-bold uppercase tracking-wide text-gold sm:w-auto"
         >
           Accept
         </button>

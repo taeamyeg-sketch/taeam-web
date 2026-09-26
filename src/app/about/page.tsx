@@ -67,8 +67,7 @@ export default function AboutPage() {
             <p>
               We&rsquo;re starting where we live, in Edmonton, Alberta. Local
               kitchens, local drivers, and a points program that gives back on
-              every order. No venture-capital games, no ghost kitchens, no
-              fine print.
+              every order. We don&rsquo;t list ghost kitchens.
             </p>
           </div>
         </Reveal>
@@ -110,13 +109,15 @@ export default function AboutPage() {
         </Reveal>
 
         <Reveal>
-          <div className="mt-14 rounded-3xl bg-ink p-8 text-cream sm:p-10">
+          <div className="mt-14 rounded-xl bg-ink p-8 text-cream sm:p-10">
             <Rule className="w-10 text-gold" />
             <h2 className="mt-4 font-black uppercase tracking-tight text-2xl sm:text-3xl">
               Hungry already?
             </h2>
             <p className="mt-2 text-cream/75">
-              The founding restaurants are live. Come see who&rsquo;s cooking.
+              {SEALED
+                ? "We are signing our founding restaurants now. Join the waitlist and we will tell you when they open for orders."
+                : "The founding restaurants are live. Come see who’s cooking."}
             </p>
             {SEALED ? (
               <JoinWaitlistButton className="mt-6 inline-block rounded-full bg-gold px-6 py-3 text-sm font-semibold text-ink">

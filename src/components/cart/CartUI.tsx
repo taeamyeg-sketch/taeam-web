@@ -47,7 +47,7 @@ export function CartUI() {
         <div className="fixed inset-x-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 sm:inset-x-auto sm:right-6 sm:w-96">
           <button
             onClick={() => cart.setOpen(true)}
-            className="flex w-full items-center justify-between rounded-full bg-ink px-5 py-3.5 text-cream shadow-card transition-transform hover:-translate-y-px"
+            className="flex w-full items-center justify-between rounded-full bg-ink px-5 py-3.5 text-cream shadow-card"
           >
             <span className="flex items-center gap-2.5 text-sm font-semibold">
               <ShoppingBagOpen className="h-5 w-5 text-gold" aria-hidden />
@@ -100,7 +100,7 @@ function CartDrawer({
         role="dialog"
         aria-modal="true"
         aria-label="Your order"
-        className="absolute inset-x-0 bottom-0 max-h-[85svh] overflow-y-auto overscroll-contain rounded-t-3xl bg-cream p-5 pb-[calc(2rem+env(safe-area-inset-bottom))] shadow-sheet sm:inset-x-auto sm:right-6 sm:bottom-6 sm:w-[26rem] sm:rounded-3xl sm:pb-8"
+        className="absolute inset-x-0 bottom-0 max-h-[85svh] overflow-y-auto overscroll-contain rounded-t-2xl bg-cream p-5 pb-[calc(2rem+env(safe-area-inset-bottom))] shadow-sheet sm:inset-x-auto sm:right-6 sm:bottom-6 sm:w-[26rem] sm:rounded-2xl sm:pb-8"
       >
             <div className="flex items-center justify-between">
               <div>
@@ -178,7 +178,7 @@ function CartDrawer({
 
             <button
               onClick={onCheckout}
-              className="mt-4 block w-full rounded-full bg-gold px-6 py-3.5 text-center text-base font-semibold text-ink transition-transform hover:-translate-y-px"
+              className="mt-4 block w-full rounded-full bg-gold px-6 py-3.5 text-center text-base font-semibold text-ink"
             >
               {user ? "Go to checkout" : "Sign in to order"}
             </button>

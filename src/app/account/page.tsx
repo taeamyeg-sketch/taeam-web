@@ -29,7 +29,7 @@ export default function AccountPage() {
     <AccountShell>
       <div className="grid gap-6 md:grid-cols-2">
         {/* Identity */}
-        <div className="rounded-3xl bg-white/60 p-7 shadow-card">
+        <div className="rounded-xl bg-white/60 p-7 shadow-card">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-mute">
             Account
           </p>
@@ -55,7 +55,7 @@ export default function AccountPage() {
         </div>
 
         {/* Points */}
-        <div className="rounded-3xl bg-ink p-7 text-cream shadow-card">
+        <div className="rounded-xl bg-ink p-7 text-cream shadow-card">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
             Taeam Points
           </p>
@@ -70,7 +70,7 @@ export default function AccountPage() {
         </div>
 
         {/* Plus */}
-        <div className="rounded-3xl bg-white/60 p-7 shadow-card">
+        <div className="rounded-xl bg-white/60 p-7 shadow-card">
           <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-gold-deep">
             <Crown className="h-4 w-4" aria-hidden /> Taeam Plus
           </p>
@@ -104,7 +104,7 @@ export default function AccountPage() {
         </div>
 
         {/* Referral */}
-        <div className="rounded-3xl bg-cream-deep p-7 shadow-card">
+        <div className="rounded-xl bg-cream-deep p-7 shadow-card">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-mute">
             Refer &amp; earn
           </p>

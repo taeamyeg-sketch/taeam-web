@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, ChefHat, Cookie, Bell, CheckCircle } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, ChefHat, Cookie, CheckCircle } from '@phosphor-icons/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
@@ -9,7 +9,6 @@ import { supabase } from '@/lib/supabase';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function FridgePage() {
-  const [mounted, setMounted] = useState(false);
   const [email, setEmail] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -17,7 +16,6 @@ export default function FridgePage() {
 
   useEffect(() => {
     requestAnimationFrame(() => window.scrollTo(0, 0));
-    setMounted(true);
   }, []);
 
   useEffect(() => {
@@ -61,12 +59,12 @@ export default function FridgePage() {
     <main className="min-h-svh bg-cream font-sans text-ink antialiased">
 
       {/* ── NAV ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-black/5 bg-cream/85 py-3.5 pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] pt-[max(0.875rem,env(safe-area-inset-top))] backdrop-blur-md sm:pl-[max(2rem,env(safe-area-inset-left))] sm:pr-[max(2rem,env(safe-area-inset-right))]">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-black/5 bg-cream py-3.5 pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] pt-[max(0.875rem,env(safe-area-inset-top))] sm:pl-[max(2rem,env(safe-area-inset-left))] sm:pr-[max(2rem,env(safe-area-inset-right))]">
         <Link
           href="/"
-          className="group flex items-center gap-2 text-sm font-bold text-ink transition-opacity hover:opacity-60"
+          className="flex items-center gap-2 text-sm font-bold text-ink transition-opacity hover:opacity-60"
         >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" weight="bold" />
+          <ArrowLeft className="h-4 w-4" weight="bold" />
           Back to Taeam
         </Link>
         <img src="/taeam-logo.jpg" alt="Taeam" className="h-9 w-9 rounded-full" />
@@ -74,7 +72,7 @@ export default function FridgePage() {
 
       {/* ── BANNER ── */}
       <section className="px-3 pt-[68px] sm:px-5 sm:pt-[76px]">
-        <div className={`relative mx-auto max-w-6xl overflow-hidden rounded-2xl sm:rounded-3xl ${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-xl sm:rounded-2xl">
           <div className="relative aspect-[16/9] w-full sm:aspect-[1376/676]">
             <Image
               src="/fridge-feature.jpg"
@@ -86,8 +84,8 @@ export default function FridgePage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5 sm:p-8 md:p-10">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/30 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white backdrop-blur-sm">
-                <span className="h-1.5 w-1.5 rounded-full bg-gold-bright" /> Coming soon
+              <span className="inline-flex items-center gap-2 rounded-md bg-noir px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white">
+                <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Coming soon
               </span>
             </div>
           </div>
@@ -121,20 +119,16 @@ export default function FridgePage() {
           </div>
         </div>
         <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
-          <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.35)]">
-            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gold-bright/12 text-gold-deep">
-              <ChefHat className="h-6 w-6" weight="bold" />
-            </div>
+          <div className="rounded-xl border border-black/5 bg-white p-6">
+            <ChefHat className="mb-3 h-6 w-6 text-gold-deep" weight="bold" />
             <h3 className="text-base font-bold">If you make it</h3>
             <p className="mt-1.5 text-sm leading-relaxed text-ink-mute">
               Turn your home kitchen into a small business. Sell your desserts today, and one day,
               full home-cooked meals, to your city.
             </p>
           </div>
-          <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.35)]">
-            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gold-bright/12 text-gold-deep">
-              <Cookie className="h-6 w-6" weight="bold" />
-            </div>
+          <div className="rounded-xl border border-black/5 bg-white p-6">
+            <Cookie className="mb-3 h-6 w-6 text-gold-deep" weight="bold" />
             <h3 className="text-base font-bold">If you love it</h3>
             <p className="mt-1.5 text-sm leading-relaxed text-ink-mute">
               Real homemade goods from people near you, not factory shelves. Made by hand,
@@ -146,12 +140,8 @@ export default function FridgePage() {
 
       {/* ── NOTIFY ── */}
       <section className="px-5 pb-16 sm:px-8">
-        <div className="mx-auto max-w-lg overflow-hidden rounded-3xl border border-gold-bright/30 bg-white shadow-[0_20px_60px_-25px_rgba(0,0,0,0.25)]">
-          <div className="h-1.5 w-full bg-gradient-to-r from-gold-bright via-gold to-gold-bright" />
+        <div className="mx-auto max-w-lg overflow-hidden rounded-xl border border-cream-line bg-white">
           <div className="p-7 text-center sm:p-9">
-            <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-gold-bright/12 text-gold-deep">
-              <Bell className="h-5 w-5" weight="bold" />
-            </div>
             <h2 className="text-xl font-black uppercase tracking-tight sm:text-2xl">Be first to know</h2>
             <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink-mute">
               Whether you want to sell from your kitchen or just be first in line to order,
@@ -177,14 +167,14 @@ export default function FridgePage() {
                   placeholder="you@email.com"
                   disabled={submitting}
                   autoComplete="email"
-                  className="flex-1 rounded-xl border border-black/10 bg-cream px-4 py-3.5 text-base text-ink outline-none transition-all placeholder:text-ink-mute focus:border-gold-bright focus:bg-white focus:ring-2 focus:ring-gold-bright/30"
+                  className="flex-1 rounded-xl border border-black/10 bg-cream px-4 py-3.5 text-base text-ink outline-none transition-all placeholder:text-ink-mute focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/30"
                 />
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="group flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black active:scale-[0.98] disabled:opacity-60"
+                  className="flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-black disabled:opacity-60"
                 >
-                  {submitting ? 'Joining…' : (<>Notify me <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" weight="bold" /></>)}
+                  {submitting ? 'Joining…' : (<>Notify me <ArrowRight className="h-4 w-4" weight="bold" /></>)}
                 </button>
               </form>
             )}
@@ -196,16 +186,16 @@ export default function FridgePage() {
         <div className="mt-10 text-center">
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-ink-mute transition-colors hover:text-gold-deep"
+            className="inline-flex items-center gap-2 text-sm font-medium text-ink-mute transition-colors hover:text-gold-deep"
           >
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" weight="bold" />
+            <ArrowLeft className="h-4 w-4" weight="bold" />
             Back to main page
           </Link>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
-      <div className="h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+      <div className="h-px bg-black/10" />
       <div className="py-6 text-center">
         <p className="text-xs uppercase tracking-wider text-ink-mute">© 2026 Taeam Technologies Inc.</p>
       </div>

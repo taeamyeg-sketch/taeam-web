@@ -23,7 +23,7 @@ export function LaunchGate() {
   if (!sealed) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-gold-bright">
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-gold">
       <span
         className="text-[18vw] font-black leading-none text-noir sm:text-[10vw]"
         style={{ fontFamily: "var(--font-arabic)" }}

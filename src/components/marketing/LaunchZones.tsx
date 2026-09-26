@@ -12,16 +12,15 @@ import { LaunchZonesMap } from "./LaunchZonesMap";
  */
 export function LaunchZones() {
   return (
-    <section id="launch" className="grain relative overflow-hidden bg-noir py-20 text-white sm:py-28">
+    <section id="launch" className="relative overflow-hidden bg-noir py-20 text-white sm:py-28">
       <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 md:grid-cols-[1.1fr_1fr] md:gap-16">
         <Reveal>
           <Eyebrow tone="bright">Edmonton, Alberta</Eyebrow>
           <h2 className="mt-4 text-4xl font-black uppercase leading-none tracking-tight sm:text-5xl">
-            Taeam <span className="text-gold-bright">launch</span>
+            Taeam <span className="text-gold">launch</span>
           </h2>
           <p className="mt-4 max-w-md text-lg font-semibold leading-snug text-white/85">
-            Edmonton&apos;s first 100% halal delivery platform. No guessing. No
-            compromise.
+            Edmonton&apos;s first 100% halal delivery platform.
           </p>
 
           {/* Deliberately short. The halal-verification argument belongs to
@@ -36,7 +35,7 @@ export function LaunchZones() {
             </p>
             <p>
               We&apos;re starting in{" "}
-              <strong className="font-semibold text-gold-bright">
+              <strong className="font-semibold text-gold">
                 North and South Edmonton
               </strong>
               , growing street by street and restaurant by restaurant.
@@ -49,7 +48,7 @@ export function LaunchZones() {
           <div className="mt-9">
             <Link
               href="/drive"
-              className="inline-block rounded-full bg-gold-bright px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir transition-transform hover:-translate-y-0.5"
+              className="inline-block rounded-full bg-gold px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir"
             >
               Drive with Taeam
             </Link>
@@ -57,11 +56,11 @@ export function LaunchZones() {
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="overflow-hidden rounded-3xl border border-noir-line bg-noir-soft">
+          <div className="overflow-hidden rounded-xl border border-noir-line bg-noir-soft">
             <LaunchZonesMap className="h-[420px] sm:h-[500px]" />
             <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 border-t border-noir-line px-5 py-3.5 text-[11px] font-semibold">
-              <span className="inline-flex items-center gap-2 uppercase tracking-[0.14em] text-gold-bright">
-                <span aria-hidden className="h-2.5 w-2.5 rounded-[3px] border border-gold-bright bg-gold-bright/15" />
+              <span className="inline-flex items-center gap-2 uppercase tracking-[0.14em] text-gold">
+                <span aria-hidden className="h-2.5 w-2.5 rounded-[3px] border border-gold bg-gold/15" />
                 Launch zones
               </span>
               <span className="text-white/40">

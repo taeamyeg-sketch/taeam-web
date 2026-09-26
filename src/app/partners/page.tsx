@@ -67,7 +67,7 @@ const RATES = [
 const PAID = [
   {
     title: "Every week, automatically",
-    copy: "We settle Sunday night and the transfer lands in your bank in one to three business days. No invoicing, no chasing us for it.",
+    copy: "We settle Sunday night and the transfer lands in your bank in one to three business days. You never have to invoice us or chase a payment.",
   },
   {
     title: "Refunds split by fault",
@@ -99,7 +99,7 @@ const NEEDS = [
 const ANSWERS = [
   {
     q: "Are there any other fees?",
-    a: "No. The commission is the only thing we take. No processing or transaction fees, no monthly fee, no setup cost, nothing for the tablet, and nothing for the menu page and photos we build for you.",
+    a: "No. The commission is the only thing we take. There are no processing, transaction, monthly or setup fees, and you pay nothing for the tablet or for the menu page and photos we build for you.",
   },
   {
     q: "Do we need our own tablet?",
@@ -149,7 +149,7 @@ export default function PartnersPage() {
       <Header overlay overlayTone="dark" />
 
       {/* ── Dark brand island: the claim, with the kitchen behind it ── */}
-      <section className="grain relative isolate overflow-hidden bg-noir pb-20 pt-32 text-white sm:pb-24 sm:pt-40">
+      <section className="relative isolate overflow-hidden bg-noir pb-20 pt-32 text-white sm:pb-24 sm:pt-40">
         <Image
           src="/partners-kitchen.webp"
           alt="A cook plating an order on the pass of a small halal restaurant kitchen in the evening"
@@ -163,11 +163,11 @@ export default function PartnersPage() {
           className="absolute inset-0 -z-10 bg-gradient-to-r from-noir via-noir/85 to-noir/30"
         />
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="rise" style={{ animationDelay: "60ms" }}>
+          <div>
             <Eyebrow tone="bright">Founding partner · Edmonton</Eyebrow>
             <h1 className="mt-4 max-w-3xl text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl">
               You already pay more for halal.{" "}
-              <span className="text-gold-bright">
+              <span className="text-gold">
                 No delivery app makes it worth anything.
               </span>
             </h1>
@@ -180,18 +180,17 @@ export default function PartnersPage() {
             <div className="mt-8 flex flex-wrap items-center gap-5">
               <a
                 href="tel:+15874150019"
-                className="rounded-full bg-gold-bright px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir transition-transform hover:-translate-y-0.5"
+                className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir"
               >
                 Call 587-415-0019
               </a>
               <a
-                href="mailto:restaurants@taeam.ca?subject=Founding%20partner%20%E2%80%94%20my%20restaurant"
-                className="group inline-flex items-center gap-1 text-sm font-semibold text-white/80 transition-colors hover:text-gold-bright"
+                href="mailto:restaurants@taeam.ca?subject=Founding%20partner%3A%20my%20restaurant"
+                className="group inline-flex items-center gap-1 text-sm font-semibold text-white/80 transition-colors hover:text-gold"
               >
                 restaurants@taeam.ca
                 <span
                   aria-hidden
-                  className="transition-transform duration-300 group-hover:translate-x-1"
                 >
                   →
                 </span>
@@ -212,7 +211,7 @@ export default function PartnersPage() {
           </Reveal>
 
           <Reveal delay={90}>
-            <div className="mt-10 overflow-hidden rounded-3xl border border-cream-line bg-cream shadow-card">
+            <div className="mt-10 overflow-hidden rounded-xl border border-cream-line bg-cream shadow-card">
               {RATES.map((row) => (
                 <div
                   key={row.label}
@@ -248,8 +247,8 @@ export default function PartnersPage() {
           <Reveal delay={150}>
             <div className="mt-5 flex flex-col gap-3 text-sm text-ink-mute sm:flex-row sm:items-center sm:justify-between">
               <span>
-                The commission is the only thing we take. No processing fees, no
-                monthly fee, and we tell you whenever your rate changes.
+                The commission is the only thing we take. There are no processing
+                or monthly fees, and we tell you whenever your rate changes.
               </span>
               <span className="shrink-0 font-semibold text-ink">
                 No upfront cost · Tablet on loan · No exclusivity · Cancel anytime
@@ -290,9 +289,9 @@ export default function PartnersPage() {
           </div>
 
           <Reveal delay={120}>
-            <div className="rounded-3xl bg-noir p-7 text-white lg:sticky lg:top-24">
+            <div className="rounded-xl bg-noir p-7 text-white lg:sticky lg:top-24">
               <div className="mb-4 flex items-center gap-2">
-                <Seal className="h-4 w-4 text-gold-bright" />
+                <Seal className="h-4 w-4 text-gold" />
                 <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/80">
                   Your supplier stays yours
                 </span>
@@ -309,12 +308,11 @@ export default function PartnersPage() {
               </p>
               <Link
                 href="/how-we-verify"
-                className="group mt-6 inline-flex items-center gap-1 text-sm font-semibold text-gold-bright"
+                className="group mt-6 inline-flex items-center gap-1 text-sm font-semibold text-gold"
               >
                 The full verification process
                 <span
                   aria-hidden
-                  className="transition-transform duration-300 group-hover:translate-x-1"
                 >
                   →
                 </span>
@@ -325,7 +323,7 @@ export default function PartnersPage() {
       </section>
 
       {/* ── Payouts and refunds: the second question, always ── */}
-      <section className="grain relative overflow-hidden bg-noir py-20 text-white sm:py-28">
+      <section className="relative overflow-hidden bg-noir py-20 text-white sm:py-28">
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
           <Reveal>
             <Eyebrow tone="bright">How you get paid</Eyebrow>
@@ -336,8 +334,8 @@ export default function PartnersPage() {
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             {PAID.map((card, i) => (
               <Reveal key={card.title} delay={i * 90}>
-                <div className="h-full rounded-3xl border border-noir-line bg-noir-soft p-8">
-                  <h3 className="font-semibold text-gold-bright">
+                <div className="h-full rounded-xl border border-noir-line bg-noir-soft p-8">
+                  <h3 className="font-semibold text-gold">
                     {card.title}
                   </h3>
                   <p className="mt-3 leading-relaxed text-white/70">
@@ -361,7 +359,7 @@ export default function PartnersPage() {
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {NEEDS.map((item, i) => (
             <Reveal key={item.title} delay={(i % 3) * 90}>
-              <div className="h-full rounded-3xl border border-cream-line bg-cream p-7 shadow-card">
+              <div className="h-full rounded-xl border border-cream-line bg-cream p-7 shadow-card">
                 <span className="text-xs font-black uppercase tracking-[0.14em] text-gold-deep">
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -411,7 +409,7 @@ export default function PartnersPage() {
       {/* ── Closing CTA ── */}
       <section className="mx-auto max-w-6xl px-4 py-20 text-center sm:px-6 sm:py-28">
         <Reveal>
-          <div className="rounded-3xl bg-cream-deep px-6 py-14 sm:py-16">
+          <div className="rounded-xl bg-cream-deep px-6 py-14 sm:py-16">
             <h2 className="mx-auto max-w-2xl text-3xl font-black uppercase leading-tight tracking-tight text-ink sm:text-4xl">
               Launching this fall.
             </h2>
@@ -422,18 +420,17 @@ export default function PartnersPage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-5">
               <a
                 href="tel:+15874150019"
-                className="rounded-full bg-gold-bright px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir transition-transform hover:-translate-y-0.5"
+                className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir"
               >
                 Call 587-415-0019
               </a>
               <a
-                href="mailto:restaurants@taeam.ca?subject=Founding%20partner%20%E2%80%94%20my%20restaurant"
+                href="mailto:restaurants@taeam.ca?subject=Founding%20partner%3A%20my%20restaurant"
                 className="group inline-flex items-center gap-1 text-sm font-semibold text-ink transition-colors hover:text-gold-deep"
               >
                 restaurants@taeam.ca
                 <span
                   aria-hidden
-                  className="transition-transform duration-300 group-hover:translate-x-1"
                 >
                   →
                 </span>

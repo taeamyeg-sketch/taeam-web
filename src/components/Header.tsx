@@ -71,13 +71,13 @@ export function Header({
     navLight ? "text-ink-soft md:text-white" : "text-ink-soft",
   );
 
-  // "Join Taeam" — the primary CTA. Always a filled, branded pill: gold-bright on
+  // "Join Taeam" — the primary CTA. Always a filled, branded pill: gold on
   // the dark hero, the signature noir/gold pill on cream. Never a faded link.
   const cta = cn(
     "rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide transition-all sm:px-5 sm:py-2.5 sm:text-sm",
     navLight
-      ? "bg-gold-bright text-noir hover:-translate-y-0.5"
-      : "bg-noir text-gold-bright hover:-translate-y-0.5",
+      ? "bg-gold text-noir"
+      : "bg-noir text-gold",
   );
 
   // While sealed, the ordering surface is unreachable, so drop its nav link.
@@ -89,7 +89,7 @@ export function Header({
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         floating
           ? "bg-transparent"
-          : "border-b border-cream-line bg-cream/85 backdrop-blur-md",
+          : "border-b border-cream-line bg-cream",
       )}
     >
       <div

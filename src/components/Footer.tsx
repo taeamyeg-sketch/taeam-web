@@ -111,33 +111,33 @@ export function Footer() {
               <ul className="space-y-1">
                 {!SEALED && (
                   <li>
-                    <Link href="/restaurants" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                    <Link href="/restaurants" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                       Restaurants
                     </Link>
                   </li>
                 )}
                 <li>
-                  <Link href="/halal" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/halal" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     The halal standard
                   </Link>
                 </li>
                 <li>
-                  <Link href="/halal/hand-vs-machine" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/halal/hand-vs-machine" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Hand or machine
                   </Link>
                 </li>
                 <li>
-                  <Link href="/how-we-verify" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/how-we-verify" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     How we verify
                   </Link>
                 </li>
                 <li>
-                  <Link href="/arbaab" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/arbaab" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Arbaab
                   </Link>
                 </li>
                 <li>
-                  <Link href="/rewards" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/rewards" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Rewards &amp; Taeam Plus
                   </Link>
                 </li>
@@ -157,7 +157,7 @@ export function Footer() {
                   </span>
                 </li>
                 <li>
-                  <Link href="/drive" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/drive" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Drive with Taeam
                   </Link>
                 </li>
@@ -169,12 +169,12 @@ export function Footer() {
               </Eyebrow>
               <ul className="space-y-1">
                 <li>
-                  <Link href="/about" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/about" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Our story
                   </Link>
                 </li>
                 <li>
-                  <Link href="/help" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/help" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Help &amp; support
                   </Link>
                 </li>
@@ -183,13 +183,13 @@ export function Footer() {
                     href="https://instagram.com/taeam.ca"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright"
+                    className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold"
                   >
                     Instagram
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:contact@taeam.ca" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <a href="mailto:contact@taeam.ca" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Contact
                   </a>
                 </li>
@@ -201,32 +201,32 @@ export function Footer() {
               </Eyebrow>
               <ul className="space-y-1">
                 <li>
-                  <Link href="/terms" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/terms" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Terms of Service
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy-policy" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/privacy-policy" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/cookies" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/cookies" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Cookies &amp; Storage
                   </Link>
                 </li>
                 <li>
-                  <Link href="/accessibility" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/accessibility" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Accessibility
                   </Link>
                 </li>
                 <li>
-                  <Link href="/terms#refunds" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/terms#refunds" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Refund policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/delete-account" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold-bright">
+                  <Link href="/delete-account" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Delete your account
                   </Link>
                 </li>
@@ -237,7 +237,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col items-start gap-4 border-t border-cream/10 pt-6 text-xs text-cream/45 sm:flex-row sm:items-center sm:justify-between">
           <span className="inline-flex items-center gap-2.5">
-            <Rule className="w-4 text-gold-bright/60" />
+            <Rule className="w-4 text-gold/60" />
             © 2026 Taeam Technologies Inc. · Edmonton, Alberta · All rights reserved.
           </span>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">

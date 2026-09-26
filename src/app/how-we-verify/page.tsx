@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 const STEPS = [
   {
     title: "The supplier file",
-    copy: "Before a kitchen goes live, it hands us its meat supplier information. That file is where the audit starts. No supplier info, no listing.",
+    copy: "Before a kitchen goes live, it hands us its meat supplier information. That file is where the audit starts, and a kitchen that does not provide it is not listed.",
   },
   {
     title: "We contact the supplier",
@@ -65,7 +65,7 @@ const HARD_LINES = [
   },
   {
     title: "No alcohol on the premises",
-    copy: "Not served, not stored, not sold. The same rule for every kitchen on Taeam, from day one.",
+    copy: "Alcohol is not served, stored or sold on the premises. The same rule applies to every kitchen on Taeam, from day one.",
   },
 ];
 
@@ -75,12 +75,12 @@ export default function HowWeVerifyPage() {
       <Header overlay overlayTone="dark" />
 
       {/* ── Dark brand island: the claim ── */}
-      <section className="grain relative overflow-hidden bg-noir pb-20 pt-32 text-white sm:pb-24 sm:pt-40">
+      <section className="relative overflow-hidden bg-noir pb-20 pt-32 text-white sm:pb-24 sm:pt-40">
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="rise" style={{ animationDelay: "60ms" }}>
+          <div>
             <Eyebrow tone="bright">Taeam Verified</Eyebrow>
             <h1 className="mt-4 max-w-3xl text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl">
-              Audited, <span className="text-gold-bright">then listed.</span>
+              Audited, <span className="text-gold">then listed.</span>
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
               We do not take a label&apos;s word for it, and we do not expect
@@ -102,7 +102,7 @@ export default function HowWeVerifyPage() {
         </Reveal>
         <div className="mt-12 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
           <Reveal className="lg:order-2">
-            <div className="relative h-64 overflow-hidden rounded-3xl border border-cream-line sm:h-80 lg:sticky lg:top-24 lg:h-[560px]">
+            <div className="relative h-64 overflow-hidden rounded-2xl border border-cream-line sm:h-80 lg:sticky lg:top-24 lg:h-[560px]">
               <Image
                 src="/verify-audit.jpg"
                 alt="Supplier paperwork being reviewed on a clipboard at a stainless steel counter in a restaurant kitchen"
@@ -160,7 +160,7 @@ export default function HowWeVerifyPage() {
           <Reveal delay={120}>
             {/* What a supplier check actually looks like: boxes on a prep
                 table at the back door, before the paperwork gets read. */}
-            <div className="relative mb-6 aspect-[3/2] overflow-hidden rounded-3xl border border-cream-line">
+            <div className="relative mb-6 aspect-[3/2] overflow-hidden rounded-2xl border border-cream-line">
               <Image
                 src="/verify-supplier.webp"
                 alt="Plain cardboard boxes stacked on a stainless prep table at the back door of a restaurant kitchen"
@@ -169,9 +169,9 @@ export default function HowWeVerifyPage() {
                 className="object-cover"
               />
             </div>
-            <div className="rounded-3xl bg-noir p-6 text-white sm:p-7">
+            <div className="rounded-xl bg-noir p-6 text-white sm:p-7">
               <div className="mb-4 flex items-center gap-2">
-                <Seal className="h-4 w-4 text-gold-bright" />
+                <Seal className="h-4 w-4 text-gold" />
                 <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/80">
                   Taeam Verified
                 </span>
@@ -187,7 +187,7 @@ export default function HowWeVerifyPage() {
                     className="flex items-center justify-between gap-3 rounded-xl bg-white/[0.07] px-4 py-3"
                   >
                     <span className="text-sm font-bold text-white">{meat}</span>
-                    <span className="text-[11px] font-semibold uppercase tracking-wide text-gold-bright">
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-gold">
                       {method}
                     </span>
                   </div>
@@ -203,7 +203,7 @@ export default function HowWeVerifyPage() {
       </section>
 
       {/* ── Dark brand island: supplier privacy ── */}
-      <section className="grain relative overflow-hidden bg-noir py-20 text-white sm:py-28">
+      <section className="relative overflow-hidden bg-noir py-20 text-white sm:py-28">
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
           <Reveal>
             <Eyebrow tone="bright">Supplier privacy</Eyebrow>
@@ -237,10 +237,10 @@ export default function HowWeVerifyPage() {
               },
             ].map((card, i) => (
               <Reveal key={card.title} delay={i * 90}>
-                <div className="h-full rounded-3xl border border-noir-line bg-noir-soft p-8">
+                <div className="h-full rounded-xl border border-noir-line bg-noir-soft p-8">
                   <div className="flex items-center gap-2">
-                    <Seal className="h-5 w-5 text-gold-bright" />
-                    <h3 className="font-semibold text-gold-bright">
+                    <Seal className="h-5 w-5 text-gold" />
+                    <h3 className="font-semibold text-gold">
                       {card.title}
                     </h3>
                   </div>
@@ -287,7 +287,7 @@ export default function HowWeVerifyPage() {
         <div className="mx-auto mt-10 grid max-w-6xl gap-4 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
           {HARD_LINES.map((line, i) => (
             <Reveal key={line.title} delay={(i % 3) * 90}>
-              <div className="h-full rounded-3xl border border-cream-line bg-cream p-6 shadow-card">
+              <div className="h-full rounded-xl border border-cream-line bg-cream p-6 shadow-card">
                 <span className="text-xs font-black uppercase tracking-[0.14em] text-red">
                   Refused
                 </span>
@@ -307,7 +307,7 @@ export default function HowWeVerifyPage() {
 
       <section className="mx-auto max-w-6xl px-4 pb-20 text-center sm:px-6 sm:pb-28">
         <Reveal>
-          <div className="rounded-3xl bg-cream-deep px-6 py-14 sm:py-16">
+          <div className="rounded-xl bg-cream-deep px-6 py-14 sm:py-16">
             <h2 className="mx-auto max-w-2xl text-3xl font-black uppercase leading-tight tracking-tight text-ink sm:text-4xl">
               See it before you order.
             </h2>
@@ -317,13 +317,13 @@ export default function HowWeVerifyPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-5">
               {SEALED ? (
-                <JoinWaitlistButton className="rounded-full bg-gold-bright px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir transition-transform hover:-translate-y-0.5">
+                <JoinWaitlistButton className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir">
                   Join the waitlist
                 </JoinWaitlistButton>
               ) : (
                 <TransitionLink
                   href={orderHref()}
-                  className="rounded-full bg-gold-bright px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir transition-transform hover:-translate-y-0.5"
+                  className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir"
                 >
                   Browse the kitchens
                 </TransitionLink>
@@ -335,7 +335,6 @@ export default function HowWeVerifyPage() {
                 Read the trust gap research
                 <span
                   aria-hidden
-                  className="transition-transform duration-300 group-hover:translate-x-1"
                 >
                   →
                 </span>
@@ -347,7 +346,6 @@ export default function HowWeVerifyPage() {
                 Hand or machine, explained
                 <span
                   aria-hidden
-                  className="transition-transform duration-300 group-hover:translate-x-1"
                 >
                   →
                 </span>

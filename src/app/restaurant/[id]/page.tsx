@@ -119,7 +119,7 @@ export default async function RestaurantPage({ params }: Params) {
 
         {/* Info card overlapping the banner */}
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="relative z-10 -mt-16 rounded-3xl bg-cream p-6 shadow-card sm:p-8">
+          <div className="relative z-10 -mt-16 rounded-xl bg-cream p-6 shadow-card sm:p-8">
             <div className="flex flex-wrap items-center gap-3">
               <h1 className="break-words font-black uppercase tracking-tight text-2xl text-ink sm:text-4xl">
                 {restaurant.name}
@@ -179,7 +179,7 @@ export default async function RestaurantPage({ params }: Params) {
               <span
                 className={cn(
                   "rounded-full px-2.5 py-1 text-xs font-semibold",
-                  status.open ? "bg-green/10 text-green" : "bg-cream-deep text-ink-mute",
+                  status.open ? "border border-cream-line text-green" : "border border-cream-line text-ink-mute",
                 )}
               >
                 {status.label}

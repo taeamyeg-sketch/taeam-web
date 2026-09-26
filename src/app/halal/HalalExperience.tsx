@@ -2,22 +2,15 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { Fraunces, Newsreader, Amiri } from 'next/font/google';
 import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
-import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Reveal from '@/components/halal/Reveal';
-import CountUp from '@/components/halal/CountUp';
 import Figure from '@/components/halal/Figure';
-
-// Editorial display + reading body, plus a calligraphic Arabic for the motif.
-const display = Fraunces({ subsets: ['latin'], weight: ['400', '500', '600', '900'], style: ['normal', 'italic'], display: 'swap' });
-const body = Newsreader({ subsets: ['latin'], weight: ['300', '400', '500'], style: ['normal', 'italic'], display: 'swap' });
-const calligraphy = Amiri({ subsets: ['arabic'], weight: ['400', '700'], display: 'swap' });
 
 /* ── Inline reference marker ── */
 function Cite({ n }: { n: number }) {
   return (
-    <a href={`#ref-${n}`} className="-m-1 ml-0.5 inline-block p-1 align-super text-[0.6em] font-semibold text-[#B8860B] no-underline hover:underline">
+    <a href={`#ref-${n}`} className="-m-1 ml-0.5 inline-block p-1 align-super text-[0.6em] font-semibold text-gold-deep no-underline hover:underline">
       {n}
     </a>
   );
@@ -27,8 +20,8 @@ function Cite({ n }: { n: number }) {
 function Pull({ children, cite }: { children: React.ReactNode; cite?: string }) {
   return (
     <Reveal>
-      <figure className="my-12 border-l-2 border-[#EAB308] pl-6 sm:my-16 sm:pl-8">
-        <blockquote className={`${display.className} text-2xl font-medium italic leading-snug text-[#1a1714] sm:text-4xl`}>
+      <figure className="my-12 border-l-2 border-gold pl-6 sm:my-16 sm:pl-8">
+        <blockquote className="text-2xl font-bold leading-snug text-ink sm:text-3xl">
           {children}
         </blockquote>
         {cite && <figcaption className="mt-4 text-xs uppercase tracking-[0.15em] text-[#8a8178]">{cite}</figcaption>}
@@ -42,7 +35,7 @@ function Aside({ children }: { children: React.ReactNode }) {
   return (
     <Reveal>
       <aside className="my-10 rounded-r-lg border-l-2 border-[#1a1714] bg-black/[0.03] py-5 pl-6 pr-5">
-        <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-[#1a1714]">How Taeam helps</p>
+        <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-ink">How Taeam helps</p>
         <p className="text-lg leading-relaxed text-[#4a443d]">{children}</p>
       </aside>
     </Reveal>
@@ -54,8 +47,8 @@ function Chapter({ num, kicker, title, children }: { num: string; kicker: string
   return (
     <section className="mx-auto max-w-[44rem] px-6 py-16 sm:py-20">
       <Reveal className="mb-8">
-        <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#B8860B]">{num} · {kicker}</span>
-        <h2 className={`${display.className} mt-3 text-3xl font-semibold leading-[1.1] text-[#1a1714] sm:text-5xl`}>{title}</h2>
+        <span className="text-xs font-bold uppercase tracking-[0.25em] text-gold-deep">{num} · {kicker}</span>
+        <h2 className="mt-3 text-3xl font-black uppercase leading-[1.05] tracking-tight text-ink sm:text-5xl">{title}</h2>
       </Reveal>
       <div className="space-y-6 text-lg leading-[1.75] text-[#3a342d] sm:text-xl">{children}</div>
     </section>
@@ -74,14 +67,14 @@ export default function HalalExperience() {
     // reducedMotion="user" turns every framer-motion reveal/parallax on this
     // page into a no-op for prefers-reduced-motion users.
     <MotionConfig reducedMotion="user">
-    <main className={`${body.className} relative min-h-svh overflow-x-clip bg-[#FAF7F0] antialiased selection:bg-[#EAB308] selection:text-black`} style={{ color: '#3a342d' }}>
+    <main className="relative min-h-svh overflow-x-clip bg-cream text-[#3a342d] antialiased">
       {/* Reading progress */}
-      <motion.div className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-[#EAB308]" style={{ scaleX: progress }} />
+      <motion.div className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-gold" style={{ scaleX: progress }} />
 
       {/* Nav */}
       <nav className="absolute inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 sm:px-8">
-        <Link href="/" className="group flex items-center gap-2 text-sm font-semibold text-[#1a1714] transition-opacity hover:opacity-60">
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+        <Link href="/" className="flex items-center gap-2 text-sm font-semibold text-ink transition-opacity hover:opacity-60">
+          <ArrowLeft className="h-4 w-4" />
           Back to Taeam
         </Link>
         <img src="/taeam-logo.jpg" alt="Taeam" className="h-9 w-9 rounded-full" />
@@ -91,12 +84,12 @@ export default function HalalExperience() {
       <header className="px-6 pb-12 pt-32 sm:pt-40">
         <div className="mx-auto max-w-[48rem] text-center">
           <Reveal>
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#B8860B]">Taeam Research · Fact-checked 2026</span>
-            <p className={`${calligraphy.className} mt-6 text-6xl leading-none text-[#B8860B] sm:text-7xl`}>طعام</p>
-            <h1 className={`${display.className} mx-auto mt-5 max-w-3xl text-5xl font-semibold leading-[0.98] text-[#1a1714] sm:text-7xl`}>
-              The Halal <span className="italic">Trust Gap</span>
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-gold-deep">Taeam Research · Fact-checked 2026</span>
+            <p className="mt-6 font-arabic text-6xl leading-none text-gold-deep sm:text-7xl">طعام</p>
+            <h1 className="mx-auto mt-5 max-w-3xl text-4xl font-black uppercase leading-none tracking-tight text-ink sm:text-6xl">
+              The halal trust gap
             </h1>
-            <p className={`${display.className} mx-auto mt-7 max-w-2xl text-xl font-light leading-snug text-[#5a534a] sm:text-2xl`}>
+            <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-[#5a534a] sm:text-xl">
               Almost two million Muslims in Canada still walk out of restaurants unsure the food is really halal. Here is why it happens, and how we close it.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs uppercase tracking-[0.15em] text-[#8a8178]">
@@ -107,16 +100,13 @@ export default function HalalExperience() {
               <span>Primary sources</span>
             </div>
           </Reveal>
-          <div className="mx-auto mt-12 flex justify-center text-[#c9bfb2]">
-            <ChevronDown className="h-5 w-5 animate-bounce" />
-          </div>
         </div>
       </header>
 
       {/* ── LEDE ── */}
       <section className="mx-auto max-w-[44rem] px-6 pb-12 pt-6">
         <Reveal>
-          <p className={`text-xl leading-[1.75] text-[#2b2620] sm:text-2xl [&::first-letter]:float-left [&::first-letter]:mr-3 [&::first-letter]:mt-1 [&::first-letter]:text-7xl [&::first-letter]:font-semibold [&::first-letter]:leading-[0.7] [&::first-letter]:text-[#1a1714] sm:[&::first-letter]:text-8xl ${display.className}`}>
+          <p className="text-xl font-medium leading-[1.7] text-[#2b2620] sm:text-2xl">
             Almost all of us have done it. You stand in a restaurant, you look at the halal sign in the window, and you still feel unsure enough to walk out. That instinct is not paranoia. It is earned.
           </p>
         </Reveal>
@@ -177,12 +167,11 @@ export default function HalalExperience() {
 
       {/* ── DARK INTERLUDE (calligraphy, clean) ── */}
       <section className="relative overflow-hidden bg-[#14100c] py-28 sm:py-40">
-        <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(115% 75% at 50% 45%, transparent 45%, rgba(0,0,0,0.6))' }} />
         <div className="relative mx-auto max-w-4xl px-6 text-center">
           <Reveal>
-            <p dir="rtl" className={`${calligraphy.className} text-[20vw] leading-[1.6] text-[#EAB308] sm:text-[10rem]`}>أمانة</p>
+            <p dir="rtl" className="font-arabic text-[20vw] leading-[1.6] text-gold sm:text-[10rem]">أمانة</p>
             <p className="mt-4 text-sm uppercase tracking-[0.3em] text-white/40">Amanah · trust</p>
-            <p className={`${display.className} mx-auto mt-10 max-w-2xl text-3xl font-medium leading-tight text-[#FAF7F0] sm:text-5xl`}>
+            <p className="mx-auto mt-10 max-w-2xl text-2xl font-black uppercase leading-tight tracking-tight text-cream sm:text-4xl">
               Being served haram meat unknowingly breaks something sacred.
             </p>
           </Reveal>
@@ -194,8 +183,8 @@ export default function HalalExperience() {
         <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
             <Reveal className="mb-8">
-              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#B8860B]">04 · The hybrid problem</span>
-              <h2 className={`${display.className} mt-3 text-3xl font-semibold leading-[1.1] text-[#1a1714] sm:text-5xl`}>&ldquo;Only the chicken is halal&rdquo;</h2>
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-gold-deep">04 · The hybrid problem</span>
+              <h2 className="mt-3 text-3xl font-black uppercase leading-[1.05] tracking-tight text-ink sm:text-5xl">&ldquo;Only the chicken is halal&rdquo;</h2>
             </Reveal>
             <div className="space-y-6 text-lg leading-[1.75] text-[#3a342d] sm:text-xl">
               <p>Plenty of restaurants are only partly halal. The chicken might be halal while the beef is not, or halal and non-halal share the same fryer. A vague halal options line hides all of it. CBC found chains using a supplier&apos;s certificate to suggest the whole restaurant was certified. It happened at six of the ten locations they visited.<Cite n={2} /></p>
@@ -208,7 +197,7 @@ export default function HalalExperience() {
               </Aside>
             </div>
           </div>
-          <Reveal y={50} className="mx-auto w-full max-w-md lg:mx-0 lg:max-w-none lg:sticky lg:top-24">
+          <Reveal className="mx-auto w-full max-w-md lg:mx-0 lg:max-w-none lg:sticky lg:top-24">
             <Figure
               src="/halal/mixed-grill.jpg"
               alt="A grill with both halal and non-halal items"
@@ -248,18 +237,18 @@ export default function HalalExperience() {
       {/* ── BY THE NUMBERS ── */}
       <section className="mx-auto max-w-[52rem] px-6 py-20">
         <Reveal className="mb-12 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#B8860B]">By the numbers</span>
-          <h2 className={`${display.className} mt-3 text-3xl font-semibold text-[#1a1714] sm:text-5xl`}>A large, underserved community</h2>
+          <span className="text-xs font-bold uppercase tracking-[0.25em] text-gold-deep">By the numbers</span>
+          <h2 className="mt-3 text-3xl font-black uppercase leading-[1.05] tracking-tight text-ink sm:text-5xl">A large, underserved community</h2>
         </Reveal>
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { node: <CountUp to={1775715} />, label: 'Muslims in Canada in 2021, more than double the 2001 figure', ref: 1 },
+            { node: <>1,775,715</>, label: 'Muslims in Canada in 2021, more than double the 2001 figure', ref: 1 },
             { node: <>4<span className="text-xl"> in </span>10</>, label: 'fast-food spots that could not verify their halal slaughter method', ref: 2 },
-            { node: <CountUp to={8.3} decimals={1} suffix="%" />, label: 'of Edmonton is Muslim, about 83,015 people', ref: 1 },
-            { node: <><span className="text-2xl align-top">$</span><CountUp to={1} suffix="B+" /></>, label: 'estimated Canadian halal market, growing around 13% a year', ref: 8 },
+            { node: <>8.3%</>, label: 'of Edmonton is Muslim, about 83,015 people', ref: 1 },
+            { node: <><span className="text-2xl align-top">$</span>1B+</>, label: 'estimated Canadian halal market, growing around 13% a year', ref: 8 },
           ].map((s, i) => (
-            <Reveal key={i} delay={i * 0.08} className="text-center">
-              <div className={`${display.className} text-3xl font-semibold tracking-tight text-[#1a1714] sm:text-4xl xl:text-5xl`}>{s.node}</div>
+            <Reveal key={i} className="text-center">
+              <div className="text-3xl font-black tracking-tight text-ink sm:text-4xl xl:text-5xl">{s.node}</div>
               <p className="mx-auto mt-3 max-w-[15rem] text-sm leading-relaxed text-[#6b6560]">
                 {s.label}<Cite n={s.ref} />
               </p>
@@ -282,23 +271,23 @@ export default function HalalExperience() {
 
       {/* ── CTA (dark, calligraphy backdrop) ── */}
       <section className="relative overflow-hidden bg-[#14100c] px-6 py-24 text-center sm:py-32">
-        <p className={`${calligraphy.className} pointer-events-none absolute inset-0 flex items-center justify-center text-[40vw] leading-none text-[#EAB308]/[0.05] sm:text-[18rem]`}>
+        <p aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center font-arabic text-[40vw] leading-none text-gold/[0.05] sm:text-[18rem]">
           طعام
         </p>
         <Reveal className="relative mx-auto max-w-2xl">
-          <h2 className={`${display.className} text-4xl font-semibold leading-tight text-[#FAF7F0] sm:text-6xl`}>
-            We built Taeam to <span className="italic text-[#EAB308]">end the guessing.</span>
+          <h2 className="text-3xl font-black uppercase leading-tight tracking-tight text-cream sm:text-5xl">
+            We built Taeam to <span className="text-gold">end the guessing.</span>
           </h2>
           <p className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-white/55">
             Know exactly what you are eating, every protein and every method, before you order.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-5">
-            <Link href="/" className="group inline-flex items-center gap-2 rounded-full bg-[#EAB308] px-7 py-4 text-sm font-bold uppercase tracking-wide text-black transition-transform hover:scale-[1.03]">
-              Get Taeam <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <Link href="/" className="inline-flex items-center gap-2 rounded-xl bg-gold px-7 py-4 text-sm font-black uppercase tracking-wide text-ink transition-colors hover:bg-cream">
+              Get Taeam <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/halal/hand-vs-machine" className="group inline-flex items-center gap-1 text-sm font-semibold text-white/70 transition-colors hover:text-[#EAB308]">
-              Next: Hand or Machine
-              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            <Link href="/halal/hand-vs-machine" className="inline-flex items-center gap-1 text-sm font-semibold text-white/70 transition-colors hover:text-gold">
+              Next: hand or machine
+              <span aria-hidden>→</span>
             </Link>
           </div>
         </Reveal>
@@ -323,10 +312,10 @@ export default function HalalExperience() {
               ['Thrive 2025, North America Muslim Market Report (US$186B)', 'DinarStandard, 2025', 'https://www.dinarstandard.com/insights/thrive25'],
             ].map(([title, source, href], i) => (
               <li key={i} id={`ref-${i + 1}`} className="flex gap-3 scroll-mt-24">
-                <span className="font-semibold text-[#B8860B]">{i + 1}.</span>
+                <span className="font-semibold text-gold-deep">{i + 1}.</span>
                 <span>
                   {title}. <span className="italic">{source}.</span>{' '}
-                  <a href={href} target="_blank" rel="noopener noreferrer" className="text-[#B8860B] underline-offset-2 hover:underline">Link</a>
+                  <a href={href} target="_blank" rel="noopener noreferrer" className="text-gold-deep underline-offset-2 hover:underline">Link</a>
                 </span>
               </li>
             ))}

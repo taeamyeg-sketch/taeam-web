@@ -33,7 +33,7 @@ const ANSWER = [
   },
   {
     title: "Nothing to double-check",
-    copy: "No scanning menus for pork or hidden alcohol. If it's on Taeam, it's halal. That's the deal.",
+    copy: "You don't have to scan menus for pork or hidden alcohol. If it's on Taeam, it's halal.",
   },
 ];
 
@@ -41,13 +41,13 @@ export function TrustGap() {
   return (
     <section
       id="standard"
-      className="grain relative overflow-hidden bg-noir py-20 text-white sm:py-28"
+      className="relative overflow-hidden bg-noir py-20 text-white sm:py-28"
     >
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-gold-bright">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-gold">
                 The halal trust gap
               </p>
               <h2 className="mt-4 max-w-2xl font-black uppercase tracking-tight text-3xl leading-tight sm:text-5xl">
@@ -56,12 +56,11 @@ export function TrustGap() {
             </div>
             <Link
               href="/halal"
-              className="group inline-flex items-center gap-1 border-b border-white/40 pb-0.5 text-sm font-semibold text-white/85 transition-colors hover:border-gold-bright hover:text-gold-bright"
+              className="group inline-flex items-center gap-1 border-b border-white/40 pb-0.5 text-sm font-semibold text-white/85 transition-colors hover:border-gold hover:text-gold"
             >
               Read the full research
               <span
                 aria-hidden
-                className="transition-transform duration-300 group-hover:translate-x-1"
               >
                 →
               </span>
@@ -72,8 +71,8 @@ export function TrustGap() {
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {STATS.map((s, i) => (
             <Reveal key={s.big} delay={i * 90}>
-              <div className="h-full rounded-3xl border border-noir-line bg-noir-soft p-8">
-                <p className="font-black tracking-tight text-5xl text-gold-bright sm:text-6xl">
+              <div className="h-full rounded-xl border border-noir-line bg-noir-soft p-8">
+                <p className="font-black tracking-tight text-5xl text-gold sm:text-6xl">
                   {s.big}
                 </p>
                 <p className="mt-3 text-lg leading-relaxed text-white/85">{s.copy}</p>
@@ -88,7 +87,7 @@ export function TrustGap() {
         {/* Taeam's answer */}
         <Reveal>
           <div className="mt-14 flex items-start gap-4 border-t border-noir-line pt-10">
-            <Seal className="mt-1.5 h-6 w-6 shrink-0 text-gold-bright" />
+            <Seal className="mt-1.5 h-6 w-6 shrink-0 text-gold" />
             <p className="max-w-2xl font-black uppercase tracking-tight text-2xl leading-snug sm:text-3xl">
               Taeam shows the full breakdown, before you order. Here is what that
               means.
@@ -103,8 +102,8 @@ export function TrustGap() {
           <div className="space-y-8">
             {ANSWER.map((row, i) => (
               <Reveal key={row.title} delay={i * 90}>
-                <div className="border-t border-gold-bright/40 pt-5">
-                  <h3 className="font-semibold text-gold-bright">{row.title}</h3>
+                <div className="border-t border-gold/40 pt-5">
+                  <h3 className="font-semibold text-gold">{row.title}</h3>
                   <p className="mt-2 max-w-md text-sm leading-relaxed text-white/70">
                     {row.copy}
                   </p>
@@ -116,7 +115,7 @@ export function TrustGap() {
           <Reveal delay={140}>
             {/* The trade the audit actually inspects, above the card that
                 states what the audit produces. Photo then proof. */}
-            <div className="relative mb-6 aspect-[4/5] overflow-hidden rounded-3xl border border-noir-line sm:aspect-[4/3]">
+            <div className="relative mb-6 aspect-[4/5] overflow-hidden rounded-2xl border border-noir-line sm:aspect-[4/3]">
               <Image
                 src="/trust-butcher.webp"
                 alt="A butcher wrapping a parcel in paper behind the counter of a small independent halal butcher shop"
@@ -126,9 +125,9 @@ export function TrustGap() {
               />
               <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-noir/60 via-transparent to-transparent" />
             </div>
-            <div className="rounded-3xl border border-noir-line bg-noir-soft p-6 sm:p-7">
+            <div className="rounded-xl border border-noir-line bg-noir-soft p-6 sm:p-7">
               <div className="mb-4 flex items-center gap-2">
-                <Seal className="h-4 w-4 text-gold-bright" />
+                <Seal className="h-4 w-4 text-gold" />
                 <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/80">
                   Taeam Verified
                 </span>
@@ -144,7 +143,7 @@ export function TrustGap() {
                     className="flex items-center justify-between gap-3 rounded-xl bg-white/[0.07] px-4 py-3"
                   >
                     <span className="text-sm font-bold text-white">{meat}</span>
-                    <span className="text-[11px] font-semibold uppercase tracking-wide text-gold-bright">
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-gold">
                       {method}
                     </span>
                   </div>
@@ -162,7 +161,7 @@ export function TrustGap() {
           <div className="mt-14 flex flex-wrap items-center gap-5 border-t border-noir-line pt-10">
             <Link
               href="/how-we-verify"
-              className="rounded-full bg-gold-bright px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir transition-transform hover:-translate-y-0.5"
+              className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir"
             >
               How we verify halal
             </Link>

@@ -61,25 +61,21 @@ export function AppFallback({
   return (
     <main className="min-h-svh bg-cream font-sans text-ink antialiased">
       {/* NAV */}
-      <nav className="flex items-center justify-between border-b border-black/5 bg-cream/85 px-5 py-3.5 backdrop-blur-md sm:px-8">
+      <nav className="flex items-center justify-between border-b border-black/5 bg-cream px-5 py-3.5 sm:px-8">
         <Link
           href="/"
           className="group flex items-center gap-2 text-sm font-bold text-ink transition-opacity hover:opacity-60"
         >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" weight="bold" />
+          <ArrowLeft className="h-4 w-4" weight="bold" />
           Back to Taeam
         </Link>
         <img src="/taeam-logo.jpg" alt="Taeam" className="h-9 w-9 rounded-full" />
       </nav>
 
       <section className="px-5 py-16 sm:px-8 sm:py-24">
-        <div className="mx-auto max-w-md overflow-hidden rounded-3xl border border-black/5 bg-white shadow-[0_20px_60px_-25px_rgba(0,0,0,0.25)]">
-          {/* accent cap */}
-          <div className="h-1.5 w-full bg-gold-bright" />
+        <div className="mx-auto max-w-md overflow-hidden rounded-xl border border-cream-line bg-white">
           <div className="p-7 sm:p-9">
-            <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-bright/12 text-gold-deep">
-              <DeviceMobile className="h-6 w-6" weight="bold" />
-            </div>
+            <DeviceMobile className="mb-4 h-7 w-7 text-gold-deep" weight="bold" />
 
             <p className="text-xs font-black uppercase tracking-[0.2em] text-gold-deep">
               {b.label}
@@ -90,7 +86,7 @@ export function AppFallback({
             <p className="mt-4 text-[15px] leading-relaxed text-ink-mute">{subtitle}</p>
 
             {detail && (
-              <p className="mt-4 inline-block max-w-full break-all rounded-2xl bg-black/5 px-3 py-1 font-mono text-xs text-ink-mute">
+              <p className="mt-4 inline-block max-w-full break-all rounded-md bg-black/5 px-3 py-1 font-mono text-xs text-ink-mute">
                 {detail}
               </p>
             )}
@@ -98,7 +94,7 @@ export function AppFallback({
             {/* Open-in-app CTA (custom scheme) */}
             <a
               href={deepLink}
-              className="mt-7 flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black active:scale-[0.98]"
+              className="mt-7 flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black"
             >
               Open in the {b.label} app
             </a>
@@ -111,13 +107,13 @@ export function AppFallback({
             <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
               <a
                 href={b.appStore}
-                className="flex flex-1 items-center justify-center rounded-xl border border-black/10 bg-cream px-4 py-3 text-sm font-bold text-ink transition-colors hover:border-gold-bright hover:bg-white"
+                className="flex flex-1 items-center justify-center rounded-xl border border-black/10 bg-cream px-4 py-3 text-sm font-bold text-ink transition-colors hover:border-gold hover:bg-white"
               >
                 App Store
               </a>
               <a
                 href={b.playStore}
-                className="flex flex-1 items-center justify-center rounded-xl border border-black/10 bg-cream px-4 py-3 text-sm font-bold text-ink transition-colors hover:border-gold-bright hover:bg-white"
+                className="flex flex-1 items-center justify-center rounded-xl border border-black/10 bg-cream px-4 py-3 text-sm font-bold text-ink transition-colors hover:border-gold hover:bg-white"
               >
                 Google Play
               </a>
@@ -132,7 +128,7 @@ export function AppFallback({
         </p>
       </section>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+      <div className="h-px bg-black/10" />
       <div className="py-6 text-center">
         <p className="text-xs uppercase tracking-wider text-ink-mute">
           © 2026 Taeam Technologies Inc.

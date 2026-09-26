@@ -70,20 +70,18 @@ function FiltersDialog({
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end justify-center sm:items-center">
-      <button className="absolute inset-0 bg-ink/50 backdrop-blur-sm" aria-label="Close" tabIndex={-1} onClick={onClose} />
+      <button className="absolute inset-0 bg-ink/50" aria-label="Close" tabIndex={-1} onClick={onClose} />
 
       <div
         ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label="Filters"
-        className="relative z-10 max-h-[85svh] w-full overflow-y-auto overscroll-contain rounded-t-3xl bg-cream p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-sheet sm:max-w-lg sm:rounded-3xl sm:pb-6"
+        className="relative z-10 max-h-[85svh] w-full overflow-y-auto overscroll-contain rounded-t-2xl bg-cream p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-sheet sm:max-w-lg sm:rounded-2xl sm:pb-6"
       >
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15 text-gold-deep">
-              <SlidersHorizontal className="h-5 w-5" weight="bold" />
-            </span>
+            <SlidersHorizontal className="h-5 w-5 text-gold-deep" weight="bold" />
             <div>
               <h2 className="text-lg font-black uppercase tracking-tight text-ink">Filters</h2>
               <p className="text-xs text-ink-mute">Refine what you see</p>
@@ -138,7 +136,7 @@ function FiltersDialog({
           <>
             <div className="mt-5 flex items-center gap-2">
               <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-ink-mute">Stunning</p>
-              <span className="rounded bg-gold/15 px-1.5 py-0.5 text-[10px] font-bold uppercase text-gold-deep">
+              <span className="text-[10px] font-bold uppercase text-gold-deep">
                 Optional
               </span>
             </div>
@@ -198,7 +196,7 @@ function FiltersDialog({
           </button>
           <button
             onClick={() => onApply({ halal, quick })}
-            className="flex-[2] rounded-full bg-gold py-3 text-sm font-bold uppercase tracking-wide text-ink shadow-sm transition-transform hover:-translate-y-0.5"
+            className="flex-[2] rounded-full bg-gold py-3 text-sm font-bold uppercase tracking-wide text-ink shadow-sm"
           >
             Show results
           </button>
@@ -226,15 +224,15 @@ function Tile({
       onClick={onClick}
       aria-pressed={selected}
       className={cn(
-        "flex flex-col items-center gap-1.5 rounded-2xl border px-2 py-3 text-center transition-all",
-        selected ? "border-gold bg-gold/10 ring-1 ring-gold" : "border-cream-line bg-cream-deep hover:border-gold/40",
+        "flex flex-col items-center gap-1.5 rounded-xl border px-2 py-3 text-center transition-colors",
+        selected ? "border-gold bg-white ring-1 ring-gold" : "border-cream-line bg-cream-deep hover:border-gold/40",
       )}
     >
       {icon && (
         <span
           className={cn(
             "flex h-9 w-9 items-center justify-center rounded-full",
-            selected ? "bg-gold/20 text-gold-deep" : "bg-cream text-ink-mute",
+            selected ? "text-gold-deep" : "text-ink-mute",
           )}
         >
           {icon}

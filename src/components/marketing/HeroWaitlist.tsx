@@ -44,13 +44,13 @@ export function HeroWaitlist() {
     return (
       <div id="waitlist" className="w-full max-w-sm text-center">
         <CheckCircle
-          className="mx-auto h-8 w-8 text-gold-bright sm:h-9 sm:w-9"
+          className="mx-auto h-8 w-8 text-gold sm:h-9 sm:w-9"
           weight="fill"
           aria-hidden
           style={{ filter: "drop-shadow(0 3px 14px rgba(0,0,0,0.7))" }}
         />
         <p
-          className="mt-2 text-base font-black uppercase tracking-tight text-gold-bright sm:text-lg"
+          className="mt-2 text-base font-black uppercase tracking-tight text-gold sm:text-lg"
           style={{ textShadow: "0 2px 18px rgba(0,0,0,0.75)" }}
         >
           {result === "existing" ? "You're already in" : "You're on the list"}
@@ -72,7 +72,7 @@ export function HeroWaitlist() {
   return (
     <div id="waitlist" className="w-full max-w-md text-center">
       <p
-        className="text-xl font-black uppercase leading-[1.05] tracking-tight text-gold-bright sm:text-3xl"
+        className="text-xl font-black uppercase leading-[1.05] tracking-tight text-gold sm:text-3xl"
         style={{ textShadow: "0 4px 26px rgba(0,0,0,0.65)" }}
       >
         50% off your first order
@@ -95,12 +95,12 @@ export function HeroWaitlist() {
           disabled={submitting}
           autoComplete="email"
           aria-label="Email address"
-          className="min-w-0 flex-1 rounded-full border border-black/10 bg-white px-4 py-2.5 text-base text-ink outline-none transition-all placeholder:text-gray-400 focus:border-gold-bright focus:ring-2 focus:ring-gold-bright/40 sm:py-3"
+          className="min-w-0 flex-1 rounded-full border border-black/10 bg-white px-4 py-2.5 text-base text-ink outline-none transition-all placeholder:text-gray-400 focus:border-gold focus:ring-2 focus:ring-gold/40 sm:py-3"
         />
         <button
           type="submit"
           disabled={submitting}
-          className="flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-gold-bright px-5 py-2.5 text-[13px] font-black uppercase tracking-wide text-noir shadow-[0_14px_36px_-12px_rgba(0,0,0,0.75)] transition-transform hover:-translate-y-0.5 active:scale-95 disabled:opacity-70 sm:px-6 sm:py-3 sm:text-sm"
+          className="flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-gold px-5 py-2.5 text-[13px] font-black uppercase tracking-wide text-noir shadow-[0_14px_36px_-12px_rgba(0,0,0,0.75)] disabled:opacity-70 sm:px-6 sm:py-3 sm:text-sm"
         >
           {submitting ? (
             "Joining…"

@@ -257,14 +257,14 @@ function TrackInner() {
             <LiveMap
               pins={pins}
               route={route}
-              className="h-80 w-full overflow-hidden rounded-3xl shadow-card sm:h-[28rem]"
+              className="h-80 w-full overflow-hidden rounded-2xl shadow-card sm:h-[28rem]"
             />
           )}
 
           <div className="space-y-5">
             {/* PIN */}
             {pin && !cancelled && current < 3 && (
-              <div className="rounded-3xl bg-ink p-6 text-cream shadow-card">
+              <div className="rounded-xl bg-ink p-6 text-cream shadow-card">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
                   Your delivery PIN
                 </p>
@@ -280,7 +280,7 @@ function TrackInner() {
 
             {/* Driver */}
             {driver && !cancelled && current < 3 && (
-              <div className="flex items-center gap-4 rounded-3xl bg-white/60 p-5 shadow-card">
+              <div className="flex items-center gap-4 rounded-xl bg-white/60 p-5 shadow-card">
                 {driver.profile_photo_url ? (
                   <Image
                     src={driver.profile_photo_url}
@@ -317,9 +317,9 @@ function TrackInner() {
 
             {/* Delivered check */}
             {current === 3 && (
-              <div className="flex items-center gap-3 rounded-3xl bg-green/10 p-5 text-green">
-                <CheckCircle className="h-7 w-7" weight="fill" aria-hidden />
-                <p className="text-sm font-semibold">
+              <div className="flex items-center gap-3 px-1 py-2">
+                <CheckCircle className="h-7 w-7 shrink-0 text-green" weight="fill" aria-hidden />
+                <p className="text-sm font-semibold text-ink">
                   Delivered{order.delivery_address ? ` to ${order.delivery_address}` : ""}.
                   Points landed in your account.
                 </p>
@@ -327,7 +327,7 @@ function TrackInner() {
             )}
 
             {/* Order summary */}
-            <div className="rounded-3xl bg-white/60 p-6 shadow-card">
+            <div className="rounded-xl bg-white/60 p-6 shadow-card">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-mute">
                 Your order
               </p>

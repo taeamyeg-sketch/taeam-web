@@ -39,7 +39,7 @@ function AuthDialog({ next, onClose }: { next: string; onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-[70] flex items-end justify-center sm:items-center">
       <button
-        className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-ink/50"
         aria-label="Close sign in"
         tabIndex={-1}
         onClick={onClose}
@@ -49,7 +49,7 @@ function AuthDialog({ next, onClose }: { next: string; onClose: () => void }) {
         role="dialog"
         aria-modal="true"
         aria-label="Sign in to Taeam"
-        className="relative z-10 max-h-[calc(100dvh-1rem)] w-full max-w-md overflow-y-auto overscroll-contain rounded-t-3xl bg-cream p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-sheet sm:rounded-3xl sm:p-8"
+        className="relative z-10 max-h-[calc(100dvh-1rem)] w-full max-w-md overflow-y-auto overscroll-contain rounded-t-2xl bg-cream p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-sheet sm:rounded-2xl sm:p-8"
       >
         <button
           onClick={onClose}

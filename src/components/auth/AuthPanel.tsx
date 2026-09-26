@@ -152,7 +152,7 @@ export function AuthPanel({
               type="button"
               onClick={appleComingSoon}
               disabled={busy}
-              className="flex w-full items-center justify-center gap-2.5 rounded-full bg-ink px-6 py-3 text-[15px] font-semibold text-cream transition-transform hover:-translate-y-px disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2.5 rounded-full bg-ink px-6 py-3 text-[15px] font-semibold text-cream disabled:opacity-60"
             >
               <AppleLogo weight="fill" className="h-5 w-5" />
               Continue with Apple
@@ -182,7 +182,7 @@ export function AuthPanel({
             <button
               type="submit"
               disabled={busy}
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 text-[15px] font-bold uppercase tracking-wide text-ink transition-transform hover:-translate-y-px disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 text-[15px] font-bold uppercase tracking-wide text-ink disabled:opacity-60"
             >
               {busy && <CircleNotch className="h-4 w-4 animate-spin" />}
               Email me a code
@@ -219,7 +219,7 @@ export function AuthPanel({
           <button
             type="submit"
             disabled={busy || code.length !== 6}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 text-[15px] font-bold uppercase tracking-wide text-ink transition-transform hover:-translate-y-px disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 text-[15px] font-bold uppercase tracking-wide text-ink disabled:opacity-60"
           >
             {busy && <CircleNotch className="h-4 w-4 animate-spin" />}
             Verify &amp; continue

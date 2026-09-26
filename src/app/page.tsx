@@ -20,17 +20,16 @@ import { SEALED } from "@/lib/launch";
 const ECOSYSTEM = [
   {
     title: "Arbaab",
-    copy: "Your food concierge. Ask by chat and it finds the craving, reorders, and runs the app.",
+    copy: "Taeam's food assistant. Ask by chat and it finds what you're craving, reorders, and runs the app.",
     href: "/arbaab",
     cta: "Meet Arbaab",
     span: "lg:col-span-6",
     badge: null as string | null,
     tile: (
       <>
-        <span className="grain absolute inset-0" />
         <div className="absolute inset-0 flex flex-col justify-center gap-2 p-5">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-bright">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold">
               <Image
                 src="/takinator_avatar.png"
                 alt=""
@@ -46,7 +45,7 @@ const ECOSYSTEM = [
           <span className="mt-1 max-w-[88%] self-start rounded-2xl rounded-tl-sm bg-white/10 px-3 py-2 text-[11px] leading-snug text-white/90">
             Find me something spicy under $15
           </span>
-          <span className="max-w-[88%] self-end rounded-2xl rounded-br-sm bg-gold-bright px-3 py-2 text-[11px] font-medium leading-snug text-noir">
+          <span className="max-w-[88%] self-end rounded-2xl rounded-br-sm bg-gold px-3 py-2 text-[11px] font-medium leading-snug text-noir">
             On it. Three halal spots near you.
           </span>
         </div>
@@ -62,7 +61,6 @@ const ECOSYSTEM = [
     badge: null,
     tile: (
       <>
-        <span className="grain absolute inset-0" />
         <div className="absolute inset-0 flex flex-col justify-center gap-2 p-5">
           {[
             ["Shawarma night", "+170 pts"],
@@ -73,10 +71,10 @@ const ECOSYSTEM = [
               className="flex items-center justify-between gap-3 rounded-xl bg-white/[0.07] px-3.5 py-2.5"
             >
               <span className="text-xs font-semibold text-white/90">{order}</span>
-              <span className="text-xs font-bold text-gold-bright">{pts}</span>
+              <span className="text-xs font-bold text-gold">{pts}</span>
             </div>
           ))}
-          <div className="mt-1 flex items-center justify-between gap-3 rounded-xl bg-gold-bright px-3.5 py-2.5">
+          <div className="mt-1 flex items-center justify-between gap-3 rounded-xl bg-gold px-3.5 py-2.5">
             <span className="text-[10px] font-black uppercase tracking-[0.14em] text-noir">
               Taeam Plus
             </span>
@@ -100,7 +98,7 @@ const ECOSYSTEM = [
           alt=""
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 60vw"
-          className="object-cover object-[70%_center] transition-transform duration-500 group-hover:scale-[1.04]"
+          className="object-cover object-[70%_center]"
         />
         <span className="pointer-events-none absolute inset-0 shadow-[inset_0_0_50px_14px_rgba(0,0,0,0.45)]" />
       </>
@@ -120,7 +118,7 @@ const ECOSYSTEM = [
           alt=""
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 60vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          className="object-cover"
         />
         <span className="pointer-events-none absolute inset-0 shadow-[inset_0_0_50px_14px_rgba(0,0,0,0.45)]" />
       </>
@@ -176,7 +174,6 @@ export default async function HomePage() {
                   {card.cta}
                   <span
                     aria-hidden
-                    className="transition-transform duration-300 group-hover:translate-x-1"
                   >
                     →
                   </span>
@@ -208,7 +205,6 @@ export default async function HomePage() {
               Browse all
               <span
                 aria-hidden
-                className="transition-transform duration-300 group-hover:translate-x-1"
               >
                 →
               </span>

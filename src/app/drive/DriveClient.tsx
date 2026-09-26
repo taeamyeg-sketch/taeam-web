@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import {
   ArrowLeft, ArrowRight, Car, Clock, MapPin, CheckCircle,
-  CurrencyCircleDollar, ShieldCheck, Sparkle,
+  CurrencyCircleDollar, ShieldCheck,
 } from '@phosphor-icons/react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,12 +15,12 @@ const PERKS = [
   {
     icon: <Car className="h-6 w-6" weight="bold" />,
     title: 'You pick your hours',
-    desc: "Online when you want, off when you don't. No shifts, no minimums.",
+    desc: "Go online when you want and off when you don't. There are no shifts or minimum hours.",
   },
   {
     icon: <CurrencyCircleDollar className="h-6 w-6" weight="bold" />,
     title: 'Fixed pay per drop',
-    desc: 'A flat rate on every delivery that climbs the further you go. No surge roulette.',
+    desc: 'A flat rate on every delivery that climbs the further you go. Pay does not swing with demand.',
   },
   {
     icon: <MapPin className="h-6 w-6" weight="bold" />,
@@ -30,7 +30,7 @@ const PERKS = [
   {
     icon: <Clock className="h-6 w-6" weight="bold" />,
     title: 'Respect for your time',
-    desc: 'One order at a time. No stacking three drops and making the last customer wait.',
+    desc: 'One order at a time, so the last customer on a run is never left waiting behind two others.',
   },
 ];
 
@@ -50,7 +50,6 @@ const LANGUAGES = [
 ];
 
 export default function DrivePage() {
-  const [mounted, setMounted] = useState(false);
   const [email, setEmail] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -60,20 +59,11 @@ export default function DrivePage() {
 
   useEffect(() => {
     requestAnimationFrame(() => window.scrollTo(0, 0));
-    setMounted(true);
     // Greet a return visitor who already joined on this device as already-in.
     if (alreadyJoinedDriver()) {
       setExisting(true);
       setSubmitted(true);
     }
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    );
-    const t = setTimeout(() => {
-      document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
-    }, 100);
-    return () => { clearTimeout(t); observer.disconnect(); };
   }, []);
 
   useEffect(() => {
@@ -109,12 +99,12 @@ export default function DrivePage() {
     <main className="min-h-svh bg-cream font-sans text-ink antialiased">
 
       {/* ── NAV ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-black/5 bg-cream/85 py-3.5 pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] pt-[max(0.875rem,env(safe-area-inset-top))] backdrop-blur-md sm:pl-[max(2rem,env(safe-area-inset-left))] sm:pr-[max(2rem,env(safe-area-inset-right))]">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-black/5 bg-cream py-3.5 pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] pt-[max(0.875rem,env(safe-area-inset-top))] sm:pl-[max(2rem,env(safe-area-inset-left))] sm:pr-[max(2rem,env(safe-area-inset-right))]">
         <Link
           href="/"
-          className="group flex items-center gap-2 text-sm font-bold text-ink transition-opacity hover:opacity-60"
+          className="flex items-center gap-2 text-sm font-bold text-ink transition-opacity hover:opacity-60"
         >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" weight="bold" />
+          <ArrowLeft className="h-4 w-4" weight="bold" />
           Back to Taeam
         </Link>
         <Image src="/taeam-logo.jpg" alt="Taeam" width={36} height={36} sizes="36px" className="h-9 w-9 rounded-full" />
@@ -122,7 +112,7 @@ export default function DrivePage() {
 
       {/* ── BANNER ── */}
       <section className="px-3 pt-[68px] sm:px-5 sm:pt-[76px]">
-        <div className={`relative mx-auto max-w-6xl overflow-hidden rounded-2xl sm:rounded-3xl ${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-xl sm:rounded-2xl">
           <div className="relative aspect-[1376/676] w-full">
             <Image
               src="/driver-hero.jpg"
@@ -134,8 +124,8 @@ export default function DrivePage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
             <div className="absolute bottom-0 left-0 p-5 sm:p-8 md:p-10">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/30 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white backdrop-blur-sm">
-                <span className="h-1.5 w-1.5 rounded-full bg-gold-bright" /> Edmonton · Soft launch
+              <span className="inline-flex items-center gap-2 rounded-md bg-noir px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white">
+                <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Edmonton · Soft launch
               </span>
             </div>
           </div>
@@ -155,16 +145,11 @@ export default function DrivePage() {
 
       {/* ── SIGNUP (primary, near top) ── */}
       <section className="px-5 py-8 sm:px-8 sm:py-10">
-        <div className="animate-on-scroll mx-auto max-w-2xl overflow-hidden rounded-3xl border border-gold-bright/30 bg-white shadow-[0_20px_60px_-25px_rgba(0,0,0,0.25)]">
-          {/* gold cap */}
-          <div className="h-1.5 w-full bg-gradient-to-r from-gold-bright via-gold to-gold-bright" />
+        <div className="mx-auto max-w-2xl overflow-hidden rounded-xl border border-cream-line bg-white">
           <div className="p-7 sm:p-10">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-gold-bright/12 px-3.5 py-1.5">
-              <span className="h-2 w-2 rounded-full bg-gold-deep" />
-              <span className="text-xs font-bold uppercase tracking-widest text-gold-deep">
-                Applications opening soon · Limited spots
-              </span>
-            </div>
+            <p className="mb-4 text-xs font-bold uppercase tracking-widest text-gold-deep">
+              Applications opening soon
+            </p>
 
             <h2 className="text-2xl font-black uppercase tracking-tight sm:text-3xl">
               Become a Taeam driver
@@ -184,15 +169,15 @@ export default function DrivePage() {
                   placeholder="you@email.com"
                   disabled={submitting}
                   autoComplete="email"
-                  className="flex-1 rounded-xl border border-black/10 bg-cream px-4 py-3.5 text-base text-ink outline-none transition-all placeholder:text-ink-mute focus:border-gold-bright focus:bg-white focus:ring-2 focus:ring-gold-bright/30"
+                  className="flex-1 rounded-xl border border-black/10 bg-cream px-4 py-3.5 text-base text-ink outline-none transition-all placeholder:text-ink-mute focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/30"
                 />
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="group flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black active:scale-[0.98] disabled:opacity-60"
+                  className="flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-black disabled:opacity-60"
                 >
                   {submitting ? 'Joining…' : (
-                    <>Join the waitlist <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" weight="bold" /></>
+                    <>Join the waitlist <ArrowRight className="h-4 w-4" weight="bold" /></>
                   )}
                 </button>
               </form>
@@ -217,7 +202,7 @@ export default function DrivePage() {
             )}
 
             <p className="mt-5 flex items-center gap-1.5 text-xs text-ink-mute">
-              <ShieldCheck className="h-3.5 w-3.5" weight="bold" /> No spam. One email when applications open, that&apos;s it.
+              <ShieldCheck className="h-3.5 w-3.5" weight="bold" /> We only email you when applications open.
             </p>
           </div>
         </div>
@@ -225,7 +210,7 @@ export default function DrivePage() {
 
       {/* ── WHY NOW (context) ── */}
       <section className="px-5 py-6 sm:px-8">
-        <div className="animate-on-scroll mx-auto max-w-2xl rounded-2xl border border-black/5 bg-white p-6 text-center sm:p-7">
+        <div className="mx-auto max-w-2xl rounded-2xl border border-black/5 bg-white p-6 text-center sm:p-7">
           <p className="leading-relaxed text-ink-mute">
             Other delivery platforms have paused driver signups in Edmonton. Their waitlists
             stretch for months, if they have one at all. We&apos;re launching fresh and we need
@@ -241,7 +226,7 @@ export default function DrivePage() {
       <section className="px-5 py-12 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-5xl">
           {/* What the job actually is at 9pm in February. */}
-          <div className="animate-on-scroll relative mb-12 aspect-[3/2] overflow-hidden rounded-2xl sm:aspect-[21/9]">
+          <div className="relative mb-12 aspect-[3/2] overflow-hidden rounded-2xl sm:aspect-[21/9]">
             <Image
               src="/drive-night.webp"
               alt="A driver parked on a residential Edmonton street at night, insulated delivery bag on the passenger side"
@@ -250,19 +235,19 @@ export default function DrivePage() {
               className="object-cover object-[65%_center]"
             />
           </div>
-          <div className="animate-on-scroll mb-10 text-center">
+          <div className="mb-10 text-center">
             <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-gold-deep">The pay</p>
             <h2 className="text-3xl font-black uppercase tracking-tight sm:text-4xl">
               Fixed per drop. Farther pays more.
             </h2>
             <p className="mx-auto mt-4 max-w-xl leading-relaxed text-ink-mute">
-              No surge games, no mystery math. Every delivery pays a flat base, and the rate
-              steps up as the distance grows. You always know what a run is worth before you accept it.
+              Every delivery pays a flat base, and the rate steps up as the distance grows.
+              Pay does not move with demand. You always know what a run is worth before you accept it.
             </p>
           </div>
 
           {/* distance → pay tiers (illustrative) */}
-          <div className="animate-on-scroll grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-3">
             {[
               { range: 'Short hops', sub: 'Close-by drops', tier: 'Base rate' },
               { range: 'Mid-range', sub: 'Across the zone', tier: 'Base + distance' },
@@ -270,11 +255,11 @@ export default function DrivePage() {
             ].map((t, i) => (
               <div
                 key={i}
-                className="relative overflow-hidden rounded-2xl border border-black/5 bg-white p-6 shadow-[0_10px_30px_-20px_rgba(0,0,0,0.3)]"
+                className="relative overflow-hidden rounded-xl border border-black/5 bg-white p-6"
               >
                 <div className="mb-4 flex items-center gap-2">
                   {Array.from({ length: i + 1 }).map((_, k) => (
-                    <span key={k} className="h-2 w-2 rounded-full bg-gold-bright" />
+                    <span key={k} className="h-2 w-2 rounded-full bg-gold" />
                   ))}
                   {Array.from({ length: 2 - i }).map((_, k) => (
                     <span key={k} className="h-2 w-2 rounded-full bg-black/10" />
@@ -282,7 +267,7 @@ export default function DrivePage() {
                 </div>
                 <p className="text-lg font-black">{t.range}</p>
                 <p className="text-sm text-ink-mute">{t.sub}</p>
-                <p className="mt-4 inline-block rounded-full bg-gold-bright/12 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-deep">
+                <p className="mt-4 text-xs font-bold uppercase tracking-wider text-gold-deep">
                   {t.tier}
                 </p>
               </div>
@@ -298,10 +283,10 @@ export default function DrivePage() {
       <section className="bg-noir px-5 py-16 text-white sm:px-8 sm:py-24">
         <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2 md:gap-16">
           {/* Copy */}
-          <div className="animate-on-scroll order-2 md:order-1">
-            <p className="mb-5 text-xs font-bold uppercase tracking-widest text-gold-bright">We&apos;re bringing change</p>
+          <div className="order-2 md:order-1">
+            <p className="mb-5 text-xs font-bold uppercase tracking-widest text-gold">We&apos;re bringing change</p>
             <h2 className="text-3xl font-black uppercase leading-tight tracking-tight sm:text-4xl md:text-5xl">
-              Navigation that <span className="text-gold-bright">speaks your language</span>
+              Navigation that <span className="text-gold">speaks your language</span>
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-white/65 sm:text-lg">
               Turn-by-turn navigation is built right into the Taeam driver app, so there&apos;s no
@@ -312,20 +297,18 @@ export default function DrivePage() {
               {LANGUAGES.map((l) => (
                 <div
                   key={l.label}
-                  className="flex items-center justify-between gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 transition-colors hover:border-gold-bright/40"
+                  className="flex items-center justify-between gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 transition-colors hover:border-gold/40"
                 >
                   <span className="text-sm font-bold text-white/90">{l.label}</span>
-                  <span className="text-lg text-gold-bright">{l.native}</span>
+                  <span className="text-lg text-gold">{l.native}</span>
                 </div>
               ))}
             </div>
-            <p className="mt-6 flex items-center gap-2 text-sm text-white/50">
-              <Sparkle className="h-4 w-4 text-gold-bright" weight="fill" /> More languages on the way.
-            </p>
+            <p className="mt-6 text-sm text-white/50">More languages on the way.</p>
           </div>
 
           {/* Phone screenshot */}
-          <div className="animate-on-scroll order-1 flex justify-center md:order-2">
+          <div className="order-1 flex justify-center md:order-2">
             <div className="relative w-[230px] overflow-hidden rounded-[2rem] border-[6px] border-noir-line bg-noir-line shadow-2xl sm:w-[260px]">
               <Image
                 src="/driver-app-home.png"
@@ -342,7 +325,7 @@ export default function DrivePage() {
       {/* ── WHY DRIVE WITH US ── */}
       <section className="px-5 py-16 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-5xl">
-          <div className="animate-on-scroll relative mb-12 aspect-[21/9] overflow-hidden rounded-2xl">
+          <div className="relative mb-12 aspect-[21/9] overflow-hidden rounded-2xl">
             <Image
               src="/drive-winter.webp"
               alt="A residential Edmonton street in deep winter, a lone figure walking the sidewalk with a bag"
@@ -351,19 +334,16 @@ export default function DrivePage() {
               className="object-cover"
             />
           </div>
-          <div className="animate-on-scroll mb-10 text-center">
+          <div className="mb-10 text-center">
             <h2 className="text-3xl font-black uppercase tracking-tight sm:text-4xl">Why drive with us</h2>
-            <div className="mx-auto mt-3 h-0.5 w-12 rounded-full bg-gold-bright" />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {PERKS.map((perk, i) => (
               <div
                 key={i}
-                className={`animate-on-scroll stagger-${i + 1} group rounded-2xl border border-black/5 bg-white p-6 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.35)] transition-all hover:border-gold-bright/30`}
+                className="rounded-xl border border-black/5 bg-white p-6"
               >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gold-bright/12 text-gold-deep transition-colors group-hover:bg-gold-bright group-hover:text-black">
-                  {perk.icon}
-                </div>
+                <div className="mb-3 text-gold-deep">{perk.icon}</div>
                 <h3 className="text-base font-bold">{perk.title}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-ink-mute">{perk.desc}</p>
               </div>
@@ -375,16 +355,16 @@ export default function DrivePage() {
       {/* ── HOW IT WORKS ── */}
       <section className="px-5 pb-20 sm:px-8">
         <div className="mx-auto max-w-2xl">
-          <h2 className="animate-on-scroll mb-8 text-center text-2xl font-black uppercase tracking-tight sm:text-3xl">
+          <h2 className="mb-8 text-center text-2xl font-black uppercase tracking-tight sm:text-3xl">
             How it works
           </h2>
           <div className="space-y-3">
             {STEPS.map((step, i) => (
               <div
                 key={i}
-                className={`animate-on-scroll stagger-${i + 1} flex items-center gap-4 rounded-xl border border-black/5 bg-white px-5 py-4`}
+                className="flex items-center gap-4 rounded-xl border border-black/5 bg-white px-5 py-4"
               >
-                <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-gold-bright">
+                <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-gold">
                   <span className="text-xs font-black text-black">{i + 1}</span>
                 </div>
                 <p className="text-sm font-medium leading-relaxed text-ink-soft">{step}</p>
@@ -395,9 +375,9 @@ export default function DrivePage() {
           <div className="mt-12 text-center">
             <Link
               href="/"
-              className="group inline-flex items-center gap-2 text-sm font-medium text-ink-mute transition-colors hover:text-gold-deep"
+              className="inline-flex items-center gap-2 text-sm font-medium text-ink-mute transition-colors hover:text-gold-deep"
             >
-              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" weight="bold" />
+              <ArrowLeft className="h-4 w-4" weight="bold" />
               Back to main page
             </Link>
           </div>
@@ -405,7 +385,7 @@ export default function DrivePage() {
       </section>
 
       {/* ── FOOTER ── */}
-      <div className="h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+      <div className="h-px bg-black/10" />
       <div className="py-6 text-center">
         <p className="text-xs uppercase tracking-wider text-ink-mute">© 2026 Taeam Technologies Inc.</p>
       </div>

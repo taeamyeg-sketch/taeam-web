@@ -2,10 +2,9 @@
 
 import { useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { Camera } from 'lucide-react';
 
 /**
- * Editorial figure with optional scroll parallax and a graceful placeholder.
+ * Editorial figure with optional scroll parallax and a neutral fallback panel.
  * Width / height is controlled by the parent via `sizeClass` (an aspect-* class
  * or a height class), so the same component can be a full-bleed banner, a
  * column-width inset, or a side-by-side panel.
@@ -52,16 +51,12 @@ export default function Figure({
             }
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-[linear-gradient(135deg,#efe7d6_0%,#e2d4bd_100%)]">
-            <div className="flex flex-col items-center gap-2 text-[#ab9c80]">
-              <Camera className="h-5 w-5" strokeWidth={1.5} />
-              <span className="font-mono text-[11px] tracking-tight">{src}</span>
-            </div>
-          </div>
+          // Image failed to load: a plain neutral panel, never the file path.
+          <div aria-hidden className="absolute inset-0 bg-cream-deep" />
         )}
       </div>
       {caption && (
-        <figcaption className="mt-3 text-sm italic leading-snug text-[#8a8178]">{caption}</figcaption>
+        <figcaption className="mt-3 text-sm leading-snug text-[#8a8178]">{caption}</figcaption>
       )}
     </figure>
   );

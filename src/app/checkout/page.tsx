@@ -392,14 +392,14 @@ export default function CheckoutPage() {
         <p className="mt-1.5 text-sm text-ink-mute">
           {cart.restaurant?.name} · {cart.count} {cart.count === 1 ? "item" : "items"}
           {stripeMode === "test" && (
-            <span className="ml-2 rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-gold-deep">
+            <span className="ml-2 text-[10px] font-bold uppercase tracking-wide text-gold-deep">
               Test mode
             </span>
           )}
         </p>
 
         {restaurantClosed && (
-          <div className="mt-6 rounded-2xl border border-cream-line bg-white/60 p-4 text-sm text-ink">
+          <div className="mt-6 rounded-xl border border-cream-line bg-white/60 p-4 text-sm text-ink">
             <p className="font-semibold">
               {cart.restaurant?.name} is closed right now.
             </p>
@@ -422,9 +422,9 @@ export default function CheckoutPage() {
                       key={t}
                       onClick={() => setOrderType(t)}
                       className={cn(
-                        "flex items-center justify-center gap-2 rounded-2xl border px-4 py-3.5 text-sm font-semibold capitalize",
+                        "flex items-center justify-center gap-2 rounded-xl border px-4 py-3.5 text-sm font-semibold capitalize",
                         orderType === t
-                          ? "border-gold bg-gold/10 text-ink"
+                          ? "border-gold bg-white text-ink ring-1 ring-gold"
                           : "border-cream-line bg-white/50 text-ink-mute",
                       )}
                     >
@@ -448,7 +448,7 @@ export default function CheckoutPage() {
                   <AddressAutocomplete
                     onPick={(a) => setChosen({ text: a.text, lat: a.lat, lng: a.lng })}
                     placeholder="Search a delivery address"
-                    fieldClassName="rounded-2xl border border-cream-line bg-white/50 px-4 py-3.5 focus-within:border-gold"
+                    fieldClassName="rounded-xl border border-cream-line bg-white/50 px-4 py-3.5 focus-within:border-gold"
                     inputClassName="text-base text-ink placeholder:text-ink-mute"
                   />
                 </div>
@@ -466,9 +466,9 @@ export default function CheckoutPage() {
                           })
                         }
                         className={cn(
-                          "flex w-full items-start gap-3 rounded-2xl border p-4 text-left",
+                          "flex w-full items-start gap-3 rounded-xl border p-4 text-left",
                           chosen?.text === a.full_address
-                            ? "border-gold bg-gold/10"
+                            ? "border-gold bg-white ring-1 ring-gold"
                             : "border-cream-line bg-white/50",
                         )}
                       >
@@ -487,9 +487,9 @@ export default function CheckoutPage() {
                     onClick={locate}
                     disabled={locating}
                     className={cn(
-                      "flex w-full items-center gap-3 rounded-2xl border p-4 text-left text-sm font-semibold",
+                      "flex w-full items-center gap-3 rounded-xl border p-4 text-left text-sm font-semibold",
                       chosen?.text === "My current location"
-                        ? "border-gold bg-gold/10 text-ink"
+                        ? "border-gold bg-white text-ink ring-1 ring-gold"
                         : "border-cream-line bg-white/50 text-ink-soft",
                     )}
                   >
@@ -529,9 +529,9 @@ export default function CheckoutPage() {
                   <button
                     onClick={() => setPreference("hand_to_me")}
                     className={cn(
-                      "flex items-center justify-center gap-2 rounded-2xl border px-4 py-3.5 text-sm font-semibold",
+                      "flex items-center justify-center gap-2 rounded-xl border px-4 py-3.5 text-sm font-semibold",
                       preference === "hand_to_me"
-                        ? "border-gold bg-gold/10 text-ink"
+                        ? "border-gold bg-white text-ink ring-1 ring-gold"
                         : "border-cream-line bg-white/50 text-ink-mute",
                     )}
                   >
@@ -541,9 +541,9 @@ export default function CheckoutPage() {
                   <button
                     onClick={() => setPreference("leave_at_door")}
                     className={cn(
-                      "flex items-center justify-center gap-2 rounded-2xl border px-4 py-3.5 text-sm font-semibold",
+                      "flex items-center justify-center gap-2 rounded-xl border px-4 py-3.5 text-sm font-semibold",
                       preference === "leave_at_door"
-                        ? "border-gold bg-gold/10 text-ink"
+                        ? "border-gold bg-white text-ink ring-1 ring-gold"
                         : "border-cream-line bg-white/50 text-ink-mute",
                     )}
                   >
@@ -568,7 +568,7 @@ export default function CheckoutPage() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="(780) 555-0123"
-                className="mt-3 w-full rounded-2xl border border-cream-line bg-white/50 px-4 py-3.5 text-base text-ink outline-none placeholder:text-ink-mute focus:border-gold"
+                className="mt-3 w-full rounded-xl border border-cream-line bg-white/50 px-4 py-3.5 text-base text-ink outline-none placeholder:text-ink-mute focus:border-gold"
               />
             </section>
 
@@ -587,7 +587,7 @@ export default function CheckoutPage() {
                     className={cn(
                       "min-h-11 rounded-full border px-5 py-2.5 text-sm font-semibold",
                       tip === t && customTip === ""
-                        ? "border-gold bg-gold/10 text-ink"
+                        ? "border-gold bg-white text-ink ring-1 ring-gold"
                         : "border-cream-line bg-white/50 text-ink-mute",
                     )}
                   >
@@ -619,7 +619,7 @@ export default function CheckoutPage() {
                   value={promo}
                   onChange={(e) => setPromo(e.target.value.toUpperCase())}
                   placeholder="Enter code"
-                  className="mt-3 w-full rounded-2xl border border-cream-line bg-white/50 px-4 py-3.5 text-base uppercase tracking-wide text-ink outline-none placeholder:normal-case placeholder:tracking-normal placeholder:text-ink-mute focus:border-gold"
+                  className="mt-3 w-full rounded-xl border border-cream-line bg-white/50 px-4 py-3.5 text-base uppercase tracking-wide text-ink outline-none placeholder:normal-case placeholder:tracking-normal placeholder:text-ink-mute focus:border-gold"
                 />
               </div>
               <div>
@@ -628,9 +628,9 @@ export default function CheckoutPage() {
                   <button
                     onClick={() => setUsePoints(!usePoints)}
                     className={cn(
-                      "mt-3 flex w-full items-center justify-between rounded-2xl border px-4 py-3.5 text-sm font-semibold",
+                      "mt-3 flex w-full items-center justify-between rounded-xl border px-4 py-3.5 text-sm font-semibold",
                       usePoints
-                        ? "border-gold bg-gold/10 text-ink"
+                        ? "border-gold bg-white text-ink ring-1 ring-gold"
                         : "border-cream-line bg-white/50 text-ink-mute",
                     )}
                   >
@@ -638,7 +638,7 @@ export default function CheckoutPage() {
                     <span className="text-green">−{money(maxRedeemable / 1000)}</span>
                   </button>
                 ) : (
-                  <p className="mt-3 rounded-2xl border border-cream-line bg-white/50 px-4 py-3.5 text-sm text-ink-mute">
+                  <p className="mt-3 rounded-xl border border-cream-line bg-white/50 px-4 py-3.5 text-sm text-ink-mute">
                     {pointsBalance.toLocaleString()} pts. 1,000 needed to redeem
                   </p>
                 )}
@@ -655,13 +655,13 @@ export default function CheckoutPage() {
                 rows={2}
                 maxLength={300}
                 placeholder="Buzzer code, landmarks, anything the kitchen or driver should know…"
-                className="mt-3 w-full resize-none rounded-2xl border border-cream-line bg-white/50 p-4 text-base text-ink outline-none placeholder:text-ink-mute focus:border-gold"
+                className="mt-3 w-full resize-none rounded-xl border border-cream-line bg-white/50 p-4 text-base text-ink outline-none placeholder:text-ink-mute focus:border-gold"
               />
             </section>
 
             {/* Estimate */}
             {estimate && (
-              <section className="rounded-3xl bg-white/60 p-6 shadow-card">
+              <section className="rounded-xl bg-white/60 p-6 shadow-card">
                 <SectionTitle>Estimated total</SectionTitle>
                 <dl className="mt-4 space-y-1.5 text-sm">
                   <Row label="Subtotal" value={money(cart.subtotal)} />
@@ -692,7 +692,7 @@ export default function CheckoutPage() {
             )}
 
             {error && (
-              <p className="rounded-2xl bg-red/10 p-4 text-sm font-medium text-red">
+              <p className="text-sm font-medium text-red">
                 {error}
               </p>
             )}
@@ -700,7 +700,7 @@ export default function CheckoutPage() {
             <button
               onClick={startPayment}
               disabled={!readyToPay || busy}
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 text-base font-semibold text-ink transition-transform hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 text-base font-semibold text-ink disabled:cursor-not-allowed disabled:opacity-50"
             >
               {busy && <CircleNotch className="h-5 w-5 animate-spin" aria-hidden />}
               Continue to payment
@@ -708,7 +708,7 @@ export default function CheckoutPage() {
           </div>
         ) : (
           <div className="mt-8">
-            <section className="rounded-3xl bg-white/60 p-6 shadow-card">
+            <section className="rounded-xl bg-white/60 p-6 shadow-card">
               <SectionTitle>Confirmed total</SectionTitle>
               <dl className="mt-4 space-y-1.5 text-sm">
                 <Row label="Subtotal" value={money(paying.breakdown.subtotal)} />
@@ -776,7 +776,7 @@ export default function CheckoutPage() {
                 />
               </Elements>
             ) : (
-              <div className="mt-4 rounded-3xl bg-red/10 p-6 text-center">
+              <div className="mt-4 py-2 text-center">
                 <p className="text-sm font-medium text-red">
                   We couldn&rsquo;t load secure payments. Check your connection
                   and try again in a moment.
@@ -913,14 +913,14 @@ function PayForm({
     <form onSubmit={submit} className="mt-6">
       <PaymentElement />
       {error && (
-        <p className="mt-4 rounded-2xl bg-red/10 p-4 text-sm font-medium text-red">
+        <p className="mt-4 text-sm font-medium text-red">
           {error}
         </p>
       )}
       <button
         type="submit"
         disabled={busy || !stripe}
-        className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 text-base font-semibold text-ink transition-transform hover:-translate-y-px disabled:opacity-60"
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 text-base font-semibold text-ink disabled:opacity-60"
       >
         {busy && <CircleNotch className="h-5 w-5 animate-spin" aria-hidden />}
         {placing

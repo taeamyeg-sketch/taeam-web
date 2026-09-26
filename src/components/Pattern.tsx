@@ -66,17 +66,3 @@ export function Divider({ className }: { className?: string }) {
     </div>
   );
 }
-
-/**
- * Seam between the dark brand islands and the light ordering surfaces. A short
- * gradient that fades one register into the next so the boundary is deliberate,
- * never an abrupt cut. `to` is the register the NEXT section is in.
- */
-export function Seam({ to }: { to: "noir" | "cream" }) {
-  return (
-    <div
-      aria-hidden
-      className={cn("seam", to === "noir" ? "seam-to-noir" : "seam-to-cream")}
-    />
-  );
-}

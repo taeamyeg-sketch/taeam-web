@@ -41,7 +41,7 @@ export function RestaurantCard({
               alt={restaurant.name}
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              className="object-cover"
             />
           ) : (
             <div className="flex h-full items-center justify-center break-words px-4 text-center font-black text-3xl text-ink-mute">
@@ -119,7 +119,6 @@ export function RestaurantCard({
             View menu
             <span
               aria-hidden
-              className="transition-transform duration-300 group-hover:translate-x-1"
             >
               →
             </span>

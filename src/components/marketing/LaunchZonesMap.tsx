@@ -66,10 +66,7 @@ function ensureZoneStyles() {
   s.textContent = `
     .tz-map .leaflet-container{background:#0f0f0f;cursor:default;pointer-events:none;}
     .tz-map .leaflet-tile-pane{filter:brightness(1.22) contrast(1.14) saturate(.65);}
-    .tz-zone{filter:drop-shadow(0 0 4px rgba(234,179,8,.85)) drop-shadow(0 0 16px rgba(234,179,8,.4));animation:tz-pulse 5s ease-in-out infinite;}
-    @keyframes tz-pulse{0%,100%{opacity:1}50%{opacity:.62}}
-    @media (prefers-reduced-motion: reduce){.tz-zone{animation:none}}
-    .tz-zone-label{display:inline-block;transform:translate(-50%,-50%);color:#eab308;font-family:var(--font-sans),system-ui,sans-serif;font-weight:800;font-size:10px;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;text-shadow:0 0 10px rgba(234,179,8,.55),0 1px 3px rgba(0,0,0,.9);}
+    .tz-zone-label{display:inline-block;transform:translate(-50%,-50%);color:#eea742;font-family:var(--font-sans),system-ui,sans-serif;font-weight:800;font-size:10px;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.8);}
   `;
   document.head.appendChild(s);
 }
@@ -127,11 +124,10 @@ export function LaunchZonesMap({ className }: { className?: string }) {
 
       ZONES.forEach((z) => {
         Lmod.polygon(z.points, {
-          color: "#eab308",
+          color: "#eea742",
           weight: 2,
-          fillColor: "#eab308",
-          fillOpacity: 0.09,
-          className: "tz-zone",
+          fillColor: "#eea742",
+          fillOpacity: 0.14,
         }).addTo(map);
         Lmod.marker(z.label, {
           interactive: false,

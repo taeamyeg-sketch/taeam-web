@@ -37,7 +37,7 @@ export default function Error({
         <div className="mt-8 flex flex-col items-center gap-4">
           <button
             onClick={reset}
-            className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-ink transition-transform hover:-translate-y-px"
+            className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-ink"
           >
             Try again
           </button>

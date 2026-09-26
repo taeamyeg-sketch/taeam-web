@@ -12,8 +12,6 @@
   /* Darkened gold for small text on cream — raw brand gold fails contrast.
      #8f5a0d clears WCAG AA (≈5:1 on cream) even at the 12px uppercase labels. */
   --color-gold-deep: #8f5a0d;
-  /* Vivid brand gold — only on the dark (noir) surfaces, where it sings */
-  --color-gold-bright: #eab308;
   --color-green: #2a9d8f;
   --color-red: #e63946;
 
@@ -81,66 +79,6 @@ summary:focus-visible,
   letter-spacing: -0.02em;
 }
 
-/* ── Entrance reveal: subtle rise, plays once ── */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px) scale(0.985);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.reveal.revealed {
-  opacity: 1;
-  transform: none;
-}
-
-/* ── On-load entrance: staggered fade-rise for above-the-fold content ── */
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-.rise {
-  opacity: 0;
-  animation: rise-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* ── Hero dishes: the cut-out plates scattered on the black diagonal.
-   A slow, low-amplitude drift so the dark side feels alive under the brand
-   mark. Not a glow, not a hard loop you notice, just breath. Each dish carries
-   its own delay (see HeroDishes) so they never rise in unison.
-
-   The drop shadow is what stops them reading as stickers. On #0f0f0f a shadow
-   can only go darker, which is exactly right: it lands as a contact shadow on a
-   dark table, not a halo. */
-@keyframes dish-drift {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -7px;
-  }
-}
-.dish {
-  /* `rotate` and `translate` are set as independent properties, never via
-     transform, so the per-dish rotation and the drift can't clobber each
-     other. */
-  animation: dish-drift 22s ease-in-out infinite;
-  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.65));
-  will-change: translate;
-}
-@media (prefers-reduced-motion: reduce) {
-  .dish {
-    animation: none;
-    translate: none;
-  }
-}
-
 /* Quiet text link with an underline that draws in on hover */
 .link-underline {
   background-image: linear-gradient(currentColor, currentColor);
@@ -156,16 +94,6 @@ summary:focus-visible,
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .rise {
-    animation: none;
-    opacity: 1;
-    transform: none;
   }
 }
 
@@ -245,7 +173,7 @@ summary:focus-visible,
 .pt-logo {
   width: 4.25rem;
   height: 4.9rem;
-  background: var(--color-gold-bright);
+  background: var(--color-gold);
   -webkit-mask: url("/logo-mark.png") no-repeat center / contain;
   mask: url("/logo-mark.png") no-repeat center / contain;
 }
@@ -262,35 +190,6 @@ summary:focus-visible,
 }
 .rail::-webkit-scrollbar {
   display: none;
-}
-
-/* ── Hybrid seam system ──
-   The site alternates dark "brand islands" (hero, halal-proof band, footer)
-   with light ordering surfaces. Every boundary is deliberate: a short gradient
-   that fades one register into the next, so the eye never hits a hard edge. */
-.seam {
-  height: 5rem;
-  width: 100%;
-}
-.seam-to-noir {
-  background: linear-gradient(to bottom, var(--color-cream), var(--color-noir));
-}
-.seam-to-cream {
-  background: linear-gradient(to bottom, var(--color-noir), var(--color-cream));
-}
-
-/* Faint film grain for the dark bands: keeps the flat black feeling rich and
-   stops gradient seams from banding. Not a glow — a texture. Parent needs
-   position: relative. */
-.grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* The diagonal is the brand's signature cut. Reused so it reads as a system,

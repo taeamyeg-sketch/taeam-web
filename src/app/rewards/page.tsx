@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rewards & Taeam Plus · Taeam",
     description:
-      "Every order earns. Every day stacks. 1,000 points = $1.00 off, no punch cards, no fine print.",
+      "Points on every order, free points every day, and 1,000 points is $1.00 off your food.",
     type: "website",
     url: "https://taeam.ca/rewards",
     images: [
@@ -152,7 +152,7 @@ export default function RewardsPage() {
       {/* ── Dark brand island: the promise. A real weeknight takeout spread
           sits behind it at low opacity so the numbers land on food, not on a
           flat black field. ── */}
-      <section className="grain relative overflow-hidden bg-noir pb-20 pt-32 text-white sm:pb-24 sm:pt-40">
+      <section className="relative overflow-hidden bg-noir pb-20 pt-32 text-white sm:pb-24 sm:pt-40">
         <Image
           src="/rewards-hero.webp"
           alt=""
@@ -166,32 +166,31 @@ export default function RewardsPage() {
           className="pointer-events-none absolute inset-0 bg-gradient-to-r from-noir via-noir/85 to-noir/40"
         />
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="rise" style={{ animationDelay: "60ms" }}>
+          <div>
             <Eyebrow tone="bright">Taeam Rewards</Eyebrow>
             <h1 className="mt-4 max-w-3xl text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl">
               Every order earns.
               <br />
-              <span className="text-gold-bright">Every day stacks.</span>
+              <span className="text-gold">Every day stacks.</span>
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
               Points land automatically on everything you order, free points
               stack every day you show up, and 1,000 points is a straight
-              dollar off your food. No punch cards, no fine print. Points
-              expire 18 months after they are earned.
+              dollar off your food. Points expire 18 months after they are
+              earned.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-5">
               <a
                 href="#calculator"
-                className="rounded-full bg-gold-bright px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir transition-transform hover:-translate-y-0.5"
+                className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir"
               >
                 Run your numbers
               </a>
               {SEALED ? (
-                <JoinWaitlistButton className="group inline-flex items-center gap-1 text-sm font-semibold text-white/75 transition-colors hover:text-gold-bright">
+                <JoinWaitlistButton className="group inline-flex items-center gap-1 text-sm font-semibold text-white/75 transition-colors hover:text-gold">
                   Join the waitlist
                   <span
                     aria-hidden
-                    className="transition-transform duration-300 group-hover:translate-x-1"
                   >
                     →
                   </span>
@@ -199,12 +198,11 @@ export default function RewardsPage() {
               ) : (
                 <TransitionLink
                   href={orderHref()}
-                  className="group inline-flex items-center gap-1 text-sm font-semibold text-white/75 transition-colors hover:text-gold-bright"
+                  className="group inline-flex items-center gap-1 text-sm font-semibold text-white/75 transition-colors hover:text-gold"
                 >
                   Start an order
                   <span
                     aria-hidden
-                    className="transition-transform duration-300 group-hover:translate-x-1"
                   >
                     →
                   </span>
@@ -217,10 +215,9 @@ export default function RewardsPage() {
             {HERO_STATS.map((s, i) => (
               <div
                 key={s.big}
-                className="rise rounded-3xl border border-noir-line bg-noir-soft p-6"
-                style={{ animationDelay: `${180 + i * 110}ms` }}
+                className="rounded-xl border border-noir-line bg-noir-soft p-6"
               >
-                <p className="text-4xl font-black tracking-tight text-gold-bright sm:text-5xl">
+                <p className="text-4xl font-black tracking-tight text-gold sm:text-5xl">
                   {s.big}
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
@@ -247,7 +244,7 @@ export default function RewardsPage() {
         </Reveal>
 
         <Reveal delay={90}>
-          <div className="mt-10 rounded-3xl bg-cream-deep p-6 sm:p-8">
+          <div className="mt-10 rounded-xl bg-cream-deep p-6 sm:p-8">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold-deep">
               The daily stack: up to 50 pts before you order anything
             </p>
@@ -255,12 +252,10 @@ export default function RewardsPage() {
               {DAILY_STACK.map((d) => (
                 <div
                   key={d.title}
-                  className="rounded-2xl bg-cream p-5 shadow-card"
+                  className="rounded-xl border border-cream-line bg-cream p-5"
                 >
                   <div className="flex items-center justify-between gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15 text-gold-deep">
-                      {d.icon}
-                    </span>
+                    <span className="text-gold-deep">{d.icon}</span>
                     <span className="text-sm font-black text-gold-deep">
                       {d.pts}
                     </span>
@@ -281,7 +276,7 @@ export default function RewardsPage() {
       {/* ── Dark brand island: the calculator ── */}
       <section
         id="calculator"
-        className="grain relative overflow-hidden bg-noir py-20 text-white sm:py-28"
+        className="relative overflow-hidden bg-noir py-20 text-white sm:py-28"
       >
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
           <Reveal>
@@ -317,10 +312,10 @@ export default function RewardsPage() {
             </h2>
             <p className="mt-4 max-w-md leading-relaxed text-ink-mute">
               At checkout, slide your points onto the bill. Every 1,000 points
-              knocks a dollar off, up to five dollars per order. No coupon
-              codes, no minimum order, no waiting for a promo week.
+              knocks a dollar off, up to five dollars per order. It works on
+              any order, without a coupon code or a minimum.
             </p>
-            <div className="mt-8 space-y-2.5 rounded-3xl bg-cream-deep p-6">
+            <div className="mt-8 space-y-2.5 rounded-xl bg-cream-deep p-6">
               {[
                 ["Chicken Shawarma Platter", "$16.99"],
                 ["Points applied", "−$3.00"],
@@ -361,8 +356,8 @@ export default function RewardsPage() {
             <div className="mt-8 space-y-4">
               {TIERS.map((t, i) => (
                 <Reveal key={t.name} delay={i * 90}>
-                  <div className="flex items-start gap-5 rounded-3xl border border-cream-line bg-cream p-6 shadow-card">
-                    <span className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gold/15 text-sm font-black uppercase text-gold-deep">
+                  <div className="flex items-start gap-5 rounded-xl border border-cream-line bg-cream p-6 shadow-card">
+                    <span className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cream-line text-sm font-black uppercase text-ink">
                       {t.name[0]}
                     </span>
                     <div className="min-w-0">
@@ -374,7 +369,7 @@ export default function RewardsPage() {
                           {t.gate}
                         </span>
                         {t.bonus && (
-                          <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-[11px] font-black text-gold-deep">
+                          <span className="rounded-full border border-cream-line px-2.5 py-0.5 text-[11px] font-black text-gold-deep">
                             {t.bonus}
                           </span>
                         )}
@@ -395,7 +390,7 @@ export default function RewardsPage() {
       <section className="bg-cream-deep py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Reveal>
-            <div className="relative mb-10 aspect-[21/9] overflow-hidden rounded-3xl">
+            <div className="relative mb-10 aspect-[21/9] overflow-hidden rounded-2xl">
               <Image
                 src="/rewards-everyday.webp"
                 alt="Two friends eating shawarma on an Edmonton sidewalk on an autumn evening"
@@ -414,16 +409,14 @@ export default function RewardsPage() {
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {MORE_WAYS.map((w, i) => (
               <Reveal key={w.title} delay={(i % 3) * 90}>
-                <div className="h-full rounded-3xl bg-cream p-6 shadow-card">
+                <div className="h-full rounded-xl border border-cream-line bg-cream p-6">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15 text-gold-deep">
-                      {w.icon}
-                    </span>
+                    <span className="text-gold-deep">{w.icon}</span>
                     <span
                       className={`rounded-full px-2.5 py-1 text-[11px] font-black ${
                         w.spend
-                          ? "bg-noir text-gold-bright"
-                          : "bg-gold/15 text-gold-deep"
+                          ? "bg-noir text-gold"
+                          : "border border-cream-line text-gold-deep"
                       }`}
                     >
                       {w.pts}
@@ -444,7 +437,7 @@ export default function RewardsPage() {
 
       {/* ── Dark brand island: Taeam Plus. The handover at the door sits behind
           the price so "the fees, handled" has the moment it pays for. ── */}
-      <section className="grain relative overflow-hidden bg-noir py-20 text-white sm:py-28">
+      <section className="relative overflow-hidden bg-noir py-20 text-white sm:py-28">
         <Image
           src="/rewards-plus.webp"
           alt=""
@@ -468,7 +461,7 @@ export default function RewardsPage() {
                 local deliveries, a flat delivery fee anywhere else in the city,
                 a 99-cent service fee, and every point doubled.
               </p>
-              <p className="mt-6 text-5xl font-black tracking-tight text-gold-bright">
+              <p className="mt-6 text-5xl font-black tracking-tight text-gold">
                 $8.99
                 <span className="ml-1 text-lg font-bold uppercase tracking-wide text-white/50">
                   / month
@@ -481,13 +474,13 @@ export default function RewardsPage() {
             </Reveal>
 
             <Reveal delay={120}>
-              <div className="overflow-hidden rounded-3xl border border-noir-line bg-noir-soft">
+              <div className="overflow-hidden rounded-xl border border-noir-line bg-noir-soft">
                 {/* Column headers only exist where the columns do (sm+);
                     phones get per-cell labels inside each stacked row. */}
                 <div className="hidden grid-cols-[1.1fr_1fr_1.4fr] gap-x-4 border-b border-noir-line px-6 py-4 text-[11px] font-black uppercase tracking-[0.14em] text-white/50 sm:grid">
                   <span />
                   <span>Standard</span>
-                  <span className="text-gold-bright">Taeam Plus</span>
+                  <span className="text-gold">Taeam Plus</span>
                 </div>
                 {PLUS_COMPARE.map((row) => (
                   <div
@@ -503,7 +496,7 @@ export default function RewardsPage() {
                       </span>
                       {row.standard}
                     </span>
-                    <span className="text-sm font-semibold text-gold-bright">
+                    <span className="text-sm font-semibold text-gold">
                       <span className="mb-0.5 block text-[10px] font-black uppercase tracking-[0.14em] text-white/40 sm:hidden">
                         Taeam Plus
                       </span>
@@ -529,21 +522,21 @@ export default function RewardsPage() {
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-5">
             {SEALED ? (
-              <JoinWaitlistButton className="group inline-flex items-center gap-2 rounded-full bg-gold-bright px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir transition-transform hover:-translate-y-0.5">
+              <JoinWaitlistButton className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir">
                 Join the waitlist
                 <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                  className="h-4 w-4"
                   weight="bold"
                 />
               </JoinWaitlistButton>
             ) : (
               <TransitionLink
                 href={orderHref()}
-                className="group inline-flex items-center gap-2 rounded-full bg-gold-bright px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir transition-transform hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir"
               >
                 Browse the kitchens
                 <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                  className="h-4 w-4"
                   weight="bold"
                 />
               </TransitionLink>
@@ -555,7 +548,6 @@ export default function RewardsPage() {
               Get the Taeam app
               <span
                 aria-hidden
-                className="transition-transform duration-300 group-hover:translate-x-1"
               >
                 →
               </span>

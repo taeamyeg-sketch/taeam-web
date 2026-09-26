@@ -48,7 +48,7 @@ export function RestaurantTile({
             alt={restaurant.name}
             fill
             sizes="(min-width: 1024px) 300px, (min-width: 640px) 45vw, 85vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            className="object-cover"
           />
         ) : (
           <div className="flex h-full items-center justify-center px-4 text-center font-black uppercase leading-tight tracking-tight text-ink-mute">
@@ -62,10 +62,10 @@ export function RestaurantTile({
         {trust && (
           <span
             className={cn(
-              "absolute left-2.5 top-2.5 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold backdrop-blur-sm",
+              "absolute left-2.5 top-2.5 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold",
               verified
-                ? "bg-gold/90 text-ink"
-                : "bg-cream/90 text-ink-mute",
+                ? "bg-gold text-ink"
+                : "bg-cream text-ink-mute",
             )}
           >
             <Seal className="h-3 w-3" strokeWidth={1.8} />

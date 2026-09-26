@@ -70,7 +70,7 @@ export function PointsCalculator() {
   return (
     <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
       {/* ── Controls ── */}
-      <div className="rounded-3xl border border-noir-line bg-noir-soft p-6 sm:p-8">
+      <div className="rounded-xl border border-noir-line bg-noir-soft p-6 sm:p-8">
         <div className="flex items-center justify-between gap-4">
           <label
             htmlFor="calc-subtotal"
@@ -78,7 +78,7 @@ export function PointsCalculator() {
           >
             A typical order
           </label>
-          <span className="text-lg font-black text-gold-bright">
+          <span className="text-lg font-black text-gold">
             {money(subtotal)}
           </span>
         </div>
@@ -90,7 +90,7 @@ export function PointsCalculator() {
           step={1}
           value={subtotal}
           onChange={(e) => setSubtotal(Number(e.target.value))}
-          className="mt-3 h-11 w-full cursor-pointer accent-gold-bright"
+          className="mt-3 h-11 w-full cursor-pointer accent-gold"
         />
 
         <div className="mt-7 flex items-center justify-between gap-4">
@@ -100,7 +100,7 @@ export function PointsCalculator() {
           >
             Orders a month
           </label>
-          <span className="text-lg font-black text-gold-bright">
+          <span className="text-lg font-black text-gold">
             {ordersPerMonth}
           </span>
         </div>
@@ -112,7 +112,7 @@ export function PointsCalculator() {
           step={1}
           value={ordersPerMonth}
           onChange={(e) => setOrdersPerMonth(Number(e.target.value))}
-          className="mt-3 h-11 w-full cursor-pointer accent-gold-bright"
+          className="mt-3 h-11 w-full cursor-pointer accent-gold"
         />
 
         {/* Standard vs Plus */}
@@ -132,7 +132,7 @@ export function PointsCalculator() {
                 aria-pressed={plus === isPlus}
                 className={`rounded-xl px-3 py-2.5 text-center transition-colors ${
                   plus === isPlus
-                    ? "bg-gold-bright text-noir"
+                    ? "bg-gold text-noir"
                     : "text-white/60 hover:text-white"
                 }`}
               >
@@ -158,7 +158,7 @@ export function PointsCalculator() {
           aria-pressed={dailyStack}
           className={`mt-4 flex w-full items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-colors ${
             dailyStack
-              ? "border-gold-bright bg-white/[0.04]"
+              ? "border-gold bg-white/[0.04]"
               : "border-noir-line bg-white/[0.04] hover:border-white/20"
           }`}
         >
@@ -173,7 +173,7 @@ export function PointsCalculator() {
           <span
             aria-hidden
             className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
-              dailyStack ? "bg-gold-bright" : "bg-white/15"
+              dailyStack ? "bg-gold" : "bg-white/15"
             }`}
           >
             <span
@@ -186,7 +186,7 @@ export function PointsCalculator() {
       </div>
 
       {/* ── Results ── */}
-      <div className="flex flex-col justify-between rounded-3xl bg-gold-bright p-6 text-noir sm:p-8">
+      <div className="flex flex-col justify-between rounded-xl bg-gold p-6 text-noir sm:p-8">
         <div>
           <p className="text-xs font-black uppercase tracking-[0.2em] text-noir/60">
             You&apos;d earn

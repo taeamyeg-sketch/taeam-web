@@ -25,10 +25,31 @@ const ACTIVE_STATUSES = new Set([
   "delivering",
 ]);
 
-function statusStyle(status: string): string {
-  if (ACTIVE_STATUSES.has(status)) return "bg-gold/15 text-gold-deep";
-  if (status === "delivered") return "bg-green/10 text-green";
-  return "bg-cream-deep text-ink-mute";
+// Plain-language label + status colour for each order state. Same palette as
+// the apps: waiting = gold, kitchen = blue, on its way = green, done = grey,
+// stopped = red. Unknown states never show the raw database value.
+const STATUS: Record<string, { label: string; dot: string }> = {
+  pending: { label: "Waiting for restaurant", dot: "bg-gold" },
+  awaiting_restaurant: { label: "Waiting for restaurant", dot: "bg-gold" },
+  awaiting_payment: { label: "Awaiting payment", dot: "bg-gold" },
+  confirmed: { label: "Confirmed", dot: "bg-[#3B6EA8]" },
+  accepted: { label: "Accepted", dot: "bg-[#3B6EA8]" },
+  preparing: { label: "Preparing", dot: "bg-[#3B6EA8]" },
+  ready: { label: "Ready", dot: "bg-[#2F7D55]" },
+  picked_up: { label: "Picked up", dot: "bg-[#2F7D55]" },
+  delivering: { label: "On the way", dot: "bg-[#2F7D55]" },
+  arrived: { label: "Arrived", dot: "bg-[#2F7D55]" },
+  delivered: { label: "Delivered", dot: "bg-[#6B6B6B]" },
+  completed: { label: "Completed", dot: "bg-[#6B6B6B]" },
+  cancelled: { label: "Cancelled", dot: "bg-[#C0392B]" },
+  canceled: { label: "Cancelled", dot: "bg-[#C0392B]" },
+  rejected: { label: "Declined", dot: "bg-[#C0392B]" },
+  refunded: { label: "Refunded", dot: "bg-[#C0392B]" },
+  failed: { label: "Failed", dot: "bg-[#C0392B]" },
+};
+
+function statusInfo(status: string): { label: string; dot: string } {
+  return STATUS[status] ?? { label: "In progress", dot: "bg-[#6B6B6B]" };
 }
 
 export default function OrdersPage() {
@@ -69,6 +90,7 @@ export default function OrdersPage() {
         <ul className="space-y-4">
           {orders.map((order) => {
             const active = ACTIVE_STATUSES.has(order.status);
+            const status = statusInfo(order.status);
             const placed = new Date(order.created_at).toLocaleString("en-CA", {
               month: "short",
               day: "numeric",
@@ -79,7 +101,7 @@ export default function OrdersPage() {
             return (
               <li
                 key={order.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white/60 p-5 shadow-card"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white/60 p-5 shadow-card"
               >
                 <div className="min-w-0">
                   <p className="font-semibold text-ink">
@@ -91,13 +113,9 @@ export default function OrdersPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span
-                    className={cn(
-                      "rounded-full px-2.5 py-1 text-xs font-semibold capitalize",
-                      statusStyle(order.status),
-                    )}
-                  >
-                    {order.status.replace(/_/g, " ")}
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-cream-line px-2.5 py-1 text-xs font-semibold text-ink-soft">
+                    <span aria-hidden className={cn("h-1.5 w-1.5 rounded-full", status.dot)} />
+                    {status.label}
                   </span>
                   {active ? (
                     <Link

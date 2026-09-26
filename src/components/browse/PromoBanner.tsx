@@ -69,7 +69,7 @@ const IFTAR: Promo = {
 const TONES: Record<Promo["tone"], { bg: string; eyebrow: string; title: string; sub: string; cta: string }> = {
   noir: {
     bg: "bg-noir",
-    eyebrow: "text-gold-bright",
+    eyebrow: "text-gold",
     title: "text-cream",
     sub: "text-white/70",
     cta: "bg-gold text-ink",
@@ -90,7 +90,7 @@ const TONES: Record<Promo["tone"], { bg: string; eyebrow: string; title: string;
   },
   green: {
     bg: "bg-[#1B5E20]",
-    eyebrow: "text-gold-bright",
+    eyebrow: "text-gold",
     title: "text-white",
     sub: "text-white/75",
     cta: "bg-gold text-ink",
@@ -119,7 +119,7 @@ export function PromoBanner({ ramadan = false }: { ramadan?: boolean }) {
 
   return (
     <div
-      className="relative mt-2 h-32 overflow-hidden rounded-3xl sm:h-36"
+      className="relative mt-2 h-32 overflow-hidden rounded-2xl sm:h-36"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onTouchStart={() => setPaused(true)}
@@ -155,7 +155,7 @@ export function PromoBanner({ ramadan = false }: { ramadan?: boolean }) {
                 )}
               >
                 {p.cta}
-                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" weight="bold" />
+                <ArrowRight className="h-3.5 w-3.5" weight="bold" />
               </span>
             </div>
             <Glyph
@@ -200,7 +200,7 @@ function BannerArrow({ side, onClick }: { side: "left" | "right"; onClick: () =>
       onClick={onClick}
       aria-label={side === "left" ? "Previous" : "Next"}
       className={cn(
-        "absolute top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/20 text-white backdrop-blur-sm transition-colors hover:bg-black/35 sm:flex",
+        "absolute top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white transition-colors hover:bg-black/60 sm:flex",
         side === "left" ? "left-2" : "right-2",
       )}
     >

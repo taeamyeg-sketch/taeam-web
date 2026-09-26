@@ -88,7 +88,7 @@ export function LegalShell({
                   className={cn(
                     "inline-flex min-h-11 shrink-0 items-center rounded-full border px-4 text-sm font-semibold transition-colors",
                     current === d.href
-                      ? "border-gold bg-gold/10 text-ink"
+                      ? "border-gold bg-white text-ink"
                       : "border-cream-line text-ink-mute hover:text-ink",
                   )}
                 >

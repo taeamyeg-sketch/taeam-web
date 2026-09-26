@@ -115,7 +115,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
     <TransitionContext.Provider value={{ navigate }}>
       {children}
       <div className="pt-root" data-phase={phase} aria-hidden>
-        <div className="pt-veil grain" />
+        <div className="pt-veil" />
         <div className="pt-mark">
           <span className="pt-logo" />
         </div>
