@@ -114,7 +114,7 @@ export function AccountMenu({ light = false }: { light?: boolean }) {
             setOpen(false);
             void signOut();
           }}
-          className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-red transition-colors hover:bg-red/10"
+          className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-red-deep transition-colors hover:bg-red/10"
         >
           <SignOut className="h-5 w-5" aria-hidden />
           Sign out

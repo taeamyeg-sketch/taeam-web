@@ -53,7 +53,7 @@ const STATUS = {
   withdrawn: {
     label: "This record has been withdrawn",
     body: "Taeam has withdrawn this record. Any printed certificate carrying this number should no longer be on display, and you should not rely on it.",
-    className: "text-red",
+    className: "text-red-deep",
   },
   expired: {
     label: "This record has lapsed",

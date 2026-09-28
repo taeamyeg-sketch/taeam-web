@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { pixelTrack } from "@/lib/meta-pixel";
 
 /**
  * Client half of the Meta pixel. The base code itself is inlined into <head> by
@@ -12,7 +13,8 @@ import { usePathname } from "next/navigation";
  * single-page app, so the head snippet never runs again and every in-site
  * navigation would go uncounted. The effect re-fires PageView on each pathname
  * change, skipping the first render — the head snippet already covered the
- * landing URL, and firing again would double-count it.
+ * landing URL, and firing again would double-count it. It goes through
+ * pixelTrack, which sends nothing once the visitor has chosen "No ad tracking".
  *
  * Conversion events are NOT fired here — see lib/meta-pixel `trackWaitlistLead`,
  * called from the waitlist submit path once the insert has actually succeeded.
@@ -26,7 +28,7 @@ export function MetaPixel() {
       firstRender.current = false;
       return;
     }
-    if (typeof window.fbq === "function") window.fbq("track", "PageView");
+    pixelTrack("PageView");
   }, [pathname]);
 
   return null;

@@ -14,6 +14,10 @@
   --color-gold-deep: #8f5a0d;
   --color-green: #2a9d8f;
   --color-red: #e63946;
+  /* Darkened red for error text on cream/white, same move as gold-deep: brand
+     red is only ≈3.9:1 on cream, #b51624 is ≈6.3:1. Brand red stays for fills
+     and for text on noir, where it reads at ≈4.6:1. */
+  --color-red-deep: #b51624;
 
   /* ── Dark register: the brand "islands" (hero, halal-proof band, footer) ── */
   --color-noir: #0f0f0f; /* deep brand black */
@@ -55,9 +59,27 @@ body {
 }
 
 /* ── Keyboard focus ring ──
-   One consistent gold ring on every interactive control, shown only to
+   One consistent ring on every interactive control, shown only to
    keyboard / assistive-tech users (:focus-visible), never on mouse click.
-   Element+pseudo specificity intentionally beats Tailwind's `outline-none`. */
+   Element+pseudo specificity intentionally beats Tailwind's `outline-none`.
+
+   The ring has to clear 3:1 against whatever sits behind it (WCAG 1.4.11).
+   Brand gold on cream is only ≈1.9:1, so the default is gold-deep (≈5.3:1 on
+   cream, ≈3:1 on the flat gold hero). On the noir islands gold-deep falls to
+   ≈3.3:1, so there the ring goes back to brand gold (≈10:1). The colour is set
+   on the CHILDREN of a dark or light surface and inherited from there, so a
+   noir pill sitting on cream still draws the cream-side colour around itself.
+   `data-surface="dark"` marks dark areas that have no bg-noir ancestor (the
+   hero's lower stack sits over the video, not inside a noir box). */
+:root {
+  --focus-ring: var(--color-gold-deep);
+}
+:where(.bg-noir, .bg-noir-soft, .bg-ink, .bg-black, [data-surface="dark"]) > * {
+  --focus-ring: var(--color-gold);
+}
+:where(.bg-cream, .bg-cream-deep, .bg-white) > * {
+  --focus-ring: var(--color-gold-deep);
+}
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -68,9 +90,14 @@ summary:focus-visible,
 [role="menuitem"]:focus-visible,
 [role="option"]:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--color-gold);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
   border-radius: 6px;
+}
+/* The region the skip link lands on takes focus only so the next Tab starts
+   there. It isn't a control, so it gets no ring (see SkipLink). */
+[data-skip-target]:focus {
+  outline: none;
 }
 
 /* Safety alias only — no element uses this now; resolves to the sans stack. */

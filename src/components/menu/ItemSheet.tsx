@@ -87,7 +87,7 @@ export function ItemSheet({
           <p className="mt-1.5 flex items-center gap-2 text-lg font-semibold text-ink">
             {money(item.price)}
             {item.is_spicy && (
-              <span className="inline-flex items-center gap-1 text-xs font-medium text-red">
+              <span className="inline-flex items-center gap-1 text-xs font-medium text-red-deep">
                 <Flame weight="fill" className="h-4 w-4" /> Spicy
               </span>
             )}

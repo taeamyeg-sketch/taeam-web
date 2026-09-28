@@ -12,6 +12,27 @@
   # its own hostname, where the subdomain set is known.
   Strict-Transport-Security: max-age=31536000
 
+  # Added 2026-09-28, REPORT-ONLY: the browser blocks nothing and logs each
+  # would-be block to the DevTools console as "[Report Only] Refused to ...".
+  # There is no report-uri, so nothing is collected server-side; the console
+  # is the only readout. Walk the site with the console open before renaming
+  # this header to Content-Security-Policy.
+  # What it allows, and why:
+  #   script   self + 'unsafe-inline' (Next's per-page payload scripts and the
+  #            Meta pixel snippet are inline and change every build, so hashes
+  #            are not practical), the Meta pixel, Stripe.js and Google
+  #            sign-in (both only on post-launch pages).
+  #   img      self, data:/blob:, the pixel beacon (www.facebook.com), CARTO
+  #            map tiles, Supabase storage, Unsplash, Stripe.
+  #   connect  Supabase (https + wss for realtime order tracking), the Railway
+  #            backend, Meta, Aladhan prayer times, Stripe API, Google sign-in.
+  #   frame    Stripe card form and 3-D Secure, Google sign-in, and Meta (the
+  #            pixel's fallback sends a form POST into a hidden iframe, which
+  #            is also why form-action lists www.facebook.com).
+  #   media    self (hero.mp4) and Supabase storage (restaurant videos).
+  # frame-ancestors 'none' matches X-Frame-Options: DENY above.
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://connect.facebook.net https://js.stripe.com https://*.js.stripe.com https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; img-src 'self' data: blob: https://www.facebook.com https://*.basemaps.cartocdn.com https://qpeoyqhillxhcrphwure.supabase.co https://images.unsplash.com https://*.stripe.com; font-src 'self'; connect-src 'self' https://qpeoyqhillxhcrphwure.supabase.co wss://qpeoyqhillxhcrphwure.supabase.co https://taeam-backend-production.up.railway.app https://www.facebook.com https://connect.facebook.net https://api.aladhan.com https://api.stripe.com https://accounts.google.com/gsi/; frame-src https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://accounts.google.com/gsi/ https://www.facebook.com; media-src 'self' https://qpeoyqhillxhcrphwure.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self' https://www.facebook.com; frame-ancestors 'none'
+
 # NOTE: there is deliberately no site-wide `X-Robots-Tag: noindex` here.
 # An HTTP header beats the per-page <meta name="robots"> tag, so a blanket rule
 # here silently overrode every page that asks to be indexed (terms, cookies,

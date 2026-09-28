@@ -11,10 +11,17 @@ export type WaitlistResult =
 
 const JOINED_KEY = "taeam.waitlist.joined";
 
-/** True if this device already joined the waitlist (localStorage flag). */
+/**
+ * True if this device already joined the waitlist (localStorage flag). The
+ * flag is "1". Builds before 2026-09-28 stored the email address itself, which
+ * nothing ever read back, so an old value is overwritten here the first time
+ * it is seen.
+ */
 export function alreadyJoined(): boolean {
   try {
-    return !!localStorage.getItem(JOINED_KEY);
+    const v = localStorage.getItem(JOINED_KEY);
+    if (v && v !== "1") localStorage.setItem(JOINED_KEY, "1");
+    return !!v;
   } catch {
     return false;
   }
@@ -71,7 +78,7 @@ export async function submitWaitlist(rawEmail: string): Promise<WaitlistResult> 
   }
 
   try {
-    localStorage.setItem(JOINED_KEY, email);
+    localStorage.setItem(JOINED_KEY, "1"); // a flag, never the email
   } catch {
     /* private mode — fine */
   }

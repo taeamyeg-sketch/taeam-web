@@ -239,7 +239,7 @@ export function AuthPanel({
         </form>
       )}
 
-      {error && <p className="mt-4 text-sm font-medium text-red">{error}</p>}
+      {error && <p className="mt-4 text-sm font-medium text-red-deep">{error}</p>}
 
       <p className="mt-6 flex items-center gap-2 text-xs text-ink-mute">
         <Seal className="h-3 w-3 text-gold" strokeWidth={1.8} />

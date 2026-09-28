@@ -288,7 +288,7 @@ export default function HowWeVerifyPage() {
           {HARD_LINES.map((line, i) => (
             <Reveal key={line.title} delay={(i % 3) * 90}>
               <div className="h-full rounded-xl border border-cream-line bg-cream p-6 shadow-card">
-                <span className="text-xs font-black uppercase tracking-[0.14em] text-red">
+                <span className="text-xs font-black uppercase tracking-[0.14em] text-red-deep">
                   Refused
                 </span>
                 <h3 className="mt-2.5 text-lg font-black uppercase tracking-tight text-ink">

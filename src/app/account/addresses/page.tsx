@@ -110,7 +110,7 @@ export default function AddressesPage() {
                   disabled={busyId === address.id}
                   aria-label="Delete address"
                   className={cn(
-                    "rounded-full border border-cream-line p-3 text-ink-mute hover:bg-red/10 hover:text-red disabled:opacity-50",
+                    "rounded-full border border-cream-line p-3 text-ink-mute hover:bg-red/10 hover:text-red-deep disabled:opacity-50",
                   )}
                 >
                   <Trash className="h-5 w-5" aria-hidden />

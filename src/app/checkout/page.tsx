@@ -507,7 +507,7 @@ export default function CheckoutPage() {
                   </p>
                 )}
                 {outOfRange && (
-                  <p className="mt-2 text-sm font-medium text-red">
+                  <p className="mt-2 text-sm font-medium text-red-deep">
                     That address is outside the {feeConfig?.delivery.max_distance_km} km
                     delivery range for this kitchen.
                   </p>
@@ -692,7 +692,7 @@ export default function CheckoutPage() {
             )}
 
             {error && (
-              <p className="text-sm font-medium text-red">
+              <p className="text-sm font-medium text-red-deep">
                 {error}
               </p>
             )}
@@ -777,7 +777,7 @@ export default function CheckoutPage() {
               </Elements>
             ) : (
               <div className="mt-4 py-2 text-center">
-                <p className="text-sm font-medium text-red">
+                <p className="text-sm font-medium text-red-deep">
                   We couldn&rsquo;t load secure payments. Check your connection
                   and try again in a moment.
                 </p>
@@ -913,7 +913,7 @@ function PayForm({
     <form onSubmit={submit} className="mt-6">
       <PaymentElement />
       {error && (
-        <p className="mt-4 text-sm font-medium text-red">
+        <p className="mt-4 text-sm font-medium text-red-deep">
           {error}
         </p>
       )}

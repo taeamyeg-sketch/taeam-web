@@ -58,6 +58,15 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
     setResult(out.status);
   }
 
+  const resultTitle =
+    result === "existing" ? "You're already in" : "You're on the list";
+  const resultBody =
+    result === "existing"
+      ? "This email is already on the launch list. Your 50% off and 3,000 points are waiting for you the day we open."
+      : emailed
+        ? "Your 50% off and 3,000 points are locked for launch day. Check your inbox for the details."
+        : "Your 50% off and 3,000 points are locked for launch day. We’ll email you the moment we open.";
+
   return (
     <div className="fixed inset-0 z-[95] flex items-end justify-center sm:items-center">
       <button
@@ -81,21 +90,27 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
           <X className="h-5 w-5" />
         </button>
 
+        {/* Screen readers hear the outcome. This region stays mounted while
+            the form swaps for the confirmation, so the change is announced. */}
+        <p role="status" className="sr-only">
+          {result ? `${resultTitle}. ${resultBody}` : ""}
+        </p>
+
         {result ? (
           <div className="pt-2 text-center">
             <CheckCircle className="mx-auto h-11 w-11 text-gold-deep" weight="fill" aria-hidden />
             <p className="mt-3 text-xl font-black uppercase tracking-tight text-ink">
-              {result === "existing" ? "You're already in" : "You're on the list"}
+              {resultTitle}
             </p>
             <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-ink-mute">
-              {result === "existing"
-                ? "This email is already on the launch list. Your 50% off and 3,000 points are waiting for you the day we open."
-                : emailed
-                  ? "Your 50% off and 3,000 points are locked for launch day. Check your inbox for the details."
-                  : "Your 50% off and 3,000 points are locked for launch day. We’ll email you the moment we open."}
+              {resultBody}
             </p>
+            {/* autoFocus: after a keyboard submit the form (and the focused
+                button) is gone, so focus lands here instead of falling out of
+                the dialog. */}
             <button
               onClick={onClose}
+              autoFocus
               className="mt-6 w-full rounded-full bg-noir px-6 py-3 text-sm font-bold uppercase tracking-wide text-gold"
             >
               Done
@@ -140,7 +155,11 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
                 )}
               </button>
             </form>
-            {error && <p className="mt-2 text-xs font-semibold text-red">{error}</p>}
+            {error && (
+              <p role="alert" className="mt-2 text-xs font-semibold text-red-deep">
+                {error}
+              </p>
+            )}
             <p className="mt-3 flex items-center gap-1.5 text-xs text-ink-mute">
               <ShieldCheck className="h-3.5 w-3.5" weight="bold" aria-hidden /> We only email you
               about the launch.

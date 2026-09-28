@@ -30,7 +30,7 @@ export default function PrivacyPolicyPage() {
     <LegalShell
       current="/privacy-policy"
       title="Privacy Policy"
-      updated="September 2026"
+      updated="September 28, 2026"
       intro={
         <>
           This is the plain-English version of how Taeam handles your info. We
@@ -158,6 +158,15 @@ export default function PrivacyPolicyPage() {
             display and delivery routing.
           </li>
           <li>
+            <strong>CARTO</strong>: the map images on this website. Your
+            browser downloads them straight from CARTO, so CARTO receives your
+            IP address.
+          </li>
+          <li>
+            <strong>Aladhan</strong>: calculates the prayer times we show.
+            Receives the location the times are for.
+          </li>
+          <li>
             <strong>Google AdMob</strong> (United States): the rewarded video
             ads in Watch &amp; Earn.
           </li>
@@ -259,9 +268,11 @@ export default function PrivacyPolicyPage() {
         <p>
           <strong>On this website.</strong> We run the Meta pixel, which
           reports page views and waitlist signups back to Meta so we can
-          measure our ads. It never sends your email or anything you type, and
-          any tracker blocker stops it. The full list of what this site stores
-          in your browser is on the{" "}
+          measure our ads. It never sends your email or anything you type. You
+          can turn it off with No ad tracking in the cookie notice, or later
+          under Cookie choices in the site footer, and any tracker blocker
+          stops it too. The full list of what this site stores in your
+          browser is on the{" "}
           <Link href="/cookies" className={linkClass}>
             Cookies &amp; Storage
           </Link>{" "}
@@ -374,9 +385,9 @@ export default function PrivacyPolicyPage() {
           <Link href="/terms" className={linkClass}>
             Terms of Service
           </Link>{" "}
-          say. We are not built for children and we don&apos;t knowingly
-          collect information from anyone under 13. If you think a child has
-          signed up, email <LegalMail /> and we&apos;ll remove the account.
+          say. We don&apos;t knowingly collect information from anyone under
+          18. If you think someone under 18 has given us their information,
+          email <LegalMail /> and we&apos;ll delete it.
         </p>
       </LegalSection>
 

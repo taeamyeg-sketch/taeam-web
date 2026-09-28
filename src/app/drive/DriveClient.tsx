@@ -162,7 +162,11 @@ export default function DrivePage() {
 
             {!submitted ? (
               <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-2.5 sm:flex-row">
+                <label htmlFor="drive-email" className="sr-only">
+                  Email address
+                </label>
                 <input
+                  id="drive-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -198,7 +202,7 @@ export default function DrivePage() {
             )}
 
             {error && (
-              <p className="mt-3 text-sm font-semibold text-red">{error}</p>
+              <p role="alert" className="mt-3 text-sm font-semibold text-red-deep">{error}</p>
             )}
 
             <p className="mt-5 flex items-center gap-1.5 text-xs text-ink-mute">

@@ -13,7 +13,7 @@ export default function TermsPage() {
     <LegalShell
       current="/terms"
       title="Terms of Service"
-      updated="July 2026"
+      updated="September 28, 2026"
       intro={
         <>
           These are the rules of using Taeam, written to be read. When you create
@@ -151,7 +151,7 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="points" title="9. Points, promos and Taeam Plus">
+      <LegalSection id="points" title="9. Points and promos">
         <p>
           Taeam Points land automatically on eligible orders; 1,000 points takes
           a dollar off. Points have no cash value, can&apos;t be transferred or
@@ -163,15 +163,26 @@ export default function TermsPage() {
           only, expiry) shown where the code is offered, and each code is one
           per account unless it says otherwise.
         </p>
+      </LegalSection>
+
+      <LegalSection id="plus" title="10. Taeam Plus">
         <p>
-          Taeam Plus is a paid membership billed on a recurring basis. You can
-          cancel any time from your account; the membership stays active until
-          the end of the period you&apos;ve already paid for, and no partial
-          refunds are given for unused days.
+          Taeam Plus is a monthly subscription for $8.99 CAD. Your card is
+          charged when you subscribe and again on the same date each month
+          until you cancel.
+        </p>
+        <p>
+          You can cancel anytime in the app. After you cancel, your benefits
+          stay on until the end of the month you already paid for, and you
+          won&apos;t be charged again. We don&apos;t refund partial months.
+        </p>
+        <p>
+          If the price ever changes, we&apos;ll tell you at least 30 days before
+          your next charge so you can cancel first.
         </p>
       </LegalSection>
 
-      <LegalSection id="arbaab" title="10. Arbaab">
+      <LegalSection id="arbaab" title="11. Arbaab">
         <p>
           Arbaab is Taeam&apos;s optional AI assistant. It can search, suggest
           and build a cart, but it never places or pays for an order on its
@@ -182,7 +193,7 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="fair-use" title="11. Fair use">
+      <LegalSection id="fair-use" title="12. Fair use">
         <p>
           Use the platform like a person, not a scheme. That means no fraudulent
           orders or chargebacks, no abuse or harassment of drivers, restaurant
@@ -195,16 +206,22 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="reviews" title="12. Reviews and content">
+      <LegalSection id="reviews" title="13. Reviews and content">
         <p>
           Reviews and photos you post stay yours, and you give us permission to
           display them on the platform. Keep them honest and about the food and
           the experience. We remove content that&apos;s abusive, off-topic,
-          fake, or posted in exchange for payment.
+          fake, posted in exchange for payment, or that infringes someone
+          else&apos;s rights.
+        </p>
+        <p>
+          If you think something on Taeam uses your work without permission,
+          email <LegalMail /> with a link to it and why it&apos;s yours, and
+          we&apos;ll respond.
         </p>
       </LegalSection>
 
-      <LegalSection id="liability" title="13. What we're responsible for">
+      <LegalSection id="liability" title="14. What we're responsible for">
         <p>
           We run the platform with care, but it&apos;s provided &quot;as
           is&quot;. We can&apos;t promise it will never go down or that every
@@ -222,7 +239,7 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="termination" title="14. Closing an account">
+      <LegalSection id="termination" title="15. Closing an account">
         <p>
           You can close your account any time:{" "}
           <Link href="/delete-account" className="font-medium text-gold-deep underline decoration-gold-deep/40 underline-offset-2 hover:decoration-gold-deep">
@@ -242,7 +259,7 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="law" title="15. Governing law">
+      <LegalSection id="law" title="16. Governing law">
         <p>
           These terms are governed by the laws of Alberta and the federal laws
           of Canada that apply there. Any dispute that we can&apos;t solve
@@ -250,7 +267,7 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="changes" title="16. Changes to these terms">
+      <LegalSection id="changes" title="17. Changes to these terms">
         <p>
           If we change something meaningful in here, we&apos;ll update the date
           at the top and let you know in the app before the change takes
@@ -259,7 +276,7 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="contact" title="17. Contact">
+      <LegalSection id="contact" title="18. Contact">
         <p>
           Questions about these terms, an order, or anything else: <LegalMail />.
         </p>

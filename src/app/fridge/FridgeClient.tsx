@@ -160,7 +160,11 @@ export default function FridgePage() {
               </div>
             ) : (
               <form onSubmit={handleWaitlist} className="mt-6 flex flex-col gap-2.5 sm:flex-row">
+                <label htmlFor="fridge-email" className="sr-only">
+                  Email address
+                </label>
                 <input
+                  id="fridge-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -179,7 +183,7 @@ export default function FridgePage() {
               </form>
             )}
 
-            {error && <p className="mt-3 text-sm font-semibold text-red">{error}</p>}
+            {error && <p role="alert" className="mt-3 text-sm font-semibold text-red-deep">{error}</p>}
           </div>
         </div>
 

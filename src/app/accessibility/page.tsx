@@ -12,7 +12,7 @@ export default function AccessibilityPage() {
     <LegalShell
       current="/accessibility"
       title="Accessibility"
-      updated="July 2026"
+      updated="September 28, 2026"
       intro={
         <>
           Ordering food shouldn&apos;t depend on how you see, hear, or move.
@@ -28,21 +28,31 @@ export default function AccessibilityPage() {
         </p>
         <ul className="list-disc space-y-2 pl-5">
           <li>
-            Text and interface colours are checked for contrast, including the
-            brand gold, which we darken wherever it carries text on light
-            backgrounds.
+            The brand gold and red are darkened wherever they carry text on
+            light backgrounds, so that text meets the contrast target.
           </li>
           <li>
-            Everything reachable by mouse is reachable by keyboard, with a
-            visible focus ring on every control.
+            Links, buttons and form fields work with a keyboard and show a
+            visible focus ring, in a colour that stands out on both our light
+            and dark backgrounds.
           </li>
           <li>
-            Dialogs, menus and forms carry proper labels and roles for screen
-            readers.
+            A &quot;Skip to content&quot; link is the first thing you reach
+            with Tab on every page.
           </li>
           <li>
-            Animations respect your system&apos;s &quot;reduce motion&quot;
-            setting. Turn it on and the site holds still.
+            Form fields have labels that screen readers read out, and dialogs
+            are announced as dialogs.
+          </li>
+          <li>
+            Errors on the waitlist and booking forms are read out by screen
+            readers as they appear, and so is the confirmation when you join
+            the launch waitlist.
+          </li>
+          <li>
+            The video on the home page has a pause button. If your system asks
+            for reduced motion, the video stays paused and decorative
+            animations stop. Loading spinners still turn.
           </li>
           <li>
             Images that carry meaning have text alternatives; decorative ones
@@ -53,10 +63,15 @@ export default function AccessibilityPage() {
 
       <LegalSection id="ongoing" title="Where we are honestly">
         <p>
-          The site is young and we audit it as we build. Some third-party
-          pieces (the payment form, the map) come from providers whose
-          accessibility we don&apos;t fully control, though we choose providers
-          (Stripe, Google) with strong accessibility records of their own.
+          The site is young and we audit it as we build. We haven&apos;t
+          finished: a few small labels still fall below the contrast target,
+          and the ordering pages that open at launch haven&apos;t had this pass
+          yet.
+        </p>
+        <p>
+          Some pieces come from outside providers, like the Stripe payment
+          form and the maps, and we don&apos;t fully control how accessible
+          they are.
         </p>
         <p>
           If you hit something that doesn&apos;t work with your screen reader,

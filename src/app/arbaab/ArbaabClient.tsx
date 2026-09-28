@@ -268,9 +268,9 @@ export default function ArbaabPage() {
                         </div>
                         <div className={`rounded-2xl rounded-tl-sm px-3.5 py-3 ${isDark ? 'bg-white/5' : 'bg-cream-deep'}`}>
                           <div className="flex h-3 items-center gap-1.5">
-                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold" style={{ animationDelay: '0ms' }} />
-                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold" style={{ animationDelay: '150ms' }} />
-                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold" style={{ animationDelay: '300ms' }} />
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold motion-reduce:animate-none" style={{ animationDelay: '0ms' }} />
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold motion-reduce:animate-none" style={{ animationDelay: '150ms' }} />
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-gold motion-reduce:animate-none" style={{ animationDelay: '300ms' }} />
                           </div>
                         </div>
                       </div>
@@ -300,7 +300,11 @@ export default function ArbaabPage() {
                       ))}
                     </div>
                     <div className="flex gap-2">
+                      <label htmlFor="arbaab-message" className="sr-only">
+                        Message to Arbaab
+                      </label>
                       <input
+                        id="arbaab-message"
                         type="text"
                         value={inputText}
                         onChange={(e) => setInputText(e.target.value)}
@@ -315,9 +319,10 @@ export default function ArbaabPage() {
                       <button
                         onClick={handleSend}
                         disabled={isTyping}
+                        aria-label="Send"
                         className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gold text-black transition-colors hover:brightness-95 disabled:opacity-50"
                       >
-                        <PaperPlaneTilt className="h-4 w-4" weight="fill" />
+                        <PaperPlaneTilt className="h-4 w-4" weight="fill" aria-hidden />
                       </button>
                     </div>
                   </div>

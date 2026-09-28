@@ -63,13 +63,21 @@ const MENU_ITEMS: HubLink[] = SEALED
 export function SiteMenu({ light = false }: { light?: boolean }) {
   const [open, setOpen] = useState(false);
   const box = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
       if (box.current && !box.current.contains(e.target as Node)) setOpen(false);
     };
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    // Escape closes and hands focus back to the logo button. The panel goes
+    // `invisible` on close, so focus left inside it would otherwise drop to
+    // the top of the page.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setOpen(false);
+      trigger.current?.focus();
+    };
     document.addEventListener("mousedown", onDown);
     document.addEventListener("keydown", onKey);
     return () => {
@@ -81,6 +89,7 @@ export function SiteMenu({ light = false }: { light?: boolean }) {
   return (
     <div ref={box} className="relative">
       <button
+        ref={trigger}
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-label="Taeam menu"

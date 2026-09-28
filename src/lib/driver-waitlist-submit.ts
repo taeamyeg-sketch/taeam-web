@@ -11,10 +11,17 @@ export type DriverWaitlistResult =
 
 const JOINED_KEY = "taeam.driver.joined";
 
-/** True if this device already joined the driver waitlist (localStorage flag). */
+/**
+ * True if this device already joined the driver waitlist (localStorage flag). The
+ * flag is "1". Builds before 2026-09-28 stored the email address itself, which
+ * nothing ever read back, so an old value is overwritten here the first time
+ * it is seen.
+ */
 export function alreadyJoinedDriver(): boolean {
   try {
-    return !!localStorage.getItem(JOINED_KEY);
+    const v = localStorage.getItem(JOINED_KEY);
+    if (v && v !== "1") localStorage.setItem(JOINED_KEY, "1");
+    return !!v;
   } catch {
     return false;
   }
@@ -70,7 +77,7 @@ export async function submitDriverWaitlist(rawEmail: string): Promise<DriverWait
   }
 
   try {
-    localStorage.setItem(JOINED_KEY, email);
+    localStorage.setItem(JOINED_KEY, "1"); // a flag, never the email
   } catch {
     /* private mode — fine */
   }

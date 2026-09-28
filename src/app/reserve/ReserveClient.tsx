@@ -428,7 +428,11 @@ export default function ReservePage() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="mt-6 space-y-3">
+                  <label htmlFor="reserve-name" className="sr-only">
+                    Your name
+                  </label>
                   <input
+                    id="reserve-name"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -437,7 +441,11 @@ export default function ReservePage() {
                     autoComplete="name"
                     className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/30"
                   />
+                  <label htmlFor="reserve-email" className="sr-only">
+                    Email address
+                  </label>
                   <input
+                    id="reserve-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -446,7 +454,11 @@ export default function ReservePage() {
                     autoComplete="email"
                     className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/30"
                   />
+                  <label htmlFor="reserve-phone" className="sr-only">
+                    Phone number
+                  </label>
                   <input
+                    id="reserve-phone"
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -467,7 +479,7 @@ export default function ReservePage() {
                   </button>
                 </form>
 
-                {error && <p className="mt-3 text-sm font-semibold text-[#C0392B]">{error}</p>}
+                {error && <p role="alert" className="mt-3 text-sm font-semibold text-[#C0392B]">{error}</p>}
 
                 <p className="mt-5 flex items-center gap-1.5 text-xs text-[#8A8880]">
                   <Phone className="h-3.5 w-3.5" /> We only use your phone to coordinate the delivery.

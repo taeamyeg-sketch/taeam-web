@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, NavigationArrow, CircleNotch, MapPin } from "@phosphor-icons/react";
+import { ArrowRight, NavigationArrow, CircleNotch, MapPin, Pause, Play } from "@phosphor-icons/react";
 import { AddressAutocomplete, type PickedAddress } from "@/components/AddressAutocomplete";
 import { usePageTransition } from "@/components/transition/PageTransition";
 import { checkDeliveryZone } from "@/lib/zones";
@@ -31,20 +31,50 @@ export function MarketingHero() {
   const [typed, setTyped] = useState("");
   const [nudge, setNudge] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  // Mirrors the video's own paused state, for the pause/play button's icon
+  // and label. Starts true so a blocked autoplay never shows "Pause".
+  const [videoPaused, setVideoPaused] = useState(true);
+  // Set once the visitor pauses by hand, so a later reduced-motion change
+  // can't start the video again behind their back.
+  const userPaused = useRef(false);
 
-  // Reduced-motion users get the poster frame, not a looping video.
+  // Reduced-motion users get the poster frame, not a looping video. Everyone
+  // else can stop it with the pause button (WCAG 2.2.2: anything that moves on
+  // its own for more than five seconds needs a way to pause it).
   useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const apply = () => {
-      const v = videoRef.current;
-      if (!v) return;
-      if (mq.matches) v.pause();
+      if (mq.matches || userPaused.current) v.pause();
       else v.play().catch(() => {});
     };
+    const sync = () => setVideoPaused(v.paused);
     apply();
     mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
+    v.addEventListener("play", sync);
+    v.addEventListener("pause", sync);
+    // Autoplay can start before hydration, before the listeners exist.
+    const raf = requestAnimationFrame(sync);
+    return () => {
+      mq.removeEventListener("change", apply);
+      v.removeEventListener("play", sync);
+      v.removeEventListener("pause", sync);
+      cancelAnimationFrame(raf);
+    };
   }, []);
+
+  function toggleVideo() {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      userPaused.current = false;
+      v.play().catch(() => {});
+    } else {
+      userPaused.current = true;
+      v.pause();
+    }
+  }
 
   async function proceed(a: PickedAddress) {
     setPicked(a);
@@ -177,8 +207,10 @@ export function MarketingHero() {
         </span>
       </div>
 
-      {/* Address search, compact, bottom center over the black side */}
+      {/* Address search, compact, bottom center over the black side.
+          data-surface="dark" gives its controls the gold focus ring. */}
       <div
+        data-surface="dark"
         className="absolute inset-x-0 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 flex flex-col items-center gap-2 px-4 md:bottom-14"
       >
         {/* Phones: the mark rides directly above the address stack, so it
@@ -297,6 +329,23 @@ export function MarketingHero() {
             </button>
           </>
         )}
+
+        {/* Pause/play for the hero video. Positioned off this stack so it can
+            never collide with it: just above the stack on the right on phones
+            (always the black side of the diagonal), and the hero's
+            bottom-right corner, over the video, from md up. */}
+        <button
+          type="button"
+          onClick={toggleVideo}
+          aria-label={videoPaused ? "Play video" : "Pause video"}
+          className="absolute -top-11 right-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-noir/50 text-white/80 transition-colors hover:border-white/60 hover:text-white md:-bottom-9 md:right-6 md:top-auto"
+        >
+          {videoPaused ? (
+            <Play className="h-3.5 w-3.5" weight="fill" aria-hidden />
+          ) : (
+            <Pause className="h-3.5 w-3.5" weight="fill" aria-hidden />
+          )}
+        </button>
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CookieChoicesButton } from "@/components/CookieConsent";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Rule } from "./Pattern";
 import { SEALED } from "@/lib/launch";
@@ -214,6 +215,10 @@ export function Footer() {
                   <Link href="/cookies" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     Cookies &amp; Storage
                   </Link>
+                </li>
+                <li>
+                  {/* Clears the stored cookie-notice answer and shows the notice again. */}
+                  <CookieChoicesButton className="inline-block py-1.5 text-left text-cream/70 transition-colors hover:text-gold" />
                 </li>
                 <li>
                   <Link href="/accessibility" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
