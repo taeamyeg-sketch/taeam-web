@@ -110,19 +110,19 @@ const TIERS = [
     name: "Silver",
     gate: "Day one",
     bonus: null as string | null,
-    copy: "Everyone starts here. Full earning rate from your very first order.",
+    copy: "Everyone starts here. 10 pts for every $1, from your very first order.",
   },
   {
     name: "Gold",
     gate: "2,000 lifetime pts",
     bonus: "+500 pts when you cross",
-    copy: "Roughly your first $200 of food. The bonus lands automatically.",
+    copy: "Roughly your first $200 of food. From here every $1 earns 12 pts, and the bonus lands automatically.",
   },
   {
     name: "Platinum",
     gate: "5,000 lifetime pts",
     bonus: "+1,000 pts when you cross",
-    copy: "The regulars' tier. A full extra dollar the moment you arrive.",
+    copy: "The regulars' tier. Every $1 earns 15 pts, plus a full extra dollar the moment you arrive.",
   },
 ];
 

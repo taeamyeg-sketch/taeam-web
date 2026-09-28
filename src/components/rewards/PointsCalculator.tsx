@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 /* ── The live numbers behind the calculator ──
    Mirrors the backend exactly (backend/routes/api/rewards.js):
-   10 pts per $1 of subtotal, 20 on Taeam Plus, floor-rounded, credited on
+   10 pts per $1 of subtotal (Gold 12, Platinum 15, Taeam Plus 20; the higher
+   rate wins, they never stack), floor-rounded, credited on
    delivery. The daily stack: +5 check-in, +10 trivia, 5 reward videos × 7. */
 const PTS_PER_DOLLAR = 10;
 const PLUS_MULTIPLIER = 2;
