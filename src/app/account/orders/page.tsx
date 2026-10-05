@@ -58,13 +58,33 @@ export default function OrdersPage() {
 
   useEffect(() => {
     if (!user) return;
-    supabaseBrowser()
-      .from("orders")
-      .select("id,restaurant_id,status,total,created_at,restaurants(name)")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
-      .limit(30)
-      .then(({ data }) => setOrders((data as unknown as OrderRow[]) ?? []));
+    const sb = supabaseBrowser();
+    (async () => {
+      const { data } = await sb
+        .from("orders")
+        .select("id,restaurant_id,status,total,created_at")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(30);
+      const rows = (data ?? []) as Omit<OrderRow, "restaurants">[];
+      // Customers cannot read `restaurants` (partner terms, tokens), so the
+      // name comes from the public mirror rather than an embedded join.
+      const ids = [...new Set(rows.map((o) => o.restaurant_id))];
+      const names = new Map<string, string>();
+      if (ids.length) {
+        const { data: rests } = await sb
+          .from("restaurant_public")
+          .select("id,name")
+          .in("id", ids);
+        for (const r of rests ?? []) names.set(r.id, r.name);
+      }
+      setOrders(
+        rows.map((o) => {
+          const name = names.get(o.restaurant_id);
+          return { ...o, restaurants: name ? { name } : null };
+        }),
+      );
+    })();
   }, [user]);
 
   return (

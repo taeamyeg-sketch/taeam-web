@@ -28,7 +28,7 @@ function serverClient() {
 
 export async function getRestaurants(): Promise<Restaurant[]> {
   const { data, error } = await serverClient()
-    .from("restaurants")
+    .from("restaurant_public")
     .select(RESTAURANT_COLS)
     .eq("is_visible", true)
     .order("total_reviews", { ascending: false })
@@ -43,7 +43,7 @@ export async function getRestaurants(): Promise<Restaurant[]> {
 
 export async function getRestaurant(id: string): Promise<Restaurant | null> {
   const { data, error } = await serverClient()
-    .from("restaurants")
+    .from("restaurant_public")
     .select(RESTAURANT_COLS)
     .eq("id", id)
     .eq("is_visible", true)

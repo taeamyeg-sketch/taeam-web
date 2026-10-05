@@ -106,7 +106,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (!restaurantId) return;
     supabaseBrowser()
-      .from("restaurants")
+      .from("restaurant_public")
       .select(
         "id,name,address,phone,latitude,longitude,supports_pickup,is_open,accepting_orders,estimated_pickup_time",
       )
@@ -236,7 +236,7 @@ export default function CheckoutPage() {
       committed.current = { orderId, paymentIntentId };
 
       const { data: restRow } = await supabaseBrowser()
-        .from("restaurants")
+        .from("restaurant_public")
         .select("address, phone, city_id")
         .eq("id", restaurant.id)
         .maybeSingle();
