@@ -338,12 +338,17 @@ export function MarketingHero() {
           type="button"
           onClick={toggleVideo}
           aria-label={videoPaused ? "Play video" : "Pause video"}
-          className="absolute -top-11 right-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-noir/50 text-white/80 transition-colors hover:border-white/60 hover:text-white md:-bottom-9 md:right-6 md:top-auto"
+          // Quiet on purpose: a bare icon at low opacity while the video plays,
+          // full strength on hover or keyboard focus. When the video is paused
+          // (by hand, reduced motion, or iOS Low Power Mode blocking autoplay)
+          // it stays fully visible so the play control can be found. The 36px
+          // hit area is unchanged; WCAG 2.2.2 still needs the control to exist.
+          className={`absolute -top-11 right-4 flex h-9 w-9 items-center justify-center rounded-full text-white transition-opacity duration-200 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70 md:-bottom-9 md:right-6 md:top-auto ${videoPaused ? "opacity-90" : "opacity-40"}`}
         >
           {videoPaused ? (
-            <Play className="h-3.5 w-3.5" weight="fill" aria-hidden />
+            <Play className="h-3 w-3" weight="fill" aria-hidden />
           ) : (
-            <Pause className="h-3.5 w-3.5" weight="fill" aria-hidden />
+            <Pause className="h-3 w-3" weight="fill" aria-hidden />
           )}
         </button>
       </div>
