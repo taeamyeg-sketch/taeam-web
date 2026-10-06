@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { cartoTiles } from "@/lib/basemap";
 import { MapTrifold, CaretDown } from "@phosphor-icons/react";
 import { mosquesNear } from "@/lib/mosques";
 import { cn } from "@/lib/cn";
@@ -87,7 +88,7 @@ export function KitchensMap({
         tapHold: false,
       }).setView([centerLat ?? EDM_LAT, centerLng ?? EDM_LNG], 12);
       Lmod.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+        cartoTiles("light_all"),
         { subdomains: "abcd", maxZoom: 20 },
       ).addTo(map);
       mapRef.current = map;

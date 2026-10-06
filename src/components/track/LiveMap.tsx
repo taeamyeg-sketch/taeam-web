@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { Map as LeafletMap, Marker, Polyline } from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { cartoTiles } from "@/lib/basemap";
 import { cn } from "@/lib/cn";
 
 export interface MapPin {
@@ -46,7 +47,7 @@ export function LiveMap({
         scrollWheelZoom: false,
         dragging: !("ontouchstart" in window),
       });
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      L.tileLayer(cartoTiles("light_all"), {
         attribution: "© OpenStreetMap, © CARTO",
         maxZoom: 19,
       }).addTo(map);

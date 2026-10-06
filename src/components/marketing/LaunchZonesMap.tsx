@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { cartoTiles } from "@/lib/basemap";
 
 /**
  * The real Edmonton, dark. A non-interactive Leaflet map on CARTO dark-matter
@@ -118,7 +119,7 @@ export function LaunchZonesMap({ className }: { className?: string }) {
       });
 
       Lmod.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+        cartoTiles("dark_all"),
         { subdomains: "abcd", maxZoom: 20 },
       ).addTo(map);
 
