@@ -30,7 +30,7 @@ export default function PrivacyPolicyPage() {
     <LegalShell
       current="/privacy-policy"
       title="Privacy Policy"
-      updated="September 28, 2026"
+      updated="October 4, 2026"
       intro={
         <>
           This is the plain-English version of how Taeam handles your info. We
@@ -176,8 +176,9 @@ export default function PrivacyPolicyPage() {
           </li>
           <li>
             <strong>OpenAI</strong> (United States): processes your Arbaab chat
-            messages, the text of a support claim, and any photo you attach to
-            a support claim or to Scan &amp; Earn.
+            messages, your support live chat messages with the details of your
+            own recent orders, the text of a support claim, and any photo you
+            attach to a support claim or to Scan &amp; Earn.
           </li>
           <li>
             <strong>Google Gemini</strong> (United States): also processes
