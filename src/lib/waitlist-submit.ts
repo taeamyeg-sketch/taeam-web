@@ -2,6 +2,7 @@
 
 import { supabase } from "@/lib/supabase";
 import { BACKEND_URL } from "@/lib/backend";
+import type { BotProof } from "@/components/BotGuard";
 import { trackWaitlistLead } from "@/lib/meta-pixel";
 
 export type WaitlistResult =
@@ -40,8 +41,15 @@ export function alreadyJoined(): boolean {
  * only for a new row. A bad email never reaches here (both callers validate
  * first), and a duplicate lands on 23505 = "existing", which does not convert.
  */
-export async function submitWaitlist(rawEmail: string): Promise<WaitlistResult> {
+export async function submitWaitlist(
+  rawEmail: string,
+  proof: BotProof = { honeypot: "" },
+): Promise<WaitlistResult> {
   const email = rawEmail.trim().toLowerCase();
+
+  // Honeypot filled: a bot. Report success so it learns nothing, but write
+  // no row and send no mail (launch test plan B6 #46).
+  if (proof.honeypot.trim() !== "") return { status: "new", emailed: false };
 
   let status: "new" | "existing" = "new";
   try {
@@ -68,7 +76,12 @@ export async function submitWaitlist(rawEmail: string): Promise<WaitlistResult> 
       const res = await fetch(`${BACKEND_URL}/api/waitlist/launch`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          email,
+          // Verified server-side before any mail goes out (lib/turnstile).
+          turnstileToken: proof.turnstileToken,
+          website: proof.honeypot,
+        }),
       });
       const data = await res.json().catch(() => ({}));
       emailed = !!data.emailed;

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { X, ArrowRight, CheckCircle, ShieldCheck } from "@phosphor-icons/react";
 import { useModalDialog } from "@/lib/useModalDialog";
 import { submitWaitlist, alreadyJoined } from "@/lib/waitlist-submit";
+import { useBotGuard } from "@/components/BotGuard";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -34,6 +35,7 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
   const [submitting, setSubmitting] = useState(false);
   const [emailed, setEmailed] = useState(false);
   const [error, setError] = useState("");
+  const guard = useBotGuard();
   // If this device already joined, greet them with the "already in" state.
   const [result, setResult] = useState<Result | null>(() =>
     alreadyJoined() ? "existing" : null,
@@ -48,7 +50,8 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
     }
     setSubmitting(true);
     setError("");
-    const out = await submitWaitlist(clean);
+    const out = await submitWaitlist(clean, await guard.collect());
+    guard.reset();
     setSubmitting(false);
     if (out.status === "fail") {
       setError("Something went wrong. Please try again.");
@@ -154,6 +157,7 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
                   </>
                 )}
               </button>
+              {guard.fields}
             </form>
             {error && (
               <p role="alert" className="mt-2 text-xs font-semibold text-red-deep">

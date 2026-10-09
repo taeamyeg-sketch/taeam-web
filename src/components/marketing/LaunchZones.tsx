@@ -50,7 +50,7 @@ export function LaunchZones() {
               href="/drive"
               className="inline-block rounded-full bg-gold px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-noir"
             >
-              Drive with Taeam
+              Drive with Tawsil
             </Link>
           </div>
         </Reveal>

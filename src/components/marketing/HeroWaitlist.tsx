@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react";
 import { submitWaitlist } from "@/lib/waitlist-submit";
+import { useBotGuard } from "@/components/BotGuard";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -20,6 +21,7 @@ export function HeroWaitlist() {
   const [error, setError] = useState("");
   const [result, setResult] = useState<null | "new" | "existing">(null);
   const [emailed, setEmailed] = useState(false);
+  const guard = useBotGuard();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -30,7 +32,8 @@ export function HeroWaitlist() {
     }
     setSubmitting(true);
     setError("");
-    const out = await submitWaitlist(clean);
+    const out = await submitWaitlist(clean, await guard.collect());
+    guard.reset();
     setSubmitting(false);
     if (out.status === "fail") {
       setError("Something went wrong. Please try again.");
@@ -131,6 +134,7 @@ export function HeroWaitlist() {
             )}
           </button>
         </form>
+        {guard.fields}
         {/* Brand red, not red-deep: this sits on the noir side of the hero,
             where brand red reads at about 4.6:1 and the deep red would not. */}
         {error && (

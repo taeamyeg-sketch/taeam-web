@@ -14,9 +14,11 @@ import { getRestaurants } from "@/lib/data";
 import { SEALED } from "@/lib/launch";
 
 /* The ecosystem grid is a bento: the two product-UI tiles (Arbaab, Rewards)
-   sit side by side at equal width up top, then the photo tiles (Drive, Fridge)
-   split 7/5 below so the section still reads editorial, not template. Ordering
-   itself lives in the "Browse the kitchens" section further down. */
+   sit side by side at equal width up top, then the Tawsil photo tile runs the
+   full width below so the section still reads editorial, not template. The
+   Fridge tile was removed: the Fridge is shelved, so taeam.ca no longer
+   promotes it (the /fridge route stays, noindexed). Ordering itself lives in
+   the "Browse the kitchens" section further down. */
 const ECOSYSTEM = [
   {
     title: "Arbaab",
@@ -89,7 +91,7 @@ const ECOSYSTEM = [
     copy: "Deliver on your own schedule. One order at a time, and tips are always 100% yours.",
     href: "/drive",
     cta: "Learn more",
-    span: "lg:col-span-7",
+    span: "sm:col-span-2 lg:col-span-12",
     badge: null,
     tile: (
       <>
@@ -97,28 +99,8 @@ const ECOSYSTEM = [
           src="/driver-hero.jpg"
           alt=""
           fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 60vw"
+          sizes="100vw"
           className="object-cover object-[70%_center]"
-        />
-        <span className="pointer-events-none absolute inset-0 shadow-[inset_0_0_50px_14px_rgba(0,0,0,0.45)]" />
-      </>
-    ),
-  },
-  {
-    title: "The Fridge",
-    copy: "Grab-and-go halal from home kitchens near you. Fresh, sealed, ready when you are.",
-    href: "/fridge",
-    cta: "Take a look",
-    span: "lg:col-span-5",
-    badge: "Soon",
-    tile: (
-      <>
-        <Image
-          src="/fridge-feature.jpg"
-          alt=""
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 60vw"
-          className="object-cover"
         />
         <span className="pointer-events-none absolute inset-0 shadow-[inset_0_0_50px_14px_rgba(0,0,0,0.45)]" />
       </>

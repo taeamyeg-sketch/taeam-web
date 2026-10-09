@@ -147,7 +147,7 @@ const PLUS_COMPARE = [
 export default function RewardsPage() {
   return (
     <>
-      <Header overlay overlayTone="dark" />
+      <Header overlay overlayTone="noir" />
 
       {/* ── Dark brand island: the promise. A real weeknight takeout spread
           sits behind it at low opacity so the numbers land on food, not on a

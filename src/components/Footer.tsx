@@ -159,7 +159,7 @@ export function Footer() {
                 </li>
                 <li>
                   <Link href="/drive" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
-                    Drive with Taeam
+                    Drive with Tawsil
                   </Link>
                 </li>
               </ul>

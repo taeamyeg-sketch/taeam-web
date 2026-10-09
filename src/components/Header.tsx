@@ -28,7 +28,10 @@ const NAV = [
  * Site header. The logo is the hub menu (every Taeam surface); on ordering pages
  * (`browse`) it also carries the "Deliver to" address selector and a compact
  * prayer chip, so wayfinding lives here instead of stacking bands down the page.
- * `overlay` floats it transparent over a hero until you scroll.
+ * `overlay` floats it transparent over a hero until you scroll. `overlayTone`
+ * says what sits under the floating header: "dark" is the home hero (gold top,
+ * dark wedge), "noir" is a fully black hero (/rewards, /how-we-verify,
+ * /partners), "light" is a light hero.
  */
 export function Header({
   overlay = false,
@@ -36,7 +39,7 @@ export function Header({
   browse = false,
 }: {
   overlay?: boolean;
-  overlayTone?: "light" | "dark";
+  overlayTone?: "light" | "dark" | "noir";
   browse?: boolean;
 }) {
   const [scrolled, setScrolled] = useState(false);
@@ -53,11 +56,14 @@ export function Header({
   const floating = overlay && !scrolled;
   // `light` is the LOGO's tone. On the home hero it sits over the gold half, so
   // it stays dark (light === false); only a genuinely light-toned overlay flips
-  // it white.
-  const light = floating && overlayTone === "light";
+  // it white. A "noir" hero is black edge to edge, so the black mark would
+  // vanish there (launch test plan B6 #44): it flips white too.
+  const light = floating && (overlayTone === "light" || overlayTone === "noir");
+  // Over a noir hero the nav links are white at every width, not only md+.
+  const noirHero = floating && overlayTone === "noir";
   // The right-side controls sit over the DARK half of the diagonal hero, so while
   // floating they always want the light/branded treatment — independent of the
-  // logo. (Only the home page ever floats, so this can't leak to other pages.)
+  // logo.
   const navLight = floating;
 
   // Top-nav link. High-contrast in BOTH tones so it never camouflages (white over
@@ -68,7 +74,11 @@ export function Header({
   // go white on desktop when floating over the dark side.
   const navLink = cn(
     "rounded-full px-2.5 py-2 text-xs font-bold uppercase tracking-wide transition-colors hover:bg-noir hover:text-white sm:px-3 sm:text-[13px]",
-    navLight ? "text-ink-soft md:text-white" : "text-ink-soft",
+    noirHero
+      ? "text-white"
+      : navLight
+        ? "text-ink-soft md:text-white"
+        : "text-ink-soft",
   );
 
   // "Join Taeam" — the primary CTA. Always a filled, branded pill: gold on

@@ -47,7 +47,7 @@ const VERIFY = [
   },
   {
     title: "A signed attestation",
-    copy: "One page confirming what is on file is accurate. A statement, not an audit.",
+    copy: "One page confirming your kitchen is halal only and what is on file is accurate. We check the paperwork; we do not inspect your kitchen.",
   },
   {
     title: "What the customer sees",
@@ -146,7 +146,7 @@ const ANSWERS = [
 export default function PartnersPage() {
   return (
     <>
-      <Header overlay overlayTone="dark" />
+      <Header overlay overlayTone="noir" />
 
       {/* ── Dark brand island: the claim, with the kitchen behind it ── */}
       <section className="relative isolate overflow-hidden bg-noir pb-20 pt-32 text-white sm:pb-24 sm:pt-40">
@@ -303,8 +303,9 @@ export default function PartnersPage() {
                 verified it, nothing else.
               </p>
               <p className="mt-5 text-xs leading-relaxed text-white/40">
-                The attestation is a statement, not an audit. You are confirming
-                what is already on file is accurate.
+                The attestation is your signed statement. We check the
+                paperwork behind it; we are not a halal certifier and we do not
+                inspect kitchens.
               </p>
               <Link
                 href="/how-we-verify"

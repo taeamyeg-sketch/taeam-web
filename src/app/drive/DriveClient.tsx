@@ -8,6 +8,7 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import { submitDriverWaitlist, alreadyJoinedDriver } from '@/lib/driver-waitlist-submit';
+import { useBotGuard } from '@/components/BotGuard';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -56,6 +57,7 @@ export default function DrivePage() {
   const [emailed, setEmailed] = useState(false);
   const [existing, setExisting] = useState(false);
   const [error, setError] = useState('');
+  const guard = useBotGuard();
 
   useEffect(() => {
     requestAnimationFrame(() => window.scrollTo(0, 0));
@@ -82,7 +84,8 @@ export default function DrivePage() {
     setSubmitting(true);
     setError('');
 
-    const result = await submitDriverWaitlist(clean);
+    const result = await submitDriverWaitlist(clean, await guard.collect());
+    guard.reset();
 
     setSubmitting(false);
 
@@ -116,7 +119,7 @@ export default function DrivePage() {
           <div className="relative aspect-[1376/676] w-full">
             <Image
               src="/driver-hero.jpg"
-              alt="Deliver with Taeam in Edmonton"
+              alt="Deliver with Tawsil in Edmonton"
               fill
               priority
               sizes="(max-width: 1152px) 100vw, 1152px"
@@ -135,7 +138,7 @@ export default function DrivePage() {
       {/* ── HEADING ── */}
       <section className="px-5 pb-4 pt-10 text-center sm:px-8 sm:pt-14">
         <h1 className="mx-auto max-w-3xl text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
-          Drive with <span className="text-gold-deep">Taeam</span>
+          Drive with <span className="text-gold-deep">Tawsil</span>
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-mute sm:text-xl">
           The big apps aren&apos;t taking new drivers right now. We are. And we&apos;re building
@@ -152,7 +155,7 @@ export default function DrivePage() {
             </p>
 
             <h2 className="text-2xl font-black uppercase tracking-tight sm:text-3xl">
-              Become a Taeam driver
+              Become a Tawsil driver
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-ink-mute sm:text-base">
               We&apos;re onboarding a limited number of drivers for our Edmonton soft launch.
@@ -184,6 +187,7 @@ export default function DrivePage() {
                     <>Join the waitlist <ArrowRight className="h-4 w-4" weight="bold" /></>
                   )}
                 </button>
+                {guard.fields}
               </form>
             ) : (
               <div className="mt-6 flex items-start gap-3">
@@ -293,7 +297,7 @@ export default function DrivePage() {
               Navigation that <span className="text-gold">speaks your language</span>
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-white/65 sm:text-lg">
-              Turn-by-turn navigation is built right into the Taeam driver app, so there&apos;s no
+              Turn-by-turn navigation is built right into the Tawsil driver app, so there&apos;s no
               jumping between apps. And it talks to you in the language you actually think in.
             </p>
 
@@ -316,7 +320,7 @@ export default function DrivePage() {
             <div className="relative w-[230px] overflow-hidden rounded-[2rem] border-[6px] border-noir-line bg-noir-line shadow-2xl sm:w-[260px]">
               <Image
                 src="/driver-app-home.png"
-                alt="Taeam driver app with built-in navigation"
+                alt="Tawsil driver app with built-in navigation"
                 width={387}
                 height={867}
                 className="h-auto w-full rounded-[1.6rem]"
