@@ -61,7 +61,8 @@ export default function OrdersPage() {
     const sb = supabaseBrowser();
     (async () => {
       const { data } = await sb
-        .from("orders")
+        // The customer's projection of orders: no other party's money.
+        .from("customer_order_feed")
         .select("id,restaurant_id,status,total,created_at")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false })

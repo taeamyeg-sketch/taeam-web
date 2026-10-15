@@ -304,10 +304,15 @@ export default function CheckoutPage() {
         source: "web",
       };
 
+      // Plain insert, not upsert: ON CONFLICT DO UPDATE needs read access to
+      // orders, which customers lose once they read customer_order_feed. A
+      // retry of the same committed id (23505) means the row already landed.
       const { error: insertError } = await supabaseBrowser()
         .from("orders")
-        .upsert(orderData);
-      if (insertError) throw new Error(`Order save failed: ${insertError.message}`);
+        .insert(orderData);
+      if (insertError && insertError.code !== "23505") {
+        throw new Error(`Order save failed: ${insertError.message}`);
+      }
 
       if (!isPickup) {
         try {

@@ -87,7 +87,7 @@ function TrackInner() {
 
     async function fetchOrder() {
       const { data } = await supabase
-        .from("orders")
+        .from("customer_order_feed")
         .select(SELECT)
         .eq("id", orderId)
         .maybeSingle();
@@ -101,7 +101,9 @@ function TrackInner() {
       .channel(`order-${orderId}`)
       .on(
         "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "orders", filter: `id=eq.${orderId}` },
+        // customer_order_feed, not orders: a realtime payload carries the whole
+        // row, and the orders row holds driver pay and restaurant commission.
+        { event: "UPDATE", schema: "public", table: "customer_order_feed", filter: `id=eq.${orderId}` },
         (payload) => setOrder(payload.new as TrackedOrder),
       )
       .subscribe();
