@@ -18,6 +18,7 @@ import {
 import { Eyebrow } from "@/components/Eyebrow";
 import { cn } from "@/lib/cn";
 import { SEALED, WAITLIST_HREF, isSealedPath } from "@/lib/launch";
+import { useWaitlistOffer } from "@/lib/waitlist-offer";
 import { openWaitlist } from "@/lib/waitlist-modal";
 
 interface HubLink {
@@ -60,6 +61,8 @@ const MENU_ITEMS: HubLink[] = SEALED
  */
 export function SiteMenu({ light = false }: { light?: boolean }) {
   const [open, setOpen] = useState(false);
+  // The 50% closes at the 150th signup; after that the item says points only.
+  const { promoOpen } = useWaitlistOffer();
   const box = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
 
@@ -140,7 +143,9 @@ export function SiteMenu({ light = false }: { light?: boolean }) {
                     {item.label}
                   </span>
                   <span className="block truncate text-xs text-ink-mute">
-                    {item.desc}
+                    {item === WAITLIST_ITEM && !promoOpen
+                      ? "3,000 points at launch"
+                      : item.desc}
                   </span>
                 </span>
               </>

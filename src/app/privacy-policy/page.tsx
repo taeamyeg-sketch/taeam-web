@@ -22,6 +22,19 @@ const linkClass =
  * never said the database sits in Ohio, and set the age floor at 13 while the
  * Terms set it at 18.
  *
+ * 2026-10-12: Arbaab moved to Anthropic (Claude) with OpenAI as fallback and
+ * Lite, Gemini removed, review grading on Anthropic, optional Brave web
+ * search. Mirrors privacy policy version 2026-10.2 in the app.
+ *
+ * 2026-10-12 (later): Arbaab's order timeline, prayer times, halal facts,
+ * "What Arbaab knows", App Check and confirm-before-cart. Mirrors privacy
+ * policy version 2026-10.3 in the app.
+ *
+ * 2026-10-13: Taeam Feed (the "Fresh from the kitchen" dish videos). What you
+ * watch and react to picks what you see and becomes name-free totals for
+ * restaurants; watch records go after 90 days; copyright contact. Mirrors
+ * privacy policy version 2026-10.4 in the app.
+ *
  * The section ids are load-bearing: they are the anchors this page has always
  * published, so /privacy-policy#sharing and #cookies still resolve.
  */
@@ -30,7 +43,7 @@ export default function PrivacyPolicyPage() {
     <LegalShell
       current="/privacy-policy"
       title="Privacy Policy"
-      updated="October 4, 2026"
+      updated="October 13, 2026"
       intro={
         <>
           This is the plain-English version of how Taeam handles your info. We
@@ -85,10 +98,17 @@ export default function PrivacyPolicyPage() {
         </p>
         <p>
           A few things are done by automated systems rather than by a person.
-          Review text is scored for sentiment so we can spot a restaurant going
-          downhill. A support claim with a photo is analysed before a human
-          looks at it. Neither one decides anything on its own: a refund, a
-          suspension or an account closure is always a decision a person makes.
+          Review text is scored by Anthropic&apos;s AI for sentiment, so we can
+          spot a restaurant going downhill, and the same check rates whether a
+          written review is detailed enough to earn the extra review points. A
+          support claim with a photo is analysed by OpenAI&apos;s AI before a
+          human looks at it. Apart from those review points, neither one
+          decides anything on its own: a refund, a suspension or an account
+          closure is always a decision a person makes.
+        </p>
+        <p>
+          We use what you watch and react to in the feed to choose what you
+          see and to give restaurants totals that never name you.
         </p>
       </LegalSection>
 
@@ -150,8 +170,9 @@ export default function PrivacyPolicyPage() {
             details; we never receive or store your full card number.
           </li>
           <li>
-            <strong>Google Firebase</strong>: delivers push notifications and
-            collects crash and usage analytics.
+            <strong>Google Firebase</strong>: delivers push notifications,
+            collects crash and usage analytics, and checks that Arbaab requests
+            come from the genuine Taeam app (App Check, see the Arbaab section).
           </li>
           <li>
             <strong>Google Maps and Places</strong>: address search, map
@@ -175,14 +196,30 @@ export default function PrivacyPolicyPage() {
             them to sign in.
           </li>
           <li>
-            <strong>OpenAI</strong> (United States): processes your Arbaab chat
-            messages, your support live chat messages with the details of your
-            own recent orders, the text of a support claim, and any photo you
-            attach to a support claim or to Scan &amp; Earn.
+            <strong>Anthropic</strong> (United States): the AI that normally
+            answers Arbaab. Receives your Arbaab messages and the context
+            described in the{" "}
+            <Link href="/privacy-policy#arbaab" className={linkClass}>
+              Arbaab
+            </Link>{" "}
+            section. It also reads the text of reviews you write, including a
+            review you give by chatting with Arbaab, to score them. Taeam&apos;s
+            management also uses it for an internal operations assistant that
+            can look up order records.
           </li>
           <li>
-            <strong>Google Gemini</strong> (United States): also processes
-            Arbaab chat messages, and scores review text.
+            <strong>OpenAI</strong> (United States): answers Arbaab when
+            Anthropic is unavailable and in Arbaab&apos;s Lite mode, and then
+            receives the same things Anthropic would. It also processes your
+            support live chat messages with the details of your own recent
+            orders, the text of a support claim, and any photo or screenshot
+            you send us for a support claim, for Scan &amp; Earn, or to claim
+            the social share bonus.
+          </li>
+          <li>
+            <strong>Brave Search</strong> (United States): only when Arbaab
+            looks something up on the web for a general question. Receives the
+            short search query and nothing that identifies you.
           </li>
           <li>
             <strong>Twilio</strong> (United States): sends our SMS, and bridges
@@ -229,12 +266,19 @@ export default function PrivacyPolicyPage() {
           is hosted in Ohio.
         </p>
         <p>
+          This includes the AI services above. When you use Arbaab, your
+          messages and the context described in the Arbaab section are
+          processed by Anthropic or OpenAI in the United States, and a web
+          search query by Brave in the United States. Review text is processed
+          by Anthropic in the United States.
+        </p>
+        <p>
           That means your personal information is stored and processed outside
           Canada. While it is there it is subject to the laws of that country,
           and United States courts, law enforcement and government agencies can
           apply to get access to it under United States law. We tell you this
-          because Alberta&apos;s PIPA requires it, not because we expect it to
-          happen.
+          because Canadian privacy law, PIPEDA and Alberta&apos;s PIPA, expects
+          us to, not because we expect it to happen.
         </p>
         <p>
           Our obligations to you under Canadian and Alberta privacy law do not
@@ -316,6 +360,10 @@ export default function PrivacyPolicyPage() {
             are deleted 30 days after the delivery.
           </li>
           <li>A driver&apos;s recorded location trail is deleted after 90 days.</li>
+          <li>
+            The record of which feed posts you watched is deleted after 90
+            days.
+          </li>
           <li>Support tickets are archived once they are resolved.</li>
         </ul>
         <p>
@@ -358,24 +406,106 @@ export default function PrivacyPolicyPage() {
           It&apos;s off by default until you turn it on.
         </p>
         <p>
-          When you chat with it, your message text and the restaurant data it
-          needs to answer get sent to an AI provider for processing. We use
-          two, OpenAI and Google (Gemini), depending on which one is answering.
-          We don&apos;t send your name, phone number, address, or payment info.
-          Arbaab can see the labels on your saved addresses, like Home or Work,
-          so it can offer you one, but not the street lines themselves.
+          Arbaab normally runs on Claude, an AI made by Anthropic. If Anthropic
+          is unavailable, or Arbaab is in its Lite mode (for example when you
+          are not signed in, or after the day&apos;s full-power messages are
+          used up), OpenAI answers instead. Both companies are in the United
+          States, so your chat is processed outside Canada (see{" "}
+          <Link href="/privacy-policy#where-stored" className={linkClass}>
+            Where your data is stored
+          </Link>
+          ). We no longer use Google Gemini.
+        </p>
+        <p>With each message, the AI provider receives:</p>
+        <ul className="ms-5 list-disc space-y-1.5">
+          <li>your message and the last few messages of the conversation</li>
+          <li>
+            the restaurant data it needs to answer: which restaurants are open,
+            their menus, hours and anything out of stock
+          </li>
+          <li>what is in your cart</li>
+          <li>
+            a short summary of your orders: your most recent order (restaurant,
+            items, total and status) and how many orders you have placed, and,
+            read from our own records, any order in progress (its status, the
+            driver&apos;s first name and an estimated arrival time, never the
+            driver&apos;s phone number or location) and the order, support and
+            refund updates we sent you in the last 24 hours
+          </li>
+          <li>
+            your favourite restaurants, your rewards status, and the labels on
+            your saved addresses, like Home or Work, but not the street lines
+          </li>
+          <li>
+            short notes Arbaab has saved about your food preferences, such as
+            &quot;likes it spicy&quot;, if there are any. You can see, edit or
+            erase each one under &quot;What Arbaab knows&quot; in Arbaab&apos;s
+            settings. Arbaab never keeps payment details, PINs or passwords,
+            phone numbers, emails, street addresses or health information;
+            dietary needs and allergies are kept so it can respect them.
+          </li>
+          <li>
+            the halal details Taeam holds for those restaurants, and whether
+            Taeam has verified them
+          </li>
+          <li>
+            today&apos;s prayer times and Islamic date, which we work out from
+            the location you saved for prayer alerts, or from Edmonton if you
+            have not (the location itself is not sent)
+          </li>
+        </ul>
+        <p>
+          We don&apos;t send your name, phone number, email, street address or
+          payment details. Whatever you type into the chat is sent as you
+          wrote it, so please don&apos;t type those in yourself.
         </p>
         <p>
-          We don&apos;t allow either provider to train their models on your
-          chats. They may hold a copy for a short period for their own abuse
-          monitoring before deleting it, which is their standard practice and
-          not something we control. We keep an audit log of any action Arbaab
-          takes inside the app, such as adding items to a cart, for security
-          reasons. That is the action, not the chat.
+          While answering one message, Arbaab may look up more of the same
+          information in our database, such as a restaurant&apos;s full menu or
+          your recent orders.
         </p>
         <p>
-          Arbaab never places or pays for an order on its own. Checkout always
-          needs your tap. You can turn it off any time in Settings, and the
+          For a general question that has nothing to do with ordering, such as
+          where a dish comes from, Arbaab may run one web search through Brave
+          Search. Brave receives only the short search query, which can
+          include words from your message. The search is sent from our server,
+          so Brave does not receive your name, your account or your IP
+          address. Arbaab never searches the web for menus, prices, hours or
+          halal status; those come only from Taeam.
+        </p>
+        <p>
+          Under the business terms we use with them, Anthropic and OpenAI do
+          not use what we send to train their models, and we have not opted in
+          to that. Each keeps it for a limited time for safety and abuse
+          monitoring, generally up to 30 days, and longer if their systems flag
+          it for a safety review or the law requires it. That is their practice
+          and not something we control. Brave keeps search queries for up to
+          90 days for billing and troubleshooting.
+        </p>
+        <p>
+          We keep our own log of each Arbaab exchange: the first part of what
+          you typed and of Arbaab&apos;s reply, with email addresses and phone
+          numbers masked, any action it took inside the app (such as adding
+          items to a cart), and whether it ran a web search. We use it to look
+          into problems you report, for security, and to keep Arbaab&apos;s
+          costs in check. It is deleted when you delete your account.
+        </p>
+        <p>
+          We also keep a record of the order, support, refund and account
+          updates we send you, for 30 days, so Arbaab can answer questions like
+          &quot;where is my food?&quot;. It is deleted when you delete your
+          account.
+        </p>
+        <p>
+          To stop fake apps and scripts from using Arbaab, each Arbaab request
+          carries a check from Firebase App Check (Google Play Integrity on
+          Android, Apple App Attest on iOS) that it comes from the genuine Taeam
+          app. That check does not include your messages.
+        </p>
+        <p>
+          Arbaab never places or pays for an order on its own. It can suggest a
+          cart, but nothing goes into your cart until you tap Add to cart, and
+          checkout always needs your tap. You can turn it off any time in Settings, and the
           rest of the app works exactly the same.
         </p>
       </LegalSection>
@@ -405,6 +535,13 @@ export default function PrivacyPolicyPage() {
       <LegalSection id="contact" title="Contact">
         <p>
           Privacy questions, data requests, or anything else: <LegalMail />.
+        </p>
+        <p>
+          If you think a post on Taeam, including a Taeam Feed video or photo,
+          uses your work without permission, email <LegalMail /> with a link
+          to it and why it&apos;s yours. We pass copyright notices on to the
+          poster as Canada&apos;s Copyright Act requires, and we take down
+          clear infringement.
         </p>
         <p>
           Taeam Technologies Inc.

@@ -6,7 +6,10 @@ import type { BotProof } from "@/components/BotGuard";
 import { trackWaitlistLead } from "@/lib/meta-pixel";
 
 export type WaitlistResult =
-  | { status: "new"; emailed: boolean }
+  // promo: whether the server put this signup inside the 150 50%-off spots;
+  // null when the confirmation call did not say (the caller then falls back
+  // to the spots count it showed).
+  | { status: "new"; emailed: boolean; promo: boolean | null }
   | { status: "existing"; emailed: false }
   | { status: "fail" };
 
@@ -49,7 +52,7 @@ export async function submitWaitlist(
 
   // Honeypot filled: a bot. Report success so it learns nothing, but write
   // no row and send no mail (launch test plan B6 #46).
-  if (proof.honeypot.trim() !== "") return { status: "new", emailed: false };
+  if (proof.honeypot.trim() !== "") return { status: "new", emailed: false, promo: null };
 
   let status: "new" | "existing" = "new";
   try {
@@ -71,6 +74,7 @@ export async function submitWaitlist(
   if (status === "new") trackWaitlistLead();
 
   let emailed = false;
+  let promo: boolean | null = null;
   if (status === "new") {
     try {
       const res = await fetch(`${BACKEND_URL}/api/waitlist/launch`, {
@@ -85,6 +89,7 @@ export async function submitWaitlist(
       });
       const data = await res.json().catch(() => ({}));
       emailed = !!data.emailed;
+      if (typeof data.promo === "boolean") promo = data.promo;
     } catch (err) {
       console.error("waitlist email request failed:", err);
     }
@@ -96,5 +101,7 @@ export async function submitWaitlist(
     /* private mode — fine */
   }
 
-  return status === "new" ? { status: "new", emailed } : { status: "existing", emailed: false };
+  return status === "new"
+    ? { status: "new", emailed, promo }
+    : { status: "existing", emailed: false };
 }

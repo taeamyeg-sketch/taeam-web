@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react";
 import { submitWaitlist } from "@/lib/waitlist-submit";
+import { spotsLeftLine, useWaitlistOffer } from "@/lib/waitlist-offer";
 import { useBotGuard } from "@/components/BotGuard";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,6 +22,11 @@ export function HeroWaitlist() {
   const [error, setError] = useState("");
   const [result, setResult] = useState<null | "new" | "existing">(null);
   const [emailed, setEmailed] = useState(false);
+  // Whether this signup got one of the 150 50%-off spots (the server's answer
+  // when it gives one, else what the page was showing).
+  const [promo, setPromo] = useState(true);
+  const { spots, promoOpen } = useWaitlistOffer();
+  const spotsLine = spotsLeftLine(spots);
   const guard = useBotGuard();
 
   async function handleSubmit(e: React.FormEvent) {
@@ -39,7 +45,10 @@ export function HeroWaitlist() {
       setError("Something went wrong. Please try again.");
       return;
     }
-    if (out.status === "new") setEmailed(out.emailed);
+    if (out.status === "new") {
+      setEmailed(out.emailed);
+      setPromo(out.promo ?? promoOpen);
+    }
     setResult(out.status);
   }
 
@@ -47,10 +56,14 @@ export function HeroWaitlist() {
     result === "existing" ? "You're already in" : "You're on the list";
   const resultBody =
     result === "existing"
-      ? "This email is already on the list. Your 50% off and 3,000 points are waiting."
-      : emailed
-        ? "Your 50% off and 3,000 points are locked. Check your inbox for the details."
-        : "Your 50% off and 3,000 points are locked for launch day.";
+      ? "This email is already on the list. Your launch reward is waiting."
+      : !promo
+        ? emailed
+          ? "Your 3,000 points are locked. Check your inbox for the details."
+          : "Your 3,000 points are locked for launch day."
+        : emailed
+          ? "Your 50% off and 3,000 points are locked. Check your inbox for the details."
+          : "Your 50% off and 3,000 points are locked for launch day.";
 
   // Screen readers hear the outcome. Both returns below start with this same
   // region, so React keeps it mounted while the form swaps for the
@@ -97,14 +110,24 @@ export function HeroWaitlist() {
           className="text-xl font-black uppercase leading-[1.05] tracking-tight text-gold sm:text-3xl"
           style={{ textShadow: "0 4px 26px rgba(0,0,0,0.65)" }}
         >
-          50% off your first order
+          {promoOpen ? "50% off your first order" : "3,000 points at launch"}
         </p>
         <p
           className="mx-auto mt-1.5 max-w-xs text-xs leading-snug text-cream/90 sm:mt-2 sm:text-sm sm:leading-relaxed"
           style={{ textShadow: "0 2px 18px rgba(0,0,0,0.7)" }}
         >
-          Up to $10 off plus 3,000 points when we launch in Edmonton.
+          {promoOpen
+            ? "Up to $10 off plus 3,000 points when we launch in Edmonton."
+            : "The 150 half-price spots are taken. Join now and 3,000 points ($3 off) go into your account when we launch in Edmonton."}
         </p>
+        {spotsLine && (
+          <p
+            className="mt-1.5 text-[11px] font-black uppercase tracking-[0.14em] text-gold sm:text-xs"
+            style={{ textShadow: "0 2px 14px rgba(0,0,0,0.8)" }}
+          >
+            {spotsLine}
+          </p>
+        )}
         <form
           onSubmit={handleSubmit}
           className="mx-auto mt-3 flex w-full flex-col gap-2 sm:mt-4 sm:flex-row"

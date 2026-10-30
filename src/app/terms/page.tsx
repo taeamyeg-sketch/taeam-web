@@ -13,7 +13,7 @@ export default function TermsPage() {
     <LegalShell
       current="/terms"
       title="Terms of Service"
-      updated="September 28, 2026"
+      updated="October 12, 2026"
       intro={
         <>
           These are the rules of using Taeam, written to be read. When you create
@@ -84,10 +84,14 @@ export default function TermsPage() {
 
       <LegalSection id="refunds" title="5. Cancellations and refunds">
         <p>
-          You can cancel an order free of charge any time before the restaurant
-          accepts it. Once the kitchen starts preparing your food, a
-          cancellation may be partially refunded or not refunded, because the
-          restaurant has already committed ingredients and labour.
+          You can cancel an order in the app for a full refund any time before
+          the restaurant accepts it. Once the restaurant accepts, cancellation
+          goes through support, through the app or at <LegalMail />, because
+          the kitchen is already making your food. If you ask us to cancel
+          then, you&apos;re charged for the food and its tax, and we refund the
+          delivery fee, service fee and tip. If the order is cancelled because
+          of a problem on our side, the restaurant&apos;s or the driver&apos;s,
+          you get a full refund.
         </p>
         <p>
           If your order arrives wrong, incomplete, or in a state you

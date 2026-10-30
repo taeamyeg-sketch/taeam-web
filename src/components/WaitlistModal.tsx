@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { X, ArrowRight, CheckCircle, ShieldCheck } from "@phosphor-icons/react";
 import { useModalDialog } from "@/lib/useModalDialog";
+import { spotsLeftLine, useWaitlistOffer } from "@/lib/waitlist-offer";
 import { submitWaitlist, alreadyJoined } from "@/lib/waitlist-submit";
 import { useBotGuard } from "@/components/BotGuard";
 
@@ -41,6 +42,12 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
     alreadyJoined() ? "existing" : null,
   );
 
+  // Whether this signup got one of the 150 50%-off spots (the server's answer
+  // when it gives one, else what the modal was showing).
+  const [promo, setPromo] = useState(true);
+  const { spots, promoOpen } = useWaitlistOffer();
+  const spotsLine = spotsLeftLine(spots);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const clean = email.trim().toLowerCase();
@@ -57,7 +64,10 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
       setError("Something went wrong. Please try again.");
       return;
     }
-    if (out.status === "new") setEmailed(out.emailed);
+    if (out.status === "new") {
+      setEmailed(out.emailed);
+      setPromo(out.promo ?? promoOpen);
+    }
     setResult(out.status);
   }
 
@@ -65,10 +75,14 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
     result === "existing" ? "You're already in" : "You're on the list";
   const resultBody =
     result === "existing"
-      ? "This email is already on the launch list. Your 50% off and 3,000 points are waiting for you the day we open."
-      : emailed
-        ? "Your 50% off and 3,000 points are locked for launch day. Check your inbox for the details."
-        : "Your 50% off and 3,000 points are locked for launch day. We’ll email you the moment we open.";
+      ? "This email is already on the launch list. Your launch reward is waiting for you the day we open."
+      : !promo
+        ? emailed
+          ? "Your 3,000 points are locked for launch day. Check your inbox for the details."
+          : "Your 3,000 points are locked for launch day. We’ll email you the moment we open."
+        : emailed
+          ? "Your 50% off and 3,000 points are locked for launch day. Check your inbox for the details."
+          : "Your 50% off and 3,000 points are locked for launch day. We’ll email you the moment we open.";
 
   return (
     <div className="fixed inset-0 z-[95] flex items-end justify-center sm:items-center">
@@ -125,12 +139,18 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
               Join the waitlist
             </p>
             <h2 className="mt-1.5 text-2xl font-black uppercase leading-tight tracking-tight text-ink">
-              50% off your first order
+              {promoOpen ? "50% off your first order" : "3,000 points at launch"}
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-mute">
-              Up to $10 off plus 3,000 points, added to your account when we launch in
-              Edmonton. Leave your email and we’ll hold your spot.
+              {promoOpen
+                ? "Up to $10 off plus 3,000 points, added to your account when we launch in Edmonton. Leave your email and we’ll hold your spot."
+                : "The 150 half-price spots are taken. Join now and 3,000 points ($3 off) go into your account when we launch in Edmonton."}
             </p>
+            {spotsLine && (
+              <p className="mt-2 text-[11px] font-black uppercase tracking-[0.14em] text-gold-deep">
+                {spotsLine}
+              </p>
+            )}
             <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-2.5">
               <input
                 type="email"

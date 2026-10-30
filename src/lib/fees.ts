@@ -41,7 +41,7 @@ const DEFAULTS: FeeConfig = {
     max_distance_km: 15,
   },
   service: { short: 1.8, medium: 2.5, long: 3.5 },
-  smallCart: { high_fee: 3, low_fee: 1.5, threshold_low: 20, threshold_high: 35 },
+  smallCart: { high_fee: 3, low_fee: 1.5, threshold_low: 15, threshold_high: 25 },
   taxRate: 0.05,
   driverPay: { base_short: 4, base_medium: 5, base_long: 5, per_km_surcharge: 0.89 },
 };
@@ -99,9 +99,12 @@ export function estimateFees(
           : cfg.service.long;
   }
 
+  // Pickup pays no small-cart fee (stripe.js calcSmallCartFee). The web has
+  // no Plus or deals, so the member bands never apply here.
   const sc = cfg.smallCart;
-  const smallCartFee =
-    subtotal < sc.threshold_low ? sc.high_fee : subtotal < sc.threshold_high ? sc.low_fee : 0;
+  const smallCartFee = pickup
+    ? 0
+    : subtotal < sc.threshold_low ? sc.high_fee : subtotal < sc.threshold_high ? sc.low_fee : 0;
 
   const discounted = Math.max(0, subtotal - promoDiscount - pointsDiscount);
   const tax = Math.round(discounted * cfg.taxRate * 100) / 100;
