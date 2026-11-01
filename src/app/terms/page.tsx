@@ -13,7 +13,7 @@ export default function TermsPage() {
     <LegalShell
       current="/terms"
       title="Terms of Service"
-      updated="October 12, 2026"
+      updated="November 1, 2026"
       intro={
         <>
           These are the rules of using Taeam, written to be read. When you create
@@ -171,14 +171,28 @@ export default function TermsPage() {
 
       <LegalSection id="plus" title="10. Taeam Plus">
         <p>
-          Taeam Plus is a monthly subscription for $8.99 CAD. Your card is
-          charged when you subscribe and again on the same date each month
-          until you cancel.
+          Taeam Plus is a subscription you can pay for monthly, at $9.99 CAD a
+          month, or yearly, at $99 CAD a year. Your card is charged when you
+          subscribe and again on the same date each month, or each year on the
+          yearly plan, until you cancel.
+        </p>
+        <p>
+          Plus includes 4 free deliveries a month on orders with a food
+          subtotal of $25 or more, within the free delivery distance shown in
+          the app. On the monthly plan they reset each billing month. On the
+          yearly plan they reset on the 1st of every calendar month, Edmonton
+          time. Unused free deliveries don&apos;t carry over. After your free
+          deliveries, Plus delivery prices apply.
         </p>
         <p>
           You can cancel anytime in the app. After you cancel, your benefits
-          stay on until the end of the month you already paid for, and you
-          won&apos;t be charged again. We don&apos;t refund partial months.
+          stay on until the end of the month or year you already paid for, and
+          you won&apos;t be charged again. We don&apos;t refund partial months
+          or partial years, with one exception: on the yearly plan, if you
+          cancel within 14 days of a yearly charge and haven&apos;t used a free
+          delivery since that charge, we refund that charge in full and Plus
+          ends right away. We email you about 7 days before each yearly
+          renewal.
         </p>
         <p>
           If the price ever changes, we&apos;ll tell you at least 30 days before

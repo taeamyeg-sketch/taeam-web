@@ -24,7 +24,7 @@ import { PointsCalculator } from "@/components/rewards/PointsCalculator";
 export const metadata: Metadata = {
   title: "Rewards & Taeam Plus",
   description:
-    "10 points on every dollar you order, a daily stack of free points, and 1,000 points is a straight dollar off. Plus: $8.99/mo for free deliveries, $0.99 service fees and 2x points.",
+    "10 points on every dollar you order, a daily stack of free points, and 1,000 points is a straight dollar off. Plus: $9.99/mo or $99/year for free deliveries, $0.99 service fees and 2x points.",
   openGraph: {
     title: "Rewards & Taeam Plus · Taeam",
     description:
@@ -40,7 +40,8 @@ export const metadata: Metadata = {
 /* Every number on this page mirrors the live backend
    (backend/routes/api/rewards.js, subscriptions.js, fee_constants.dart):
    10 pts/$1 (20 on Plus), 1,000 pts = $1, redeem 1,000–5,000 per order,
-   daily stack = 5 + 10 + 5×7, Plus = $8.99/mo · 6 free local deliveries then
+   daily stack = 5 + 10 + 5×7, Plus = $9.99/mo or $99/yr · 4 free local
+   deliveries a month on $25+ orders (calendar month on yearly) then
    $2.99 (≤10km) / $4.99 (10–15km) · $0.99 service fee. Change the system there
    first, then here. */
 
@@ -130,7 +131,7 @@ const PLUS_COMPARE = [
   {
     label: "Delivery, citywide",
     standard: "$4.99 to $9+",
-    plus: "6 free local a month, then $2.99 up to 10 km · flat $4.99 anywhere",
+    plus: "4 free local a month on $25+ orders, then $2.99 up to 10 km · flat $4.99 anywhere",
   },
   {
     label: "Service fee",
@@ -462,10 +463,13 @@ export default function RewardsPage() {
                 a 99-cent service fee, and every point doubled.
               </p>
               <p className="mt-6 text-5xl font-black tracking-tight text-gold">
-                $8.99
+                $9.99
                 <span className="ml-1 text-lg font-bold uppercase tracking-wide text-white/50">
                   / month
                 </span>
+              </p>
+              <p className="mt-2 text-sm text-white/70">
+                Or $99 a year, 2 months free.
               </p>
               <p className="mt-2 text-sm text-white/50">
                 Cancel anytime. It&apos;s live in the app today, and your
