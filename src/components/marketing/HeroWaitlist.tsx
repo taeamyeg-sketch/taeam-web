@@ -47,7 +47,9 @@ export function HeroWaitlist() {
     }
     if (out.status === "new") {
       setEmailed(out.emailed);
-      setPromo(out.promo ?? promoOpen);
+      // Only the server's answer promises 50%: a spot is claimed after the
+      // bot check, so the count shown at page load proves nothing.
+      setPromo(out.promo === true);
     }
     setResult(out.status);
   }

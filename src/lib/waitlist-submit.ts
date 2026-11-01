@@ -6,9 +6,9 @@ import type { BotProof } from "@/components/BotGuard";
 import { trackWaitlistLead } from "@/lib/meta-pixel";
 
 export type WaitlistResult =
-  // promo: whether the server put this signup inside the 150 50%-off spots;
-  // null when the confirmation call did not say (the caller then falls back
-  // to the spots count it showed).
+  // promo: whether the server gave this signup one of the 150 50%-off spots
+  // (claimed after the bot check); null when the confirmation call failed,
+  // which the callers treat as no spot.
   | { status: "new"; emailed: boolean; promo: boolean | null }
   | { status: "existing"; emailed: false }
   | { status: "fail" };
