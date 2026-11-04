@@ -22,6 +22,7 @@ type Slot = {
 };
 type Day = { date: string; slots: Slot[] };
 type Confirmed = { date: string; startTime: string; endTime: string; label?: string | null };
+type Install = { testflightApp: string; ios: string | null; android: string | null };
 
 // ── timezone-safe formatters ────────────────────────────────────────────────
 // slot_date / start_time / end_time arrive as raw wall-clock strings for
@@ -57,9 +58,9 @@ function fmtRange(s: string, e: string): string {
 const STEPS = [
   'Pick a time window that still has space.',
   'Add your name, email, and phone, then confirm.',
-  'You get a confirmation email right away.',
-  'Before your window, we send you the app download link.',
-  'You install the app and order from Barcelos.',
+  'You get a confirmation email with the install steps.',
+  'Install the app and sign up with the phone number you booked with.',
+  'When your window opens, order from Barcelos.',
   'We bring it to your door.',
 ];
 
@@ -68,6 +69,44 @@ const PHOTOS = [
   { src: '/barcelos-wraps.webp', caption: 'The wraps', alt: 'A grilled chicken wrap cut in half' },
   { src: '/barcelos-family.webp', caption: 'For the family', alt: 'A family pack of chicken, fries, rice and garlic bread' },
 ];
+
+// Install buttons on the confirmed screen. The links come from the backend and
+// are null until the test builds are uploaded, so this renders nothing then.
+function InstallSteps({ install }: { install: Install | null }) {
+  const [device, setDevice] = useState<'ios' | 'android' | 'both'>('both');
+
+  useEffect(() => {
+    const ua = navigator.userAgent;
+    if (/iPhone|iPad|iPod/i.test(ua)) setDevice('ios');
+    else if (/Android/i.test(ua)) setDevice('android');
+  }, []);
+
+  if (!install || (!install.ios && !install.android)) return null;
+  const button =
+    'mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A1A1A] px-5 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black';
+
+  return (
+    <div className="mx-auto mt-6 max-w-sm rounded-xl border border-cream-line bg-cream p-5 text-left">
+      <p className="text-xs font-black uppercase tracking-widest text-gold-deep">Get the app</p>
+      <p className="mt-1.5 text-sm leading-relaxed text-[#52504A]">
+        Sign up with the same phone number you booked with, or the app won&apos;t find your booking.
+      </p>
+      {install.ios && device !== 'android' && (
+        <div className="mt-4">
+          <p className="text-sm font-bold">On iPhone, get TestFlight first, then join the test.</p>
+          <a href={install.testflightApp} target="_blank" rel="noreferrer noopener" className={button}>Get TestFlight</a>
+          <a href={install.ios} target="_blank" rel="noreferrer noopener" className={button}>Join the Taeam test</a>
+        </div>
+      )}
+      {install.android && device !== 'ios' && (
+        <div className="mt-4">
+          <p className="text-sm font-bold">On Android, this works once we&apos;ve added your Gmail. That can take a little while.</p>
+          <a href={install.android} target="_blank" rel="noreferrer noopener" className={button}>Get it on Google Play</a>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function ReservePage() {
 
@@ -79,11 +118,13 @@ export default function ReservePage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [googleEmail, setGoogleEmail] = useState('');
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [confirmed, setConfirmed] = useState<Confirmed | null>(null);
   const [emailed, setEmailed] = useState(false);
+  const [install, setInstall] = useState<Install | null>(null);
 
   const loadSlots = useCallback(async () => {
     setLoadingSlots(true);
@@ -93,6 +134,7 @@ export default function ReservePage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || 'failed');
       setDays(Array.isArray(data.days) ? data.days : []);
+      setInstall(data.install ?? null);
     } catch {
       setDays([]);
       setSlotsError('We could not load the windows just now. Please refresh and try again.');
@@ -131,6 +173,8 @@ export default function ReservePage() {
     if (!cName) { setError('Please add your name.'); return; }
     if (!EMAIL_RE.test(cEmail)) { setError('Please enter a valid email.'); return; }
     if (cPhone.replace(/\D/g, '').length < 7) { setError('Please add a phone number we can reach you at.'); return; }
+    const cGoogle = googleEmail.trim().toLowerCase();
+    if (cGoogle && !EMAIL_RE.test(cGoogle)) { setError('Please check your Gmail address.'); return; }
 
     setSubmitting(true);
     setError('');
@@ -138,18 +182,21 @@ export default function ReservePage() {
       const res = await fetch(`${BACKEND_URL}/api/reserve`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: cName, email: cEmail, phone: cPhone, slotId: selectedSlotId }),
+        body: JSON.stringify({ name: cName, email: cEmail, phone: cPhone, googleEmail: cGoogle, slotId: selectedSlotId }),
       });
       const data = await res.json().catch(() => ({}));
 
       if (res.ok && data.ok) {
         setConfirmed(data.slot as Confirmed);
         setEmailed(!!data.emailed);
+        setInstall(data.install ?? install);
         requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
         return;
       }
 
-      if (data.error === 'slot_full' || data.error === 'slot_unavailable') {
+      if (data.error === 'already_booked') {
+        setError('You already have a booking. It\'s one window per person.');
+      } else if (data.error === 'slot_full' || data.error === 'slot_unavailable') {
         setError('Sorry, that window just filled up. Please pick another one.');
         setSelectedSlotId(null);
         loadSlots();
@@ -161,6 +208,8 @@ export default function ReservePage() {
         setError('Please add a phone number we can reach you at.');
       } else if (data.error === 'invalid_email') {
         setError('Please enter a valid email.');
+      } else if (data.error === 'invalid_google_email') {
+        setError('Please check your Gmail address.');
       } else if (data.error === 'invalid_name') {
         setError('Please add your name.');
       } else {
@@ -209,9 +258,11 @@ export default function ReservePage() {
                   {emailed
                     ? 'Check your inbox for the confirmation we just sent.'
                     : 'Your spot is saved.'}{' '}
-                  Before your window we&apos;ll send you the link to download the app. Then you order from
-                  Barcelos and we bring it to your door.
+                  Install the app any time before your window. Ordering opens when your window starts,
+                  and we bring it to your door.
                 </p>
+
+                <InstallSteps install={install} />
 
                 <p className="mt-3 text-[15px] font-semibold text-[#1A1A1A]">
                   Thanks for being one of the first to try Taeam. Looking forward to seeing you.
@@ -477,6 +528,22 @@ export default function ReservePage() {
                     autoComplete="tel"
                     className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/30"
                   />
+                  <label htmlFor="reserve-google" className="sr-only">
+                    Gmail address, Android phones only
+                  </label>
+                  <input
+                    id="reserve-google"
+                    type="email"
+                    value={googleEmail}
+                    onChange={(e) => setGoogleEmail(e.target.value)}
+                    placeholder="Gmail (Android phones only)"
+                    disabled={submitting}
+                    autoComplete="off"
+                    className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/30"
+                  />
+                  <p className="px-1 text-xs leading-relaxed text-[#8A8880]">
+                    On Android, Google needs the Gmail on your phone before you can install. iPhone people can skip this.
+                  </p>
 
                   <button
                     type="submit"
@@ -495,7 +562,7 @@ export default function ReservePage() {
                   <Phone className="h-3.5 w-3.5" /> We only use your phone to coordinate the delivery.
                 </p>
                 <p className="mt-2 flex items-center gap-1.5 text-xs text-[#8A8880]">
-                  <ShieldCheck className="h-3.5 w-3.5" /> One confirmation now, then your download link before your window.
+                  <ShieldCheck className="h-3.5 w-3.5" /> One confirmation now, then one reminder before your window.
                 </p>
               </div>
             </div>
