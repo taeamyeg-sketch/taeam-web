@@ -22,7 +22,8 @@ export const dynamic = "force-static";
 // `/partners` is the founding-restaurant offer, handed out on a printed sheet
 // and reached by scanning its QR. It carries commission rates we do not want a
 // customer (or a competitor) finding in search, so it is unlinked sitewide,
-// absent from the sitemap, and noindex on the page itself.
+// absent from the sitemap, and noindex on the page itself. `/reserve` is the
+// same: friends and family get the link by hand, so it stays out of search.
 const ALWAYS_PRIVATE = [
   "/account",
   "/partners",
@@ -30,6 +31,7 @@ const ALWAYS_PRIVATE = [
   "/merchant",
   "/promo",
   "/refer",
+  "/reserve",
   "/banner",
   "/driver",
   "/checkout",

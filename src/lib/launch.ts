@@ -27,7 +27,6 @@ export const SEALED_PREFIXES = [
   "/merchant",
   "/promo",
   "/refer",
-  "/reserve",
 ];
 
 /** True when `pathname` is part of the sealed ordering / account surface. */

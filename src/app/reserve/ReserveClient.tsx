@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
   ArrowLeft, ArrowRight, CheckCircle, Clock, Calendar, Phone,
-  ShieldCheck, UtensilsCrossed, MapPin,
+  ShieldCheck, MapPin,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -59,8 +59,14 @@ const STEPS = [
   'Add your name, email, and phone, then confirm.',
   'You get a confirmation email right away.',
   'Before your window, we send you the app download link.',
-  'You install the app and order from Pitavibe.',
+  'You install the app and order from Barcelos.',
   'We bring it to your door.',
+];
+
+const PHOTOS = [
+  { src: '/barcelos-chicken.webp', caption: 'The chicken', alt: 'Half a grilled chicken with fries' },
+  { src: '/barcelos-wraps.webp', caption: 'The wraps', alt: 'A grilled chicken wrap cut in half' },
+  { src: '/barcelos-family.webp', caption: 'For the family', alt: 'A family pack of chicken, fries, rice and garlic bread' },
 ];
 
 export default function ReservePage() {
@@ -204,7 +210,7 @@ export default function ReservePage() {
                     ? 'Check your inbox for the confirmation we just sent.'
                     : 'Your spot is saved.'}{' '}
                   Before your window we&apos;ll send you the link to download the app. Then you order from
-                  Pitavibe and we bring it to your door.
+                  Barcelos and we bring it to your door.
                 </p>
 
                 <p className="mt-3 text-[15px] font-semibold text-[#1A1A1A]">
@@ -224,17 +230,15 @@ export default function ReservePage() {
         </section>
       ) : (
         <>
-          {/* ───────────────────────── PITAVIBE INTRO ───────────────────────── */}
+          {/* ───────────────────────── BARCELOS INTRO ───────────────────────── */}
           <section className="px-3 pt-[68px] sm:px-5 sm:pt-[76px]">
             <div className="relative mx-auto max-w-4xl">
-              {/* Hero. NOTE: this image is generated, not a photograph of the
-                  real Pitavibe room. Swap it for a real one before this page
-                  goes to a wider audience — a reservation page is a promise
-                  about a specific place. */}
+              {/* Hero and tiles are the restaurant's own menu photos, copied
+                  from the restaurant-images bucket. */}
               <div className="relative flex aspect-[16/9] w-full flex-col items-center justify-center overflow-hidden rounded-xl border border-gold/20 sm:aspect-[1376/620] sm:rounded-2xl">
                 <Image
-                  src="/pitavibe-hero.webp"
-                  alt="The interior of a small casual halal pita and shawarma restaurant in the late afternoon"
+                  src="/barcelos-hero.webp"
+                  alt="A plate of flame grilled Barcelos chicken"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 896px"
@@ -244,36 +248,42 @@ export default function ReservePage() {
                 <span className="relative inline-flex max-w-[calc(100%-2rem)] flex-wrap items-center justify-center gap-2 rounded-md bg-noir px-3 py-1.5 text-center text-[11px] font-bold uppercase tracking-widest text-white">
                   <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Edmonton · Invite-only soft launch
                 </span>
-                <h1 className="relative mt-6 text-4xl font-black uppercase leading-none tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] min-[400px]:text-5xl sm:mt-8 sm:text-7xl">Pitavibe</h1>
+                <h1 className="relative mt-6 text-4xl font-black uppercase leading-none tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] min-[400px]:text-5xl sm:mt-8 sm:text-7xl">Barcelos</h1>
               </div>
             </div>
           </section>
 
           <section className="px-5 pb-2 pt-8 text-center sm:px-8 sm:pt-10">
             <h2 className="mx-auto max-w-2xl text-3xl font-black uppercase leading-[1] tracking-tight sm:text-5xl">
-              Reserve your <span className="text-gold-deep">Pitavibe</span> window
+              Reserve your <span className="text-gold-deep">Barcelos</span> window
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-[#52504A]">
-              Pitavibe makes fresh halal pitas and bowls in Edmonton. Warm bread, good spice, the
-              kind of food you want on a weeknight.
+              Barcelos Gateway does flame grilled peri peri chicken in Edmonton. Halves, wraps,
+              family packs, all the good stuff.
             </p>
             <p className="mx-auto mt-3 max-w-xl leading-relaxed text-[#6B6963]">
               We&apos;re opening to a small group first. Pick a time below and we&apos;ll bring it to your door.
             </p>
           </section>
 
-          {/* a couple of photo placeholders — founder swaps these for real shots */}
           <section className="px-5 pt-6 sm:px-8">
             <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
-              {['The pitas', 'The bowls', 'The spot'].map((cap, i) => (
-                <div
-                  key={i}
-                  className={`flex aspect-square flex-col items-center justify-center rounded-xl border border-black/5 bg-white text-[#C7BFA8] ${i === 2 ? 'hidden sm:flex' : ''}`}
+              {PHOTOS.map((photo, i) => (
+                <figure
+                  key={photo.src}
+                  className={`relative aspect-square overflow-hidden rounded-xl border border-black/5 bg-white ${i === 2 ? 'hidden sm:block' : ''}`}
                 >
-                  <UtensilsCrossed className="h-6 w-6" />
-                  <span className="mt-2 text-[11px] font-bold uppercase tracking-widest">{cap}</span>
-                  <span className="text-[10px] text-[#C7BFA8]">Photo coming soon</span>
-                </div>
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    sizes="(max-width: 640px) 50vw, 288px"
+                    className="object-cover object-center"
+                  />
+                  <figcaption className="absolute bottom-2 left-2 rounded-md bg-noir px-2 py-1 text-[11px] font-bold uppercase tracking-widest text-white">
+                    {photo.caption}
+                  </figcaption>
+                </figure>
               ))}
             </div>
           </section>

@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import ReserveClient from "./ReserveClient";
 
 export const metadata: Metadata = {
-  title: "Pitavibe reservations",
+  title: "Barcelos reservations",
   description:
-    "Reserve a spot for Pitavibe's Edmonton soft launch on Taeam. Fresh halal pitas, limited slots.",
+    "Reserve a spot for the Barcelos Gateway soft launch on Taeam in Edmonton. Flame grilled peri peri chicken, limited slots.",
+  robots: { index: false, follow: false },
 };
 
 export default function ReservePage() {

@@ -24,7 +24,7 @@ const STATIC_ROUTES = [
   "/drive",
   // "/partners" is intentionally absent: QR-only, and robots.ts disallows it.
   "/arbaab",
-  "/reserve",
+  // "/reserve" is intentionally absent: invite-only, and robots.ts disallows it.
   "/help",
   "/terms",
   "/privacy-policy",
