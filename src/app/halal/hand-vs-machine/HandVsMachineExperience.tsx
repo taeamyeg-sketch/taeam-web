@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Reveal from '@/components/halal/Reveal';
+import CountUp from '@/components/halal/CountUp';
 import Figure from '@/components/halal/Figure';
 
 /* ── Inline reference marker ── */
@@ -236,9 +237,9 @@ export default function HandVsMachineExperience() {
         </Reveal>
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { node: <>140</>, label: 'birds per minute and up on a single mechanical slaughter line', ref: 15 },
+            { node: <CountUp to={140} />, label: 'birds per minute and up on a single mechanical slaughter line', ref: 15 },
             { node: <>4<span className="text-xl"> in </span>10</>, label: 'restaurant locations that could not answer hand or machine when CBC asked', ref: 1 },
-            { node: <>25+</>, label: 'Muslim blessers Zabiha Halal says rotate through its machine line', ref: 6 },
+            { node: <CountUp to={25} suffix="+" />, label: 'Muslim blessers Zabiha Halal says rotate through its machine line', ref: 6 },
             { node: <>2004</>, label: 'the year Canada got a certifier built entirely on per-bird hand slaughter', ref: 8 },
           ].map((s, i) => (
             <Reveal key={i} className="text-center">

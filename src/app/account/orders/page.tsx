@@ -117,7 +117,7 @@ export default function OrdersPage() {
               day: "numeric",
               hour: "numeric",
               minute: "2-digit",
-              timeZone: "America/Edmonton",
+              timeZone: "America/Regina",
             });
             return (
               <li

@@ -172,10 +172,10 @@ export function MarketingHero() {
       <div
         className="absolute left-[7%] top-[19%] z-10 md:left-[12%]"
       >
-        <h1 className="font-sans text-[15vw] font-black uppercase leading-none tracking-tighter text-noir sm:text-[11vw] md:text-[8vw]">
+        <h1 className="hero-title font-sans text-[15vw] font-black uppercase leading-none tracking-tighter text-noir sm:text-[11vw] md:text-[8vw]">
           Taeam
         </h1>
-        <p className="mt-2 text-sm font-bold uppercase tracking-tight text-noir/70 md:text-xl">
+        <p className="hero-fade mt-2 text-sm font-bold uppercase tracking-tight text-noir/70 md:text-xl">
           Taste the trust
         </p>
       </div>
@@ -184,7 +184,7 @@ export function MarketingHero() {
           mark lives inside the bottom address stack (below) so it can never
           collide with the card. Hidden on very short landscape viewports. */}
       <div
-        className="absolute z-10 hidden text-right md:block md:bottom-[32%] md:right-[12%] [@media(max-height:480px)]:hidden"
+        className="hero-fade absolute z-10 hidden text-right md:block md:bottom-[32%] md:right-[12%] [@media(max-height:480px)]:hidden"
       >
         <p
           className="text-[13vw] font-black leading-none text-gold sm:text-[10vw] md:text-[9vw]"
@@ -217,7 +217,7 @@ export function MarketingHero() {
             clears the card no matter which state (pill / resume / out-of-zone)
             is showing or how short the screen is. Kept toward the right so the
             glyph stays on the black side of the diagonal. */}
-        <div className="mb-1 w-full pr-[6%] text-right md:hidden [@media(max-height:480px)]:hidden">
+        <div className="hero-fade mb-1 w-full pr-[6%] text-right md:hidden [@media(max-height:480px)]:hidden">
           <p
             className="text-[11vw] font-black leading-none text-gold"
             style={{

@@ -13,7 +13,7 @@ const DAYS = [
 /** Current weekday + minutes-since-midnight in Edmonton, wherever we render. */
 function nowInEdmonton(): { day: (typeof DAYS)[number]; minutes: number } {
   const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Edmonton",
+    timeZone: "America/Regina",
     weekday: "long",
     hour: "numeric",
     minute: "numeric",

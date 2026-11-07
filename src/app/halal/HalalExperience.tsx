@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Reveal from '@/components/halal/Reveal';
+import CountUp from '@/components/halal/CountUp';
 import Figure from '@/components/halal/Figure';
 
 /* ── Inline reference marker ── */
@@ -242,9 +243,9 @@ export default function HalalExperience() {
         </Reveal>
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { node: <>1,775,715</>, label: 'Muslims in Canada in 2021, more than double the 2001 figure', ref: 1 },
+            { node: <CountUp to={1775715} />, label: 'Muslims in Canada in 2021, more than double the 2001 figure', ref: 1 },
             { node: <>4<span className="text-xl"> in </span>10</>, label: 'fast-food spots that could not verify their halal slaughter method', ref: 2 },
-            { node: <>8.3%</>, label: 'of Edmonton is Muslim, about 83,015 people', ref: 1 },
+            { node: <CountUp to={8.3} decimals={1} suffix="%" />, label: 'of Edmonton is Muslim, about 83,015 people', ref: 1 },
             { node: <><span className="text-2xl align-top">$</span>1B+</>, label: 'estimated Canadian halal market, growing around 13% a year', ref: 8 },
           ].map((s, i) => (
             <Reveal key={i} className="text-center">
