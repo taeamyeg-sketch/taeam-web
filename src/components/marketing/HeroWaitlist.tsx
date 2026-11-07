@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, CheckCircle } from "@phosphor-icons/react";
+import { ArrowRight } from "@phosphor-icons/react";
 import { submitWaitlist } from "@/lib/waitlist-submit";
 import { spotsLeftLine, useWaitlistOffer } from "@/lib/waitlist-offer";
 import { useBotGuard } from "@/components/BotGuard";
+import { WaitlistCheck } from "@/components/marketing/WaitlistCheck";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -80,21 +81,23 @@ export function HeroWaitlist() {
     return (
       <>
         {status}
-        <div id="waitlist" className="w-full max-w-sm text-center">
-          <CheckCircle
+        <div
+          id="waitlist"
+          className={`w-full max-w-sm text-center ${result === "new" ? "wl-joined" : ""}`}
+        >
+          <WaitlistCheck
             className="mx-auto h-8 w-8 text-gold sm:h-9 sm:w-9"
-            weight="fill"
-            aria-hidden
+            tickClassName="text-noir"
             style={{ filter: "drop-shadow(0 3px 14px rgba(0,0,0,0.7))" }}
           />
           <p
-            className="mt-2 text-base font-black uppercase tracking-tight text-gold sm:text-lg"
+            className="wl-text mt-2 text-base font-black uppercase tracking-tight text-gold sm:text-lg"
             style={{ textShadow: "0 2px 18px rgba(0,0,0,0.75)" }}
           >
             {resultTitle}
           </p>
           <p
-            className="mx-auto mt-1 max-w-xs text-xs leading-snug text-cream/90 sm:text-sm sm:leading-relaxed"
+            className="wl-text mx-auto mt-1 max-w-xs text-xs leading-snug text-cream/90 sm:text-sm sm:leading-relaxed"
             style={{ textShadow: "0 2px 16px rgba(0,0,0,0.8)" }}
           >
             {resultBody}

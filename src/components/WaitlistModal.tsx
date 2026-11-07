@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, ArrowRight, CheckCircle, ShieldCheck } from "@phosphor-icons/react";
+import { X, ArrowRight, ShieldCheck } from "@phosphor-icons/react";
+import { WaitlistCheck } from "@/components/marketing/WaitlistCheck";
 import { useModalDialog } from "@/lib/useModalDialog";
 import { spotsLeftLine, useWaitlistOffer } from "@/lib/waitlist-offer";
 import { submitWaitlist, alreadyJoined } from "@/lib/waitlist-submit";
@@ -116,12 +117,12 @@ function WaitlistDialog({ onClose }: { onClose: () => void }) {
         </p>
 
         {result ? (
-          <div className="pt-2 text-center">
-            <CheckCircle className="mx-auto h-11 w-11 text-gold-deep" weight="fill" aria-hidden />
-            <p className="mt-3 text-xl font-black uppercase tracking-tight text-ink">
+          <div className={`pt-2 text-center ${result === "new" ? "wl-joined" : ""}`}>
+            <WaitlistCheck className="mx-auto h-11 w-11 text-gold-deep" tickClassName="text-cream" />
+            <p className="wl-text mt-3 text-xl font-black uppercase tracking-tight text-ink">
               {resultTitle}
             </p>
-            <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-ink-mute">
+            <p className="wl-text mx-auto mt-2 max-w-xs text-sm leading-relaxed text-ink-mute">
               {resultBody}
             </p>
             {/* autoFocus: after a keyboard submit the form (and the focused
