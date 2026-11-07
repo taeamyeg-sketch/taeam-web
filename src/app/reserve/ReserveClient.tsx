@@ -102,6 +102,7 @@ function InstallSteps({ install }: { install: Install | null }) {
         <div className="mt-4">
           <p className="text-sm font-bold">On Android, this works once we&apos;ve added your Gmail. That can take a little while.</p>
           <a href={install.android} target="_blank" rel="noreferrer noopener" className={button}>Get it on Google Play</a>
+          <p className="mt-2 text-xs leading-relaxed text-[#52504A]">Play may show a long name ending in &quot;(unreviewed)&quot;. That&apos;s normal for a test app. Tap install.</p>
         </div>
       )}
     </div>
