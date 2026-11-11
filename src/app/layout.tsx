@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   // scrapers get relative (broken) image URLs.
   metadataBase: new URL("https://taeam.ca"),
   title: {
-    default: "Taeam · Halal food delivered in Edmonton",
+    default: "Taeam · Edmonton's halal food delivery platform",
     template: "%s · Taeam",
   },
   description:
