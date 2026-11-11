@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowLeft, DeviceMobile } from '@phosphor-icons/react/dist/ssr';
+import { SEALED } from '@/lib/launch';
 
 /**
  * Shared, read-only "open in app" skeleton used by every email deep-link path
@@ -47,6 +48,7 @@ export function AppFallback({
   subtitle,
   deepLink,
   detail,
+  contactEmail,
 }: {
   brand: AppBrand;
   title: string;
@@ -55,8 +57,13 @@ export function AppFallback({
   deepLink: string;
   /** Optional small read-only context line (e.g. an order id). */
   detail?: string;
+  /** Before launch, make "email us" the main button (the public has no app yet). */
+  contactEmail?: string;
 }) {
   const b = BRANDS[brand];
+  // Before launch the apps are not in the stores, so the store buttons would
+  // land on "not found" pages. Only testers have the app.
+  const emailFirst = SEALED && !!contactEmail;
 
   return (
     <main className="min-h-svh bg-cream font-sans text-ink antialiased">
@@ -91,41 +98,69 @@ export function AppFallback({
               </p>
             )}
 
-            {/* Open-in-app CTA (custom scheme) */}
-            <a
-              href={deepLink}
-              className="mt-7 flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black"
-            >
-              Open in the {b.label} app
-            </a>
-
-            <p className="mt-5 text-center text-xs text-ink-mute">
-              Don&apos;t have the app yet? Get it below.
-            </p>
-
-            {/* Store links */}
-            <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
+            {emailFirst ? (
+              <>
+                <a
+                  href={`mailto:${contactEmail}`}
+                  className="mt-7 flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black"
+                >
+                  Email us
+                </a>
+                <a
+                  href={deepLink}
+                  className="mt-3 flex items-center justify-center rounded-xl border border-black/10 bg-cream px-4 py-3 text-sm font-bold text-ink transition-colors hover:border-gold hover:bg-white"
+                >
+                  Testing the app? Open it here
+                </a>
+              </>
+            ) : (
+              /* Open-in-app CTA (custom scheme) */
               <a
-                href={b.appStore}
-                className="flex flex-1 items-center justify-center rounded-xl border border-black/10 bg-cream px-4 py-3 text-sm font-bold text-ink transition-colors hover:border-gold hover:bg-white"
+                href={deepLink}
+                className="mt-7 flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black"
               >
-                App Store
+                Open in the {b.label} app
               </a>
-              <a
-                href={b.playStore}
-                className="flex flex-1 items-center justify-center rounded-xl border border-black/10 bg-cream px-4 py-3 text-sm font-bold text-ink transition-colors hover:border-gold hover:bg-white"
-              >
-                Google Play
-              </a>
-            </div>
+            )}
+
+            {SEALED ? (
+              <p className="mt-5 text-center text-xs text-ink-mute">
+                The {b.label} app isn&apos;t in the App Store or Google Play yet.
+                It will be when we open in Edmonton.
+              </p>
+            ) : (
+              <>
+                <p className="mt-5 text-center text-xs text-ink-mute">
+                  Don&apos;t have the app yet? Get it below.
+                </p>
+
+                {/* Store links */}
+                <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
+                  <a
+                    href={b.appStore}
+                    className="flex flex-1 items-center justify-center rounded-xl border border-black/10 bg-cream px-4 py-3 text-sm font-bold text-ink transition-colors hover:border-gold hover:bg-white"
+                  >
+                    App Store
+                  </a>
+                  <a
+                    href={b.playStore}
+                    className="flex flex-1 items-center justify-center rounded-xl border border-black/10 bg-cream px-4 py-3 text-sm font-bold text-ink transition-colors hover:border-gold hover:bg-white"
+                  >
+                    Google Play
+                  </a>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
-        <p className="mx-auto mt-8 max-w-md text-center text-xs leading-relaxed text-ink-mute">
-          If you have the {b.label} app installed on your phone, this link opens
-          it automatically. This page is the fallback for desktop browsers and
-          devices without the app.
-        </p>
+        {!emailFirst && (
+          <p className="mx-auto mt-8 max-w-md text-center text-xs leading-relaxed text-ink-mute">
+            If you have the {b.label} app installed on your phone, this link opens
+            it automatically. This page is the fallback for desktop browsers and
+            devices without the app.
+          </p>
+        )}
       </section>
 
       <div className="h-px bg-black/10" />

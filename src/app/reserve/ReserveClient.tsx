@@ -98,6 +98,14 @@ function InstallSteps({ install }: { install: Install | null }) {
           <a href={install.ios} target="_blank" rel="noreferrer noopener" className={button}>Join the Taeam test</a>
         </div>
       )}
+      {/* The iPhone link is set once Apple approves the test build. Until
+          then say so, or an iPhone guest sees a heading with no button. */}
+      {!install.ios && device !== 'android' && (
+        <div className="mt-4">
+          <p className="text-sm font-bold">On iPhone, the install link isn&apos;t ready yet.</p>
+          <p className="mt-1 text-sm leading-relaxed text-[#52504A]">We&apos;ll email it to you before your window opens.</p>
+        </div>
+      )}
       {install.android && device !== 'ios' && (
         <div className="mt-4">
           <p className="text-sm font-bold">On Android, this works once we&apos;ve added your Gmail. That can take a little while.</p>
@@ -172,8 +180,11 @@ export default function ReservePage() {
     const cEmail = email.trim().toLowerCase();
     const cPhone = phone.trim();
     if (!cName) { setError('Please add your name.'); return; }
+    if (cName.length > 80) { setError('Please shorten your name a little.'); return; }
     if (!EMAIL_RE.test(cEmail)) { setError('Please enter a valid email.'); return; }
-    if (cPhone.replace(/\D/g, '').length < 7) { setError('Please add a phone number we can reach you at.'); return; }
+    // The app finds the booking by the last 10 digits of the phone, so a
+    // shorter number would book fine and then lock the guest out.
+    if (cPhone.replace(/\D/g, '').length < 10) { setError('Please enter your full phone number, with the area code.'); return; }
     const cGoogle = googleEmail.trim().toLowerCase();
     if (cGoogle && !EMAIL_RE.test(cGoogle)) { setError('Please check your Gmail address.'); return; }
 
@@ -205,14 +216,16 @@ export default function ReservePage() {
         setError('That window is no longer available. Please pick another one.');
         setSelectedSlotId(null);
         loadSlots();
+      } else if (data.error === 'too_many_reservations' || data.error === 'rate_limited' || res.status === 429) {
+        setError('Too many tries. Please wait a while, or email contact@taeam.ca.');
       } else if (data.error === 'invalid_phone') {
-        setError('Please add a phone number we can reach you at.');
+        setError('Please enter your full phone number, with the area code.');
       } else if (data.error === 'invalid_email') {
         setError('Please enter a valid email.');
       } else if (data.error === 'invalid_google_email') {
         setError('Please check your Gmail address.');
       } else if (data.error === 'invalid_name') {
-        setError('Please add your name.');
+        setError(cName.length > 80 ? 'Please shorten your name a little.' : 'Please add your name.');
       } else {
         setError('Something went wrong. Please try again.');
       }

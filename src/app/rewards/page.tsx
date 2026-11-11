@@ -545,17 +545,21 @@ export default function RewardsPage() {
                 />
               </TransitionLink>
             )}
-            <a
-              href="https://apps.apple.com/app/taeam"
-              className="group inline-flex items-center gap-1 text-sm font-semibold text-ink transition-colors hover:text-gold-deep"
-            >
-              Get the Taeam app
-              <span
-                aria-hidden
+            {/* The app is not in the stores before launch, so this link would
+                land on Apple's "not found" page. */}
+            {!SEALED && (
+              <a
+                href="https://apps.apple.com/app/taeam"
+                className="group inline-flex items-center gap-1 text-sm font-semibold text-ink transition-colors hover:text-gold-deep"
               >
-                →
-              </span>
-            </a>
+                Get the Taeam app
+                <span
+                  aria-hidden
+                >
+                  →
+                </span>
+              </a>
+            )}
           </div>
         </Reveal>
       </section>
