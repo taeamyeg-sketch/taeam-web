@@ -4,7 +4,10 @@
  */
 export default function Loading() {
   return (
+    // data-nosnippet: the static export bakes this fallback into every page,
+    // so "Loading" was among the first words Google read.
     <div
+      data-nosnippet
       role="status"
       aria-live="polite"
       className="flex min-h-[100svh] items-center justify-center bg-cream"

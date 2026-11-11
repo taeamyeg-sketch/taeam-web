@@ -9,7 +9,7 @@ import { SEALED, orderHref } from "@/lib/launch";
 import { JoinWaitlistButton } from "@/components/JoinWaitlistButton";
 
 export const metadata: Metadata = {
-  title: "About Taeam",
+  title: "Our story",
   description:
     "Taeam is Edmonton's halal food delivery platform. Every kitchen verified, built by the community it serves.",
 };

@@ -41,10 +41,12 @@ export const metadata: Metadata = {
   },
   description:
     "Every kitchen on Taeam is halal. Verified, not filtered. Local Edmonton kitchens, delivered to your door.",
+  // No og:title / og:description here on purpose. Next does not merge a
+  // page's title into an inherited openGraph block, so setting them here made
+  // every page without its own openGraph share as the homepage. Left out,
+  // WhatsApp, Facebook, iMessage and LinkedIn fall back to each page's own
+  // <title> and meta description.
   openGraph: {
-    title: "Taeam · Taste the trust.",
-    description:
-      "Every kitchen on Taeam is halal. Verified, not filtered. Edmonton kitchens, delivered hot.",
     images: [{ url: "/og.jpg", width: 1200, height: 630 }],
     siteName: "Taeam",
   },

@@ -117,8 +117,12 @@ export function SiteMenu({ light = false }: { light?: boolean }) {
         />
       </button>
 
-      {/* Panel, kept mounted so it can fade both in and out */}
+      {/* Panel, kept mounted so it can fade both in and out. It is the first
+          text in every page's HTML and its rows have no spaces between them,
+          so Google was quoting it as the search snippet ("ArbaabTaeam's food
+          assistant * The halal gapWhy..."). data-nosnippet keeps it out. */}
       <div
+        data-nosnippet
         className={cn(
           "absolute left-0 top-full z-50 mt-2 max-h-[calc(100dvh-6.5rem)] w-[min(92vw,520px)] origin-top-left overflow-y-auto overscroll-contain rounded-2xl border border-cream-line bg-cream p-3 shadow-card transition-opacity duration-150",
           open ? "visible opacity-100" : "invisible opacity-0",
