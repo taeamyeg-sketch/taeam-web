@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     url: "https://taeam.ca/partners",
     images: [
       {
-        url: "/og.png",
+        url: "/og.jpg",
         width: 1200,
         height: 630,
         alt: "Partner with Taeam",

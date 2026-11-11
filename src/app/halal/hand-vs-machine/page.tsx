@@ -21,7 +21,7 @@ export const metadata: Metadata = {
       'Two very different things are both sold as halal chicken in Canada. What happens on each line, what scholars say, and how to know which one is on your plate.',
     type: 'article',
     url: 'https://taeam.ca/halal/hand-vs-machine',
-    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Taeam, hand or machine' }],
+    images: [{ url: '/og.jpg', width: 1200, height: 630, alt: 'Taeam, hand or machine' }],
   },
 };
 

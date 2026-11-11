@@ -20,7 +20,7 @@ export const metadata: Metadata = {
       'Canada has no single halal standard and nobody regulates the certifiers. The trust gap Canadian Muslims face, and how Taeam closes it.',
     type: 'article',
     url: 'https://taeam.ca/halal',
-    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Taeam, the halal trust gap' }],
+    images: [{ url: '/og.jpg', width: 1200, height: 630, alt: 'Taeam, the halal trust gap' }],
   },
 };
 

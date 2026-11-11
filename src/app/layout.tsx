@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     title: "Taeam · Taste the trust.",
     description:
       "Every kitchen on Taeam is halal. Verified, not filtered. Edmonton kitchens, delivered hot.",
-    images: [{ url: "/og.png", width: 1200, height: 630 }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630 }],
     siteName: "Taeam",
   },
   // Indexable by default. What is actually crawlable is decided in one place,

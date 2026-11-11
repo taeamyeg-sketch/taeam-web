@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://taeam.ca/rewards",
     images: [
-      { url: "/og.png", width: 1200, height: 630, alt: "Taeam Rewards" },
+      { url: "/og.jpg", width: 1200, height: 630, alt: "Taeam Rewards" },
     ],
   },
 };

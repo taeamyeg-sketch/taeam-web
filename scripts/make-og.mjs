@@ -4,7 +4,7 @@
 //   node scripts/make-og.mjs
 //
 // Writes:
-//   public/og.png        the Taeam customer card (every page by default)
+//   public/og.jpg        the Taeam customer card (every page by default)
 //   public/og-drive.png  the Tawsil driver card (/drive)
 //
 // Brand rules (launch test plan B6 #47): uppercase sans, no serif anywhere,
@@ -14,6 +14,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { createElement as h } from "react";
 import { ImageResponse } from "next/dist/compiled/@vercel/og/index.node.js";
+import sharp from "sharp";
 
 const W = 1200;
 const H = 630;
@@ -35,11 +36,21 @@ const rule = (style) =>
 
 async function render(tree, out) {
   const res = new ImageResponse(tree, { width: W, height: H, fonts });
-  await writeFile(out, Buffer.from(await res.arrayBuffer()));
+  let buf = Buffer.from(await res.arrayBuffer());
+  // A photo card as PNG is ~900 KB; WhatsApp and some chat apps skip share
+  // images over ~300 KB, so photo cards are written as JPEG.
+  if (out.endsWith(".jpg")) buf = await sharp(buf).jpeg({ quality: 84, mozjpeg: true }).toBuffer();
+  await writeFile(out, buf);
   console.log(`${out} done`);
 }
 
-// Customer card: cream field, black mark, uppercase black headline.
+// Customer card: a real grill under a dark wash, the orange app tile, and a
+// stacked headline. Google search and many chat apps crop share images to a
+// centred SQUARE, so the tile and headline must live inside the middle
+// 630x630; the old cream card put "HALAL, DELIVERED." across the full width
+// and the square crop read "AL, DELIVER".
+const grill = `data:image/jpeg;base64,${(await readFile("public/halal/mixed-grill.jpg")).toString("base64")}`;
+const tile = `data:image/png;base64,${(await readFile("src/app/icon.png")).toString("base64")}`;
 await render(
   h(
     "div",
@@ -51,26 +62,54 @@ await render(
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: CREAM,
+        background: NOIR,
         fontFamily: "Montserrat",
         position: "relative",
       },
     },
-    rule({ left: 58, top: 90 }),
-    rule({ right: 58, bottom: 90 }),
-    h("img", { src: logo, width: 145, height: 170 }),
+    h("img", {
+      src: grill,
+      width: W,
+      height: H,
+      style: { position: "absolute", left: 0, top: 0, width: W, height: H, objectFit: "cover", objectPosition: "50% 70%" },
+    }),
+    h("div", {
+      style: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: W,
+        height: H,
+        background: "linear-gradient(180deg, rgba(15,15,15,0.55) 0%, rgba(15,15,15,0.72) 55%, rgba(15,15,15,0.88) 100%)",
+      },
+    }),
+    h("img", { src: tile, width: 150, height: 150 }),
     h(
       "div",
-      { style: { marginTop: 44, fontSize: 92, fontWeight: 900, color: INK, letterSpacing: -2, textTransform: "uppercase" } },
-      "Halal, delivered.",
+      {
+        style: {
+          marginTop: 34,
+          fontSize: 80,
+          fontWeight: 900,
+          lineHeight: 0.98,
+          color: "#ffffff",
+          letterSpacing: -2,
+          textTransform: "uppercase",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        },
+      },
+      h("span", null, "Halal,"),
+      h("span", { style: { color: GOLD } }, "delivered."),
     ),
     h(
       "div",
-      { style: { marginTop: 18, fontSize: 28, fontWeight: 600, color: MUTE, letterSpacing: 4, textTransform: "uppercase" } },
-      "Halal-only kitchens · Edmonton",
+      { style: { marginTop: 26, fontSize: 24, fontWeight: 600, color: "rgba(255,255,255,0.78)", letterSpacing: 4, textTransform: "uppercase" } },
+      "Edmonton · Halal-only kitchens",
     ),
   ),
-  "public/og.png",
+  "public/og.jpg",
 );
 
 // Driver card: Tawsil is the driver brand (gold on a dark field, like the app).
