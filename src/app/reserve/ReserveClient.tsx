@@ -22,7 +22,9 @@ type Slot = {
 };
 type Day = { date: string; slots: Slot[] };
 type Confirmed = { date: string; startTime: string; endTime: string; label?: string | null };
-type Install = { testflightApp: string; ios: string | null; android: string | null };
+// androidGroup: an open Google Group for Play closed testing. When set, Android
+// guests join it themselves and nobody adds their Gmail by hand.
+type Install = { testflightApp: string; ios: string | null; android: string | null; androidGroup?: string | null };
 type CalendarLinks = { ics: string; google?: string | null };
 
 // ── timezone-safe formatters ────────────────────────────────────────────────
@@ -107,7 +109,16 @@ function InstallSteps({ install }: { install: Install | null }) {
           <p className="mt-1 text-sm leading-relaxed text-[#52504A]">We&apos;ll email it to you before your window opens.</p>
         </div>
       )}
-      {install.android && device !== 'ios' && (
+      {install.android && install.androidGroup && device !== 'ios' && (
+        <div className="mt-4">
+          <p className="text-sm font-bold">On Android, join the tester group first, then get the app.</p>
+          <p className="mt-1 text-sm leading-relaxed text-[#52504A]">Use the Gmail that is signed into your Play Store.</p>
+          <a href={install.androidGroup} target="_blank" rel="noreferrer noopener" className={button}>Join the tester group</a>
+          <a href={install.android} target="_blank" rel="noreferrer noopener" className={button}>Get it on Google Play</a>
+          <p className="mt-2 text-xs leading-relaxed text-[#52504A]">Play may show a long name ending in &quot;(unreviewed)&quot;. That&apos;s normal for a test app. Tap install.</p>
+        </div>
+      )}
+      {install.android && !install.androidGroup && device !== 'ios' && (
         <div className="mt-4">
           <p className="text-sm font-bold">On Android, this works once we&apos;ve added your Gmail. That can take a little while.</p>
           <a href={install.android} target="_blank" rel="noreferrer noopener" className={button}>Get it on Google Play</a>
@@ -569,6 +580,7 @@ export default function ReservePage() {
                     autoComplete="tel"
                     className="w-full rounded-xl border border-black/10 bg-[#FAFAF8] px-4 py-3.5 text-base text-[#1A1A1A] outline-none transition-all placeholder:text-[#9A988F] focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/30"
                   />
+                  {!install?.androidGroup && (<>
                   <label htmlFor="reserve-google" className="sr-only">
                     Gmail address, Android phones only
                   </label>
@@ -585,6 +597,7 @@ export default function ReservePage() {
                   <p className="px-1 text-xs leading-relaxed text-[#8A8880]">
                     On Android, Google needs the Gmail on your phone before you can install. iPhone people can skip this.
                   </p>
+                  </>)}
 
                   <button
                     type="submit"
