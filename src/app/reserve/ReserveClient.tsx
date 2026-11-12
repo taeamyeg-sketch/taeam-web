@@ -23,6 +23,7 @@ type Slot = {
 type Day = { date: string; slots: Slot[] };
 type Confirmed = { date: string; startTime: string; endTime: string; label?: string | null };
 type Install = { testflightApp: string; ios: string | null; android: string | null };
+type CalendarLinks = { ics: string; google?: string | null };
 
 // ── timezone-safe formatters ────────────────────────────────────────────────
 // slot_date / start_time / end_time arrive as raw wall-clock strings for
@@ -134,6 +135,7 @@ export default function ReservePage() {
   const [confirmed, setConfirmed] = useState<Confirmed | null>(null);
   const [emailed, setEmailed] = useState(false);
   const [install, setInstall] = useState<Install | null>(null);
+  const [calendar, setCalendar] = useState<CalendarLinks | null>(null);
 
   const loadSlots = useCallback(async () => {
     setLoadingSlots(true);
@@ -202,6 +204,7 @@ export default function ReservePage() {
         setConfirmed(data.slot as Confirmed);
         setEmailed(!!data.emailed);
         setInstall(data.install ?? install);
+        setCalendar(data.calendar?.ics ? (data.calendar as CalendarLinks) : null);
         requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
         return;
       }
@@ -266,6 +269,30 @@ export default function ReservePage() {
                   <p className="mt-0.5 text-base font-semibold text-[#52504A]">
                     {fmtRange(confirmed.startTime, confirmed.endTime)}, Edmonton time
                   </p>
+                  {calendar && (
+                    <>
+                      {/* The .ics opens the phone's own calendar, with a reminder
+                          2 hours before the window. */}
+                      <a
+                        href={calendar.ics}
+                        className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A1A1A] px-5 py-3.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-black"
+                      >
+                        <Calendar className="h-4 w-4" />
+                        Add to calendar
+                      </a>
+                      {calendar.google && (
+                        <a
+                          href={calendar.google}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="mt-2 block text-center text-xs font-semibold text-[#52504A] underline underline-offset-2"
+                        >
+                          Or add it to Google Calendar
+                        </a>
+                      )}
+                      <p className="mt-2 text-center text-xs text-[#52504A]">It reminds you 2 hours before.</p>
+                    </>
+                  )}
                 </div>
 
                 <p className="mx-auto mt-6 max-w-md text-[15px] leading-relaxed text-[#52504A]">
