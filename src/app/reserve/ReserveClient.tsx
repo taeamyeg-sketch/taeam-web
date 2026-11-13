@@ -24,6 +24,13 @@ type Day = { date: string; slots: Slot[] };
 type Confirmed = { date: string; startTime: string; endTime: string; label?: string | null };
 // androidGroup: an open Google Group for Play closed testing. When set, Android
 // guests join it themselves and nobody adds their Gmail by hand.
+// The store page for the app, from the tester link. On an Android phone it
+// opens in the Play Store app, which is where the install button lives.
+function playStoreUrl(testingUrl: string): string {
+  const id = testingUrl.split('/apps/testing/')[1];
+  return id ? `https://play.google.com/store/apps/details?id=${id}` : testingUrl;
+}
+
 type Install = { testflightApp: string; ios: string | null; android: string | null; androidGroup?: string | null };
 type CalendarLinks = { ics: string; google?: string | null };
 
@@ -130,17 +137,18 @@ function InstallSteps({ install }: { install: Install | null }) {
               <a href={install.androidGroup} target="_blank" rel="noreferrer noopener" className={button}>Join the tester group</a>
             </li>
             <li>
-              <span className="font-bold text-[#1A1A1A]">Step 2.</span> Tap below, then tap <span className="font-bold">Become a tester</span>. Then tap <span className="font-bold">download it on Google Play</span>.
-              <a href={install.android} target="_blank" rel="noreferrer noopener" className={button}>Get it on Google Play</a>
+              <span className="font-bold text-[#1A1A1A]">Step 2.</span> Tap below, then tap <span className="font-bold">Become a tester</span>. Then come back here.
+              <a href={install.android} target="_blank" rel="noreferrer noopener" className={button}>Become a tester</a>
             </li>
             <li>
-              <span className="font-bold text-[#1A1A1A]">Step 3.</span> Tap <span className="font-bold">Install</span>. Play may show a long name ending in &quot;(unreviewed)&quot;. That&apos;s normal for a test app.
+              <span className="font-bold text-[#1A1A1A]">Step 3.</span> Tap below. The Play Store opens. Tap <span className="font-bold">Install</span>. Play may show a long name ending in &quot;(unreviewed)&quot;. That&apos;s normal for a test app.
+              <a href={playStoreUrl(install.android)} target="_blank" rel="noreferrer noopener" className={button}>Get it on Google Play</a>
             </li>
             <li>
               <span className="font-bold text-[#1A1A1A]">Step 4.</span> Open Taeam and sign up with the phone number you booked with.
             </li>
           </ol>
-          <p className="mt-3 text-xs leading-relaxed text-[#52504A]">If Play says the app isn&apos;t available, you joined a moment ago. Wait 5 minutes and tap Step 2 again. Still stuck? Make sure the Google account in your Play Store is the one you joined the group with.</p>
+          <p className="mt-3 text-xs leading-relaxed text-[#52504A]">If Play says the app isn&apos;t available, you joined a moment ago. Wait a few minutes and tap Step 3 again. Still stuck? Make sure the Google account in your Play Store is the one you joined the group with.</p>
         </div>
       )}
       {install.android && !install.androidGroup && device !== 'ios' && (
