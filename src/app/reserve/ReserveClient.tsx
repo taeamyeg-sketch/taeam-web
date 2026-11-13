@@ -96,9 +96,20 @@ function InstallSteps({ install }: { install: Install | null }) {
       </p>
       {install.ios && device !== 'android' && (
         <div className="mt-4">
-          <p className="text-sm font-bold">On iPhone, get TestFlight first, then join the test.</p>
-          <a href={install.testflightApp} target="_blank" rel="noreferrer noopener" className={button}>Get TestFlight</a>
-          <a href={install.ios} target="_blank" rel="noreferrer noopener" className={button}>Join the Taeam test</a>
+          <p className="text-sm font-bold">On iPhone</p>
+          <ol className="mt-2 space-y-3 text-sm leading-relaxed text-[#52504A]">
+            <li>
+              <span className="font-bold text-[#1A1A1A]">Step 1.</span> Get Apple&apos;s free TestFlight app. Tap Get, then come back here.
+              <a href={install.testflightApp} target="_blank" rel="noreferrer noopener" className={button}>Get TestFlight</a>
+            </li>
+            <li>
+              <span className="font-bold text-[#1A1A1A]">Step 2.</span> Tap below. TestFlight opens. Tap Accept, then Install.
+              <a href={install.ios} target="_blank" rel="noreferrer noopener" className={button}>Join the Taeam test</a>
+            </li>
+            <li>
+              <span className="font-bold text-[#1A1A1A]">Step 3.</span> Open Taeam and sign up with the phone number you booked with.
+            </li>
+          </ol>
         </div>
       )}
       {/* The iPhone link is set once Apple approves the test build. Until
@@ -111,11 +122,25 @@ function InstallSteps({ install }: { install: Install | null }) {
       )}
       {install.android && install.androidGroup && device !== 'ios' && (
         <div className="mt-4">
-          <p className="text-sm font-bold">On Android, join the tester group first, then get the app.</p>
-          <p className="mt-1 text-sm leading-relaxed text-[#52504A]">Use the Gmail that is signed into your Play Store.</p>
-          <a href={install.androidGroup} target="_blank" rel="noreferrer noopener" className={button}>Join the tester group</a>
-          <a href={install.android} target="_blank" rel="noreferrer noopener" className={button}>Get it on Google Play</a>
-          <p className="mt-2 text-xs leading-relaxed text-[#52504A]">Play may show a long name ending in &quot;(unreviewed)&quot;. That&apos;s normal for a test app. Tap install.</p>
+          <p className="text-sm font-bold">On Android</p>
+          <p className="mt-1 text-sm leading-relaxed text-[#52504A]">Do these in order, on your phone, with the Google account your Play Store uses.</p>
+          <ol className="mt-2 space-y-3 text-sm leading-relaxed text-[#52504A]">
+            <li>
+              <span className="font-bold text-[#1A1A1A]">Step 1.</span> Tap below, then tap the blue <span className="font-bold">Join group</span> button on Google&apos;s page. Sign in if it asks. Then come back here.
+              <a href={install.androidGroup} target="_blank" rel="noreferrer noopener" className={button}>Join the tester group</a>
+            </li>
+            <li>
+              <span className="font-bold text-[#1A1A1A]">Step 2.</span> Tap below, then tap <span className="font-bold">Become a tester</span>. Then tap <span className="font-bold">download it on Google Play</span>.
+              <a href={install.android} target="_blank" rel="noreferrer noopener" className={button}>Get it on Google Play</a>
+            </li>
+            <li>
+              <span className="font-bold text-[#1A1A1A]">Step 3.</span> Tap <span className="font-bold">Install</span>. Play may show a long name ending in &quot;(unreviewed)&quot;. That&apos;s normal for a test app.
+            </li>
+            <li>
+              <span className="font-bold text-[#1A1A1A]">Step 4.</span> Open Taeam and sign up with the phone number you booked with.
+            </li>
+          </ol>
+          <p className="mt-3 text-xs leading-relaxed text-[#52504A]">If Play says the app isn&apos;t available, you joined a moment ago. Wait 5 minutes and tap Step 2 again. Still stuck? Make sure the Google account in your Play Store is the one you joined the group with.</p>
         </div>
       )}
       {install.android && !install.androidGroup && device !== 'ios' && (
