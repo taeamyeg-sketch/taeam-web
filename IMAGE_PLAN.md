@@ -26,7 +26,7 @@ Source PNGs are in `Desktop/FireFox downloads/Web pics`; the shipped WebPs are i
 | 7 | `7.png` | `public/verify-lines.jpg` | Approved — see dark-band note |
 | 8 | `Gemini_..._t09p9t...` | `public/rewards-plus.jpg` | Approved |
 | 9 | `9.png` | `public/rewards-everyday.jpg` | Approved — see food note |
-| 10 | `Gemini_..._il58nz...` | `public/fridge-homecook.jpg` | Approved |
+| 10 | `Gemini_..._il58nz...` | ~~`public/fridge-homecook.jpg`~~ | Retired 2026-11-16: the Fridge page was removed (Taeam Grocery replaced it) |
 | 11 | `11.png` | `public/drive-night.jpg` | Approved — remove visor label |
 | 12 | `12.png` | `public/drive-winter.jpg` | Approved — remove bin decal |
 | 13 | `13.png` | `public/arbaab-craving.jpg` | Approved for low-opacity use only |
@@ -51,7 +51,7 @@ Line numbers are from when the plan was written — verify before editing.
 | 7 | [how-we-verify/page.tsx](src/app/how-we-verify/page.tsx) ~250 | Full-bleed band above the hard-lines cards |
 | 8 | [rewards/page.tsx](src/app/rewards/page.tsx) ~418 | Backdrop behind the Taeam Plus column, ~25% opacity |
 | 9 | [rewards/page.tsx](src/app/rewards/page.tsx) ~378 | Band above the "More ways to earn" cards |
-| 10 | [FridgeClient.tsx](src/app/fridge/FridgeClient.tsx) ~115 | Image above the "If you make it" copy |
+| 10 | Retired | The Fridge page is gone; Grocery photo slots are in GROCERY_IMAGE_PROMPTS.md |
 | 11 | [DriveClient.tsx](src/app/drive/DriveClient.tsx) ~240 | Band above the three pay-tier cards |
 | 12 | [DriveClient.tsx](src/app/drive/DriveClient.tsx) ~335 | Band above the "Why drive with us" perks |
 | 13 | [ArbaabClient.tsx](src/app/arbaab/ArbaabClient.tsx) ~153 | Dark-masked backdrop behind the chat mockup, low opacity |

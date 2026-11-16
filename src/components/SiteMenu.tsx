@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  Basket,
   CaretDown,
   Storefront,
   Robot,
@@ -32,6 +33,7 @@ interface HubLink {
 // surfaces that make Taeam more than a delivery app.
 const HUB: HubLink[] = [
   { href: "/restaurants", label: "Order food", desc: "Halal kitchens near you", icon: Storefront },
+  { href: "/grocery", label: "Grocery", desc: "Checked halal groceries, soon", icon: Basket },
   { href: "/arbaab", label: "Arbaab", desc: "Taeam's food assistant", icon: Robot },
   { href: "/halal", label: "The halal gap", desc: "Why we verify, not filter", icon: SealCheck },
   { href: "/drive", label: "Drive with Tawsil", desc: "Earn on your schedule", icon: Car },

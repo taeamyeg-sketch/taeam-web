@@ -17,8 +17,11 @@ import { openWaitlist } from "@/lib/waitlist-modal";
 // The primary taeam.ca surfaces, surfaced as always-visible top-nav buttons
 // (desktop). On phones these collapse into the logo hub menu, which carries the
 // full set. Each opens a real page that already exists in this app.
-const NAV = [
+// `wide` links show from lg up only: at phone and tablet widths the row is
+// already full, so those live in the logo menu there.
+const NAV: { href: string; label: string; wide?: boolean }[] = [
   { href: "/restaurants", label: "Restaurants" },
+  { href: "/grocery", label: "Grocery", wide: true },
   { href: "/arbaab", label: "Arbaab" },
   { href: "/halal", label: "Halal" },
   { href: "/drive", label: "Drive" },
@@ -137,7 +140,11 @@ export function Header({
                     {item.label}
                   </TransitionLink>
                 ) : (
-                  <Link key={item.href} href={item.href} className={navLink}>
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(navLink, item.wide && "hidden lg:inline-block")}
+                  >
                     {item.label}
                   </Link>
                 ),

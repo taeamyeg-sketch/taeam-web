@@ -7,25 +7,26 @@ import { LaunchZones } from "@/components/marketing/LaunchZones";
 import { TrustGap } from "@/components/marketing/TrustGap";
 import { ContactSection } from "@/components/marketing/ContactSection";
 import { RestaurantCard } from "@/components/RestaurantCard";
+import { GroceryShelfArt } from "@/components/grocery/GroceryArt";
 import { TransitionLink } from "@/components/transition/PageTransition";
 import { Reveal } from "@/components/Reveal";
 import { Eyebrow } from "@/components/Eyebrow";
 import { getRestaurants } from "@/lib/data";
 import { SEALED } from "@/lib/launch";
 
-/* The ecosystem grid is a bento: the two product-UI tiles (Arbaab, Rewards)
-   sit side by side at equal width up top, then the Tawsil photo tile runs the
-   full width below so the section still reads editorial, not template. The
-   Fridge tile was removed: the Fridge is shelved, so taeam.ca no longer
-   promotes it (the /fridge route stays, noindexed). Ordering itself lives in
-   the "Browse the kitchens" section further down. */
+/* The ecosystem grid is a bento: three tiles (Arbaab, Rewards, Grocery) sit
+   side by side at equal width up top, then the Tawsil photo tile runs the full
+   width below so the section still reads editorial, not template. Grocery took
+   the place of the shelved Fridge (GROCERY_PLAN G-43); its tile is the same
+   drawn shelf as the /grocery hero, held still. Ordering itself lives in the
+   "Browse the kitchens" section further down. */
 const ECOSYSTEM = [
   {
     title: "Arbaab",
     copy: "Taeam's food assistant. Ask by chat and it finds what you're craving, reorders, and runs the app.",
     href: "/arbaab",
     cta: "Meet Arbaab",
-    span: "lg:col-span-6",
+    span: "lg:col-span-4",
     badge: null as string | null,
     tile: (
       <>
@@ -59,7 +60,7 @@ const ECOSYSTEM = [
     copy: "10 points on every dollar, free points every day, and 1,000 points is a dollar off. Plus doubles it all.",
     href: "/rewards",
     cta: "See how rewards work",
-    span: "lg:col-span-6",
+    span: "lg:col-span-4",
     badge: null,
     tile: (
       <>
@@ -84,6 +85,21 @@ const ECOSYSTEM = [
           </div>
         </div>
       </>
+    ),
+  },
+  {
+    title: "Taeam Grocery",
+    copy: "Halal groceries, checked product by product and shopped by a real person. Coming soon to South Edmonton.",
+    href: "/grocery",
+    cta: "See how it works",
+    span: "sm:col-span-2 lg:col-span-4",
+    badge: null,
+    tile: (
+      <GroceryShelfArt
+        animate={false}
+        decorative
+        className="absolute inset-0 h-full w-full bg-[#F6F1E7]"
+      />
     ),
   },
   {

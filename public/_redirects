@@ -15,3 +15,8 @@
 /promo/:code       /promo/promo         200
 /merchant/orders/:id  /merchant/orders/order  200
 /refer/:code       /refer               200
+
+# The Fridge (home-chef marketplace) was shelved and replaced by Taeam Grocery
+# (GROCERY_PLAN G-43). Its page is gone; old links land on the Grocery page.
+/fridge        /grocery   301
+/fridge/       /grocery   301

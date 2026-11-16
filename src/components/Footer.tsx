@@ -118,6 +118,11 @@ export function Footer() {
                   </li>
                 )}
                 <li>
+                  <Link href="/grocery" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
+                    Taeam Grocery
+                  </Link>
+                </li>
+                <li>
                   <Link href="/halal" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     The halal standard
                   </Link>
@@ -130,6 +135,11 @@ export function Footer() {
                 <li>
                   <Link href="/how-we-verify" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
                     How we verify
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/halal-check" className="inline-block py-1.5 text-cream/70 transition-colors hover:text-gold">
+                    Halal product check
                   </Link>
                 </li>
                 <li>
