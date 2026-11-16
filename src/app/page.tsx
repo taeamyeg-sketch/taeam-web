@@ -8,6 +8,7 @@ import { TrustGap } from "@/components/marketing/TrustGap";
 import { ContactSection } from "@/components/marketing/ContactSection";
 import { RestaurantCard } from "@/components/RestaurantCard";
 import { GroceryShelfArt } from "@/components/grocery/GroceryArt";
+import { ArbaabArt, PlusArt } from "@/components/marketing/EcosystemArt";
 import { TransitionLink } from "@/components/transition/PageTransition";
 import { Reveal } from "@/components/Reveal";
 import { Eyebrow } from "@/components/Eyebrow";
@@ -16,9 +17,10 @@ import { SEALED } from "@/lib/launch";
 
 /* The ecosystem grid is a bento: three tiles (Arbaab, Rewards, Grocery) sit
    side by side at equal width up top, then the Tawsil photo tile runs the full
-   width below so the section still reads editorial, not template. Grocery took
-   the place of the shelved Fridge (GROCERY_PLAN G-43); its tile is the same
-   drawn shelf as the /grocery hero, held still. Ordering itself lives in the
+   width below so the section still reads editorial, not template. The three
+   top tiles are drawn scenes in one style (components/marketing/EcosystemArt
+   and components/grocery/GroceryArt), each looping gently and still under
+   reduced motion. Grocery took the place of the shelved Fridge (G-43). Ordering itself lives in the
    "Browse the kitchens" section further down. */
 const ECOSYSTEM = [
   {
@@ -28,32 +30,7 @@ const ECOSYSTEM = [
     cta: "Meet Arbaab",
     span: "lg:col-span-4",
     badge: null as string | null,
-    tile: (
-      <>
-        <div className="absolute inset-0 flex flex-col justify-center gap-2 p-5">
-          <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold">
-              <Image
-                src="/takinator_avatar.png"
-                alt=""
-                width={18}
-                height={18}
-                className="object-contain"
-              />
-            </span>
-            <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/80">
-              Arbaab
-            </span>
-          </div>
-          <span className="mt-1 max-w-[88%] self-start rounded-2xl rounded-tl-sm bg-white/10 px-3 py-2 text-[11px] leading-snug text-white/90">
-            Find me something spicy under $15
-          </span>
-          <span className="max-w-[88%] self-end rounded-2xl rounded-br-sm bg-gold px-3 py-2 text-[11px] font-medium leading-snug text-noir">
-            On it. Three halal spots near you.
-          </span>
-        </div>
-      </>
-    ),
+    tile: <ArbaabArt decorative className="absolute inset-0 h-full w-full bg-[#F6F1E7]" />,
   },
   {
     title: "Rewards + Plus",
@@ -62,30 +39,7 @@ const ECOSYSTEM = [
     cta: "See how rewards work",
     span: "lg:col-span-4",
     badge: null,
-    tile: (
-      <>
-        <div className="absolute inset-0 flex flex-col justify-center gap-2 p-5">
-          {[
-            ["Shawarma night", "+170 pts"],
-            ["Daily check-in", "+5 pts"],
-          ].map(([order, pts]) => (
-            <div
-              key={order}
-              className="flex items-center justify-between gap-3 rounded-xl bg-white/[0.07] px-3.5 py-2.5"
-            >
-              <span className="text-xs font-semibold text-white/90">{order}</span>
-              <span className="text-xs font-bold text-gold">{pts}</span>
-            </div>
-          ))}
-          <div className="mt-1 flex items-center justify-between gap-3 rounded-xl bg-gold px-3.5 py-2.5">
-            <span className="text-[10px] font-black uppercase tracking-[0.14em] text-noir">
-              Taeam Plus
-            </span>
-            <span className="text-xs font-bold text-noir">Flat $2.99 delivery</span>
-          </div>
-        </div>
-      </>
-    ),
+    tile: <PlusArt decorative className="absolute inset-0 h-full w-full bg-[#F6F1E7]" />,
   },
   {
     title: "Taeam Grocery",
@@ -96,7 +50,6 @@ const ECOSYSTEM = [
     badge: null,
     tile: (
       <GroceryShelfArt
-        animate={false}
         decorative
         className="absolute inset-0 h-full w-full bg-[#F6F1E7]"
       />

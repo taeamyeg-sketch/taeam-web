@@ -70,11 +70,11 @@ function RiceSack({ r }: { r: Box }) {
         {...INK}
       />
       <path
-        d={`M${l + 16},${t + 12} L${l + 22},${t} L${cx},${t + 6} L${rr - 22},${t} L${rr - 16},${t + 12} Z`}
+        d={`M${l + 18},${t + 12} Q${l + 14},${t + 2} ${l + 24},${t + 1} Q${cx},${t - 3} ${rr - 24},${t + 1} Q${rr - 14},${t + 2} ${rr - 18},${t + 12} Z`}
         fill={C.paper}
         {...INK}
       />
-      <line x1={l + 17} y1={t + 13} x2={rr - 17} y2={t + 13} {...INK} strokeWidth={2.2} />
+      <rect x={l + 17} y={t + 10} width={r.w - 34} height={5} rx={2.5} fill={C.goldDeep} {...INK} />
       <rect x={l + 8} y={t + 32} width={r.w - 16} height={18} rx={2} fill={C.gold} {...INK} />
       {[-9, 0, 9].map((dx) => (
         <ellipse
