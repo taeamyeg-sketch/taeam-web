@@ -92,22 +92,20 @@ function TextLines({ x, y, widths, color, gap = 6 }: { x: number; y: number; wid
 
 // ─── Arbaab ──────────────────────────────────────────────────────────────────
 
-/** Arbaab's face: the faceless host in a headdress, like the app avatar. */
+/** Arbaab's real icon (public/takinator_avatar.png) in a gold circle, as in the app. */
 function ArbaabAvatar({ cx, cy, r }: { cx: number; cy: number; r: number }) {
-  const s = r / 10;
+  const size = r * 1.35;
   return (
     <g>
-      <circle cx={cx} cy={cy} r={r} fill={C.gold} {...INK} strokeWidth={1.2} />
-      <g transform={`translate(${cx} ${cy}) scale(${s})`}>
-        {/* headdress */}
-        <path d="M-6.2,6 L-6.2,-2.2 Q-6.2,-7.4 0,-7.4 Q6.2,-7.4 6.2,-2.2 L6.2,6" fill={C.paper} stroke={C.ink} strokeWidth={1.1} strokeLinejoin="round" />
-        {/* face */}
-        <path d="M-3.4,-3.6 Q0,-4.6 3.4,-3.6 L3.4,1.4 Q0,4.6 -3.4,1.4 Z" fill={C.gold} stroke={C.ink} strokeWidth={1} strokeLinejoin="round" />
-        {/* band */}
-        <rect x={-6.6} y={-6.2} width={13.2} height={1.9} rx={0.95} fill={C.ink} />
-        {/* shoulders */}
-        <path d="M-7.8,9.6 Q-7.8,5.4 -3.2,4.8 L3.2,4.8 Q7.8,5.4 7.8,9.6" fill={C.ink} />
-      </g>
+      <circle cx={cx} cy={cy} r={r} fill={C.gold} />
+      <image
+        href="/takinator_avatar.png"
+        x={cx - size / 2}
+        y={cy - size / 2}
+        width={size}
+        height={size}
+        preserveAspectRatio="xMidYMid meet"
+      />
     </g>
   );
 }
