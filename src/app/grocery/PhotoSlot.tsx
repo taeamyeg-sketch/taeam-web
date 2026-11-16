@@ -12,13 +12,13 @@ export const GROCERY_PHOTOS = {
   // Slot 1, "Who shops": hands holding a phone, scanning a barcode in an aisle.
   // File: public/grocery-scan.webp, 4:3, 1600 x 1200.
   scan: {
-    src: null as string | null,
+    src: "/grocery-scan.webp" as string | null,
     alt: "A shopper's hands holding a phone up to a jar on a grocery shelf, scanning its barcode",
   },
   // Slot 2, "Good to know": a paper grocery bag on a doorstep.
   // File: public/grocery-doorstep.webp, 3:2, 1800 x 1200.
   doorstep: {
-    src: null as string | null,
+    src: "/grocery-doorstep.webp" as string | null,
     alt: "A paper grocery bag of bread, greens and staples waiting on a doormat beside a front door",
   },
   // Slot 3, "Coming too": a small halal grocer's shelves and counter.
