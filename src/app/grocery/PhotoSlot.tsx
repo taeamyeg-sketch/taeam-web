@@ -24,7 +24,7 @@ export const GROCERY_PHOTOS = {
   // Slot 3, "Coming too": a small halal grocer's shelves and counter.
   // File: public/grocery-grocer.webp, 3:2, 1800 x 1200.
   grocer: {
-    src: null as string | null,
+    src: "/grocery-grocer.webp" as string | null,
     alt: "Shelves of rice, dates, oil and jars in a small neighbourhood grocer, with wrapped packs on the counter",
   },
 };
