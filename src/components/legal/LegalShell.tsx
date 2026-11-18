@@ -13,6 +13,7 @@ import { cn } from "@/lib/cn";
 
 export const LEGAL_DOCS = [
   { href: "/terms", label: "Terms of Service" },
+  { href: "/grocery-terms", label: "Grocery Terms" },
   { href: "/privacy-policy", label: "Privacy Policy" },
   { href: "/cookies", label: "Cookies & Storage" },
   { href: "/accessibility", label: "Accessibility" },

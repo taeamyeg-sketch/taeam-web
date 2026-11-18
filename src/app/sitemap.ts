@@ -29,6 +29,7 @@ const STATIC_ROUTES = [
   // "/reserve" is intentionally absent: invite-only, and robots.ts disallows it.
   "/help",
   "/terms",
+  "/grocery-terms",
   "/privacy-policy",
   "/cookies",
   "/accessibility",

@@ -35,6 +35,13 @@ const linkClass =
  * restaurants; watch records go after 90 days; copyright contact. Mirrors
  * privacy policy version 2026-10.4 in the app.
  *
+ * 2026-11-17: Taeam Grocery. Store receipt photos and business card statement
+ * lines, doorstep photos, saved loyalty card numbers, "Ask us to check this"
+ * votes (with a scrambled IP), what the shopper and the store receive, how
+ * shoppers are shown, OpenAI reading receipts and label photos, grocery calls
+ * on Agora, and the retention lines. Mirrors privacy policy version 2026-11
+ * in the app.
+ *
  * The section ids are load-bearing: they are the anchors this page has always
  * published, so /privacy-policy#sharing and #cookies still resolve.
  */
@@ -43,7 +50,7 @@ export default function PrivacyPolicyPage() {
     <LegalShell
       current="/privacy-policy"
       title="Privacy Policy"
-      updated="October 13, 2026"
+      updated="November 17, 2026"
       intro={
         <>
           This is the plain-English version of how Taeam handles your info. We
@@ -74,6 +81,16 @@ export default function PrivacyPolicyPage() {
           If you send us a photo, we keep it. That happens in two places:
           evidence you attach to a support claim, and the picture of your
           delivery bag if you use Scan &amp; Earn.
+        </p>
+        <p>
+          If you use Taeam Grocery, we also keep the photo of the store receipt
+          for your order and the matching line from our business card
+          statement, the photo your shopper takes if they leave your order at
+          the door, and a store loyalty card number if you choose to save one.
+          If you tap &quot;Ask us to check this&quot; in the halal lookup, we
+          keep the product, barcode or words you searched, your account if you
+          are signed in, and a scrambled form of your IP address so that each
+          person counts once.
         </p>
         <p>
           We also collect basic technical details: device type, OS version, app
@@ -110,6 +127,15 @@ export default function PrivacyPolicyPage() {
           We use what you watch and react to in the feed to choose what you
           see and to give restaurants totals that never name you.
         </p>
+        <p>
+          For Taeam Grocery, OpenAI&apos;s AI reads each store receipt photo to
+          pull out the store, date, total and item prices, as a cross-check on
+          the total a person confirms. It also reads photos of product labels
+          and ingredient panels so we can spot a recipe change. A person
+          confirms every receipt total and makes every halal decision: the AI
+          decides neither what you are charged nor whether a product is
+          listed.
+        </p>
       </LegalSection>
 
       <LegalSection id="sharing" title="Who we share it with">
@@ -126,6 +152,22 @@ export default function PrivacyPolicyPage() {
           deliberate: if you entered a separate number for whoever is receiving
           the order, the driver is shown that number at the door, because they
           may need to call it to hand the food over.
+        </p>
+        <p>
+          For a Taeam Grocery order, your shopper gets your first name, your
+          delivery address and notes, the items, and your store loyalty card
+          number if you saved one. They do not get your surname, phone number
+          or email, and calls go through the app. Your shopper scans your
+          loyalty card at the till, so that store&apos;s loyalty programme
+          records the purchase on your loyalty account. Otherwise the store
+          receives nothing about you, because your shopper pays with a Taeam
+          card.
+        </p>
+        <p>
+          Grocery shoppers are shown to customers by their first name, a photo
+          if they chose to add one, a short profile line and a live status such
+          as Available now or Shopping. We never show a shopper&apos;s surname,
+          location, home area, the store they are at, or their phone number.
         </p>
         <p>
           Beyond that, your information goes only to the companies listed in{" "}
@@ -214,7 +256,9 @@ export default function PrivacyPolicyPage() {
             support live chat messages with the details of your own recent
             orders, the text of a support claim, and any photo or screenshot
             you send us for a support claim, for Scan &amp; Earn, or to claim
-            the social share bonus.
+            the social share bonus. For Taeam Grocery it reads photos of store
+            receipts (the store, date, total and item prices) and of product
+            labels and ingredient panels.
           </li>
           <li>
             <strong>Brave Search</strong> (United States): only when Arbaab
@@ -228,7 +272,7 @@ export default function PrivacyPolicyPage() {
           </li>
           <li>
             <strong>Agora</strong> (United States): carries the in-app voice
-            calls between you and your driver.
+            calls between you and your driver or grocery shopper.
           </li>
           <li>
             <strong>Resend</strong> (United States): sends our email.
@@ -270,7 +314,8 @@ export default function PrivacyPolicyPage() {
           messages and the context described in the Arbaab section are
           processed by Anthropic or OpenAI in the United States, and a web
           search query by Brave in the United States. Review text is processed
-          by Anthropic in the United States.
+          by Anthropic in the United States, and grocery receipt and label
+          photos by OpenAI in the United States.
         </p>
         <p>
           That means your personal information is stored and processed outside
@@ -356,8 +401,8 @@ export default function PrivacyPolicyPage() {
         <p>Some things are deleted on a fixed schedule, whether or not you ask:</p>
         <ul className="ms-5 list-disc space-y-1.5">
           <li>
-            Delivery photos, meaning the picture a driver takes at your door,
-            are deleted 30 days after the delivery.
+            Delivery photos, meaning the picture a driver or grocery shopper
+            takes at your door, are deleted 30 days after the delivery.
           </li>
           <li>A driver&apos;s recorded location trail is deleted after 90 days.</li>
           <li>
@@ -365,6 +410,16 @@ export default function PrivacyPolicyPage() {
             days.
           </li>
           <li>Support tickets are archived once they are resolved.</li>
+          <li>
+            The scrambled IP address kept with an &quot;Ask us to check
+            this&quot; request is deleted after 90 days.
+          </li>
+          <li>
+            Grocery store receipt photos and our business card statement
+            records are kept for six years after the end of the tax year they
+            belong to, because tax law requires us to keep records of what we
+            bought.
+          </li>
         </ul>
         <p>
           If you close your account, we remove your personal details and
