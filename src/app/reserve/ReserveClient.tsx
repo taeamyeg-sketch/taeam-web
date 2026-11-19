@@ -24,14 +24,14 @@ type Day = { date: string; slots: Slot[] };
 type Confirmed = { date: string; startTime: string; endTime: string; label?: string | null };
 // androidGroup: an open Google Group for Play closed testing. When set, Android
 // guests join it themselves and nobody adds their Gmail by hand.
+type Install = { testflightApp: string; ios: string | null; android: string | null; androidGroup?: string | null };
+
 // The store page for the app, from the tester link. On an Android phone it
 // opens in the Play Store app, which is where the install button lives.
 function playStoreUrl(testingUrl: string): string {
   const id = testingUrl.split('/apps/testing/')[1];
   return id ? `https://play.google.com/store/apps/details?id=${id}` : testingUrl;
 }
-
-type Install = { testflightApp: string; ios: string | null; android: string | null; androidGroup?: string | null };
 type CalendarLinks = { ics: string; google?: string | null };
 
 // ── timezone-safe formatters ────────────────────────────────────────────────
@@ -255,8 +255,13 @@ export default function ReservePage() {
 
       if (data.error === 'already_booked') {
         setError('You already have a booking. It\'s one window per person.');
-      } else if (data.error === 'slot_full' || data.error === 'slot_unavailable') {
+      } else if (data.error === 'slot_full') {
         setError('Sorry, that window just filled up. Please pick another one.');
+        setSelectedSlotId(null);
+        loadSlots();
+      } else if (data.error === 'slot_unavailable') {
+        // Closed, or today's: same-day windows can't be booked.
+        setError('That window can\'t be booked anymore. Please pick another one.');
         setSelectedSlotId(null);
         loadSlots();
       } else if (data.error === 'slot_not_found') {
@@ -338,6 +343,15 @@ export default function ReservePage() {
                     </>
                   )}
                 </div>
+
+                {/* The app finds the booking by this number alone, and a second
+                    booking is refused, so a typo here has to be caught now. */}
+                {phone.trim() && (
+                  <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-[#52504A]">
+                    You booked with <span className="font-bold text-[#1A1A1A]">{phone.trim()}</span>. Sign up in the app with that number.
+                    If it&apos;s wrong, email contact@taeam.ca and we&apos;ll fix it.
+                  </p>
+                )}
 
                 <p className="mx-auto mt-6 max-w-md text-[15px] leading-relaxed text-[#52504A]">
                   {emailed
