@@ -76,7 +76,7 @@ export default function HandVsMachineExperience() {
           <ArrowLeft className="h-4 w-4" />
           The halal trust gap
         </Link>
-        <img src="/taeam-logo.jpg" alt="Taeam" className="h-9 w-9 rounded-full" />
+        <img src="/taeam-logo-square.jpg" alt="Taeam" className="h-9 w-9 rounded-full object-cover" />
       </nav>
 
       {/* ── MASTHEAD ── */}

@@ -110,7 +110,7 @@ export default function DrivePage() {
           <ArrowLeft className="h-4 w-4" weight="bold" />
           Back to Taeam
         </Link>
-        <Image src="/taeam-logo.jpg" alt="Taeam" width={36} height={36} sizes="36px" className="h-9 w-9 rounded-full" />
+        <Image src="/taeam-logo-square.jpg" alt="Taeam" width={36} height={36} sizes="36px" className="h-9 w-9 rounded-full object-cover" />
       </nav>
 
       {/* ── BANNER ── */}

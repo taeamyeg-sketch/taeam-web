@@ -76,7 +76,7 @@ export function AppFallback({
           <ArrowLeft className="h-4 w-4" weight="bold" />
           Back to Taeam
         </Link>
-        <img src="/taeam-logo.jpg" alt="Taeam" className="h-9 w-9 rounded-full" />
+        <img src="/taeam-logo-square.jpg" alt="Taeam" className="h-9 w-9 rounded-full object-cover" />
       </nav>
 
       <section className="px-5 py-16 sm:px-8 sm:py-24">
