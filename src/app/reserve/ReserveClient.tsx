@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   ArrowLeft, ArrowRight, CheckCircle, Clock, Calendar, Phone,
   ShieldCheck, MapPin,
@@ -169,6 +169,18 @@ export default function ReservePage() {
   const [slotsError, setSlotsError] = useState('');
 
   const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
+
+  // Picking a window takes the guest straight to the details card, where the
+  // window they picked shows at the top.
+  const pickSlot = (id: string) => {
+    setSelectedSlotId(id);
+    setError('');
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    requestAnimationFrame(() =>
+      detailsRef.current?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }),
+    );
+  };
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -529,7 +541,7 @@ export default function ReservePage() {
                             <button
                               key={slot.id}
                               type="button"
-                              onClick={() => { setSelectedSlotId(slot.id); setError(''); }}
+                              onClick={() => pickSlot(slot.id)}
                               aria-pressed={selected}
                               className={`rounded-xl border px-4 py-4 text-left transition-colors ${
                                 selected
@@ -569,7 +581,7 @@ export default function ReservePage() {
 
           {/* ───────────────────────── FORM ───────────────────────── */}
           <section className="px-5 py-14 sm:px-8 sm:py-16">
-            <div className="mx-auto max-w-2xl overflow-hidden rounded-xl border border-cream-line bg-white">
+            <div ref={detailsRef} className="mx-auto max-w-2xl scroll-mt-24 overflow-hidden rounded-xl border border-cream-line bg-white">
               <div className="p-7 sm:p-10">
                 <h2 className="text-2xl font-black uppercase tracking-tight sm:text-3xl">Your details</h2>
 
