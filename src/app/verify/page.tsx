@@ -27,8 +27,12 @@ export default function VerifyPage() {
     <>
       <Header />
       <main className="mx-auto w-full max-w-3xl px-4 pb-24 pt-10 sm:pt-16">
-        {/* useSearchParams needs a Suspense boundary to prerender statically. */}
-        <Suspense fallback={null}>
+        {/* useSearchParams needs a Suspense boundary to prerender statically.
+            The fallback is all the static HTML holds, so it carries the
+            page's heading for crawlers and screen readers. */}
+        <Suspense
+          fallback={<h1 className="sr-only">Check a Taeam Verified record</h1>}
+        >
           <VerifyLookup />
         </Suspense>
       </main>

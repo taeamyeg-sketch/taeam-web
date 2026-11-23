@@ -72,6 +72,40 @@ export default function AboutPage() {
           </div>
         </Reveal>
 
+        {/* The one place the other spellings of the name belong. People hear
+            "Taeam" before they see it, and search engines read it as a typo of
+            "team", so this answers the question in plain words. Keep the
+            variants here and in lib/structured-data only; repeating them
+            elsewhere on the site reads as keyword stuffing. */}
+        <Reveal>
+          <section
+            id="name"
+            aria-labelledby="name-title"
+            className="mt-12 border-l-2 border-gold pl-5 sm:pl-6"
+          >
+            <h2
+              id="name-title"
+              className="font-black uppercase tracking-tight text-2xl text-ink sm:text-3xl"
+            >
+              How do you say Taeam?
+            </h2>
+            <div className="mt-4 space-y-4 text-[17px] leading-relaxed text-ink-soft">
+              <p>
+                <strong className="text-ink">Tay-em.</strong> The name comes
+                from{" "}
+                <span lang="ar" dir="rtl" style={{ fontFamily: "var(--font-arabic)" }}>
+                  طعام
+                </span>
+                , the Arabic word for food. And no, it is not a typo of team.
+              </p>
+              <p>
+                If you heard it before you saw it written, you might have typed
+                Tayem, Taam or Ta&rsquo;am. Same place, same food. You found us.
+              </p>
+            </div>
+          </section>
+        </Reveal>
+
         <Divider className="my-12" />
 
         <Reveal>
