@@ -193,26 +193,54 @@ export default function ReservePage() {
   const [install, setInstall] = useState<Install | null>(null);
   const [calendar, setCalendar] = useState<CalendarLinks | null>(null);
 
-  const loadSlots = useCallback(async () => {
-    setLoadingSlots(true);
-    setSlotsError('');
+  // silent: a background refresh (tab came back into view). No spinner, and a
+  // failed refresh keeps the list already on screen instead of an error.
+  const loadSlots = useCallback(async ({ silent = false }: { silent?: boolean } = {}) => {
+    if (!silent) {
+      setLoadingSlots(true);
+      setSlotsError('');
+    }
     try {
-      const res = await fetch(`${BACKEND_URL}/api/reserve/slots`);
+      const res = await fetch(`${BACKEND_URL}/api/reserve/slots`, { cache: 'no-store' });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || 'failed');
-      setDays(Array.isArray(data.days) ? data.days : []);
+      const fresh: Day[] = Array.isArray(data.days) ? data.days : [];
+      setDays(fresh);
       setInstall(data.install ?? null);
+      // A window picked earlier may have filled up or closed in the meantime.
+      setSelectedSlotId((id) =>
+        id && fresh.some((d) => d.slots.some((s) => s.id === id && !s.isFull)) ? id : null,
+      );
     } catch {
+      if (silent) return;
       setDays([]);
       setSlotsError('We could not load the windows just now. Please refresh and try again.');
     } finally {
-      setLoadingSlots(false);
+      if (!silent) setLoadingSlots(false);
     }
   }, []);
 
   useEffect(() => {
     requestAnimationFrame(() => window.scrollTo(0, 0));
     loadSlots();
+  }, [loadSlots]);
+
+  // Phones keep a backgrounded tab frozen, so a page opened this morning would
+  // still list a window someone booked since then as Open. Reload the windows
+  // whenever the tab comes back into view.
+  useEffect(() => {
+    const refresh = () => {
+      if (document.visibilityState === 'visible') loadSlots({ silent: true });
+    };
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) loadSlots({ silent: true });
+    };
+    document.addEventListener('visibilitychange', refresh);
+    window.addEventListener('pageshow', onPageShow);
+    return () => {
+      document.removeEventListener('visibilitychange', refresh);
+      window.removeEventListener('pageshow', onPageShow);
+    };
   }, [loadSlots]);
 
   useEffect(() => {
@@ -500,7 +528,7 @@ export default function ReservePage() {
                 <div className="p-6 text-center">
                   <p className="text-sm font-semibold text-[#C0392B]">{slotsError}</p>
                   <button
-                    onClick={loadSlots}
+                    onClick={() => loadSlots()}
                     className="mt-4 rounded-xl bg-[#1A1A1A] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-black"
                   >
                     Try again
