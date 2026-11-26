@@ -1,12 +1,12 @@
 # Taeam
 
-> Taeam is a halal food delivery platform in Edmonton, Alberta, Canada. Every kitchen on Taeam is halal: restaurants are verified before they are listed, not filtered by a checkbox. Taeam is pre-launch and taking sign-ups on a waitlist at https://taeam.ca.
+> Taeam is a halal food delivery platform in Edmonton, Alberta, Canada. Every kitchen on Taeam is halal only, not filtered by a checkbox, and every restaurant page shows how far Taeam's paperwork check has gone. Taeam is pre-launch and taking sign-ups on a waitlist at https://taeam.ca.
 
 Key facts:
 
 - Name: Taeam, pronounced "tay-em". It comes from طعام, the Arabic word for food. People who hear the name sometimes spell it Tayem, Taam or Ta'am. It is a brand name, not a misspelling of "team".
 - Tagline: Taste the trust (Arabic: طعم الثقة).
-- What it is: a food delivery app where every restaurant is halal. Each restaurant signs that its kitchen is halal only, Taeam checks the paperwork behind that promise, and each restaurant page shows how the meat was prepared.
+- What it is: a food delivery app where every restaurant is halal. Each restaurant signs that its kitchen is halal only, Taeam checks the paperwork behind that promise, and each restaurant page shows where that check stands (Under review, Owner's word, Third-party certified or Taeam Verified).
 - Where: Edmonton, Alberta. Launching first in North and South Edmonton, then growing across the city.
 - Status: pre-launch. Customers and drivers can join the waitlist on the website.
 - Company: Taeam Technologies Inc., Edmonton, Alberta.
