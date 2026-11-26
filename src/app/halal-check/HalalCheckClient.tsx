@@ -268,6 +268,9 @@ export function HalalCheckClient() {
     return (
       <section aria-busy="true" aria-label="Taeam halal lookup">
         <Eyebrow>Taeam halal lookup</Eyebrow>
+        {/* The static HTML is this loading state, so without this the page a
+            crawler reads first has no heading at all. */}
+        <h1 className="sr-only">Taeam halal product check</h1>
         <div className="mt-4 h-10 w-3/4 animate-pulse rounded-lg bg-cream-deep motion-reduce:animate-none" />
         <div className="mt-4 h-5 w-full max-w-xl animate-pulse rounded bg-cream-deep motion-reduce:animate-none" />
         <div className="mt-8 h-12 w-full animate-pulse rounded-lg bg-cream-deep motion-reduce:animate-none" />

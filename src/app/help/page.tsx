@@ -4,7 +4,8 @@ import { SEALED } from '@/lib/launch';
 
 export const metadata: Metadata = {
   title: 'Help & support',
-  description: 'Get help with your Taeam order or account.',
+  description:
+    'Get help from Taeam, the halal food delivery app in Edmonton: your order, your account or the launch waitlist. Email us any time at contact@taeam.ca.',
 };
 
 export default function HelpPage() {

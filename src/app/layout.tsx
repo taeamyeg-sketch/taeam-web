@@ -35,12 +35,17 @@ export const metadata: Metadata = {
   // Absolute base for OG/twitter images and canonicals; without it social
   // scrapers get relative (broken) image URLs.
   metadataBase: new URL("https://taeam.ca"),
+  // The default title is the home page's. It leads with the name and says
+  // what and where, because "Taeam" alone reads like a typo of "team" and a
+  // search engine needs the rest of the line to know it is a brand.
   title: {
-    default: "Taeam · Edmonton's halal food delivery platform",
+    default: "Taeam | Verified Halal Food Delivery in Edmonton",
     template: "%s · Taeam",
   },
   description:
-    "Every kitchen on Taeam is halal. Verified, not filtered. Local Edmonton kitchens, delivered to your door.",
+    "Taeam is Edmonton's halal food delivery app. Every kitchen on Taeam is halal, verified not filtered, and delivered to your door. Join the waitlist for launch.",
+  // Name under the icon when someone adds the site to an iPhone home screen.
+  appleWebApp: { title: "Taeam" },
   // No og:title / og:description here on purpose. Next does not merge a
   // page's title into an inherited openGraph block, so setting them here made
   // every page without its own openGraph share as the homepage. Left out,

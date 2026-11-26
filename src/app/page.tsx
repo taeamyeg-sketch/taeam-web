@@ -14,6 +14,7 @@ import { Reveal } from "@/components/Reveal";
 import { Eyebrow } from "@/components/Eyebrow";
 import { getRestaurants } from "@/lib/data";
 import { SEALED } from "@/lib/launch";
+import { ORGANIZATION_LD, WEBSITE_LD, jsonLd } from "@/lib/structured-data";
 
 /* The ecosystem grid is a bento: three tiles (Arbaab, Rewards, Grocery) sit
    side by side at equal width up top, then the Tawsil photo tile runs the full
@@ -83,6 +84,15 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* Who Taeam is, for search engines and AI assistants. See lib/structured-data. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(ORGANIZATION_LD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(WEBSITE_LD) }}
+      />
       <Header overlay overlayTone="dark" />
 
       {/* ── Dark brand island: the diagonal hero, hard cut into cream ── */}
